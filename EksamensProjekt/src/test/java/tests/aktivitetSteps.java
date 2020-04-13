@@ -1,4 +1,4 @@
-package tests;
+package test.java.tests;
 
 import static org.junit.Assert.assertFalse;
 
@@ -22,6 +22,12 @@ public class aktivitetSteps {
 	
 	@Then("projektet har en ny aktivitet med navnet {string}")
 	public void projektetHarEnNyAktivitetMedNavnet(String string) {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new io.cucumber.java.PendingException();
+	}
+	
+	@Then("ajsdhbfajkdbhf {string}")
+	public void ajsdhbfajkdbhf(String string) {
 	    // Write code here that turns the phrase above into concrete actions
 	    throw new io.cucumber.java.PendingException();
 	}
