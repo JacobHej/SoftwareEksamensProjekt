@@ -13,4 +13,8 @@ public class Project {
 	public String getProjectName() {
         return projectName.get();
     }
+	
+	public void setProjectName(String name) {
+		this.projectName = new SimpleStringProperty(name);
+	}
 }
