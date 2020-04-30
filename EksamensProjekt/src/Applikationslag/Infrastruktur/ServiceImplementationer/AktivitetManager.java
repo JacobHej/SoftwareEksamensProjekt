@@ -1,5 +1,7 @@
 package Applikationslag.Infrastruktur.ServiceImplementationer;
 
-public class AktivitetManager {
+import Applikationslag.Infrastruktur.ServiceInterfaces.IAktivitetManager;
+
+public class AktivitetManager implements IAktivitetManager{
 
 }

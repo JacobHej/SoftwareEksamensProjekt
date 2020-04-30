@@ -1,5 +1,14 @@
 package Applikationslag.Data.Datavedholdelsesklasser;
 
-public class Brugttid {
+import Applikationslag.Domaeneklasser.*;
+import java.util.HashMap;
 
+final class BrugttidData
+{
+	private BrugttidData()
+	{
+		
+	}
+	
+    public static HashMap<Integer, Brugttid> Bibliotek = new HashMap<>();
 }

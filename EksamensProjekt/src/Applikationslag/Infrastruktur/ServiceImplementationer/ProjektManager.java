@@ -1,5 +1,7 @@
 package Applikationslag.Infrastruktur.ServiceImplementationer;
 
-public class ProjektManager {
+import Applikationslag.Infrastruktur.ServiceInterfaces.*;
+
+public class ProjektManager implements IProjektManager{
 
 }

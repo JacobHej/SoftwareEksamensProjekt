@@ -1,5 +1,14 @@
 package Applikationslag.Data.Datavedholdelsesklasser;
 
-public class AktivitetData {
+import Applikationslag.Domaeneklasser.*;
+import java.util.HashMap;
 
+final class AktivitetData
+{
+	private AktivitetData()
+	{
+		
+	}
+	
+    public static HashMap<Integer, Aktivitet> Bibliotek = new HashMap<>();
 }
