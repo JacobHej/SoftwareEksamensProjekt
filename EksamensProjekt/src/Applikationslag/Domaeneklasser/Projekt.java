@@ -45,11 +45,11 @@ public class Projekt {
 		return false;
 	}
 	
-	public Boolean tilfoejAktivitet(Date start, Date slut, Medarbejder medarbejder, String navn)
+	public Boolean tilfoejAktivitet(Date start, Date slut, String navn)
 	{
-		if (!aktivitetManager.eksisterer(new Aktivitet(start,slut,this,medarbejder, navn)))
+		if (!aktivitetManager.eksisterer(new Aktivitet(start,slut,this,navn)))
 		{
-			aktivitetManager.GemAktivitet(new Aktivitet(start,slut,this,medarbejder, navn));
+			aktivitetManager.GemAktivitet(new Aktivitet(start,slut,this,navn));
 			return true;
 		}
 		return false;

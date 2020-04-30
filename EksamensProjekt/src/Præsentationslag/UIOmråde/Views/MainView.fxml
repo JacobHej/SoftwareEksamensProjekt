@@ -16,47 +16,46 @@
          <children>
             <VBox alignment="TOP_CENTER" prefHeight="500.0" prefWidth="301.0" spacing="10.0">
                <children>
-                  <TableView fx:id="ProjectsTable" prefHeight="385.0" prefWidth="300.0">
+                  <TableView fx:id="projektTabel" prefHeight="385.0" prefWidth="300.0">
                     <columns>
-                      <TableColumn fx:id="ProjectNameColumn" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="150.0" resizable="false" text="Projects" />
-                        <TableColumn fx:id="ProjectDateColumn" prefWidth="150.0" text="Starting Day" />
+                      <TableColumn fx:id="projektNavnKolonne" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="300.0" resizable="false" text="Projekter" />
                     </columns>
                   </TableView>
-                  <Button fx:id="DeleteSelectedProjectButton" mnemonicParsing="false" onAction="#deleteSelectedProjects" text="Delete selected">
+                  <Button fx:id="fjernValgteProjekterKnap" mnemonicParsing="false" onAction="#fjernValgteProjekter" text="Fjern valgte projekter">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
                   </Button>
                   <HBox prefHeight="5.0" prefWidth="301.0" spacing="10.0">
                      <children>
-                        <TextField fx:id="AddProjectName" promptText="Project name" />
-                        <DatePicker fx:id="AddProjectDate" prefHeight="25.0" prefWidth="143.0" />
+                        <TextField fx:id="tilfoejProjektNavn" promptText="Projekt navn" />
+                        <DatePicker fx:id="tilfoejProjektDato" prefHeight="25.0" prefWidth="143.0" />
                      </children>
                      <padding>
                         <Insets left="10.0" right="10.0" />
                      </padding>
                   </HBox>
-                  <Button fx:id="AddProjectButton" mnemonicParsing="false" onAction="#addProject" text="Add Project" textAlignment="CENTER" />
+                  <Button fx:id="tilfoejProjektKnap" mnemonicParsing="false" onAction="#tilfoejProjekt" text="Tilfoej projekt" textAlignment="CENTER" />
                </children>
             </VBox>
             <VBox alignment="TOP_CENTER" prefHeight="500.0" prefWidth="301.0">
                <children>
-                  <TableView fx:id="ActivitiesTable" prefHeight="385.0" prefWidth="300.0">
+                  <TableView fx:id="aktivitetTabel" prefHeight="385.0" prefWidth="300.0">
                      <columns>
-                        <TableColumn fx:id="ActivityNameColoumn" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="299.0" resizable="false" text="Activities" />
+                        <TableColumn fx:id="aktivitetNavnKolonne" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="299.0" resizable="false" text="Aktiviteter" />
                      </columns>
                   </TableView>
-                  <Button fx:id="DeleteSelectedButton1" mnemonicParsing="false" onAction="#deleteSelectedActivities" text="Delete selected">
+                  <Button fx:id="fjernValgteAktiviteterKnap" mnemonicParsing="false" onAction="#fjernValgteAktiviteter" text="Delete selected">
                      <VBox.margin>
                         <Insets top="10.0" />
                      </VBox.margin>
                   </Button>
-                  <TextField fx:id="AddActivityName" promptText="Activity name">
+                  <TextField fx:id="tilfoejAktivitetNavn" promptText="Aktivitet's navn">
                      <VBox.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </VBox.margin>
                   </TextField>
-                  <Button fx:id="AddActivityButton" mnemonicParsing="false" onAction="#addActivity" text="Add Activity" textAlignment="CENTER" />
+                  <Button fx:id="tilfoejAktivitetKnap" mnemonicParsing="false" onAction="#tilfoejAktivitet" text="Tilfoej aktivitet" textAlignment="CENTER" />
                </children>
             </VBox>
          </children>

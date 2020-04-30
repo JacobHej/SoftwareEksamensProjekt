@@ -32,6 +32,16 @@ public class Aktivitet {
 		aktivitetManager.GemAktivitet(this);
 	}
 	
+	public Aktivitet(Date start, Date slut, Projekt projekt, String navn)
+	{
+		this.start = start;
+		this.slut = slut;
+		this.projekt = projekt;
+		this.navn = navn;
+		
+		aktivitetManager.GemAktivitet(this);
+	}
+	
 	public Aktivitet(String navn, Projekt projekt)
 	{
 		this.projekt = projekt;
@@ -86,9 +96,14 @@ public class Aktivitet {
 		return this.medarbejder;
 	}
 
-	public String Navn()
+	public String getNavn()
 	{
 		return this.navn;
+	}
+	
+	public void setNavn(String navn)
+	{
+		this.navn = navn;
 	}
 
 	public Boolean Feardig()
