@@ -12,7 +12,7 @@ public class Aktivitet {
 	private Medarbejder medarbejder;
 	
 	//Metoder
-	public Aktivitet()
+	public Aktivitet(Date start, Date slut, Projekt projekt, Medarbejder medarbejder)
 	{
 		
 	}
