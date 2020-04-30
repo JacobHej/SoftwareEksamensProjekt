@@ -1,5 +1,7 @@
 package Applikationslag.Infrastruktur.ServiceInterfaces;
 
-public interface IProjektManager {
+import Applikationslag.Domaeneklasser.*;
 
+public interface IProjektManager {
+	public Boolean GemProjekt(Projekt projekt);
 }
