@@ -22,12 +22,20 @@ public class MainController implements Initializable {
 	
 	//FXML Variables
 	//The Project Table
-	@FXML private TableView<Project> TableView;
+	@FXML private TableView<Project> ProjectsTable;
 	@FXML private TableColumn<Project,String> ProjectNameColumn;
+	
+	//The activity table
+	@FXML private TableView<Project> ActivitiesTable;
+	@FXML private TableColumn<Project,String> ActivityNameColoumn;
 	
 	//The add and remove project features
 	@FXML private Button AddProjectButton;
 	@FXML private TextField AddProjectName;
+	
+	//The add and remove activity features
+	@FXML private Button AddActivityButton;
+	@FXML private TextField AddActivityName;
 	
 	//Variables used in initialize and smaller tests
 	private Project test;
@@ -35,24 +43,38 @@ public class MainController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
-		test = new Project("Stater");
+		
 		
 		System.out.println("Initializing main Controller");
 		
+		initializeProjectsTable();
+		
+		
+	}
+	
+	public void initializeProjectsTable() {
+
 		//set up the columns in the table
 		ProjectNameColumn.setCellValueFactory(new PropertyValueFactory<Project, String>("projectName"));
         
         //load dummy data
-        TableView.setItems(getTestProjects());
+		ProjectsTable.setItems(getTestProjects());
         
         //This will allow the table to select multiple rows at once
-        TableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+		ProjectsTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		
+		//adds a listener for when selecting on the table
+		ProjectsTable.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+		    if (newSelection != null) {
+		    	ProjectOnSelectStart();
+		    }
+		});
 	}
 	
 	public ObservableList<Project>  getTestProjects()
     {
         ObservableList<Project> projects = FXCollections.observableArrayList();
+        test = new Project("Stater");
         projects.add(test);
         for(int i = 0;i<10; i++) {
         	projects.add(new Project("Project nr: "+i));
@@ -65,8 +87,8 @@ public class MainController implements Initializable {
     {
         System.out.println("lollolol");
         test.setProjectName("changed");
-        TableView.getColumns().get(0).setVisible(false);
-        TableView.getColumns().get(0).setVisible(true);
+        ProjectsTable.getColumns().get(0).setVisible(false);
+        ProjectsTable.getColumns().get(0).setVisible(true);
     }
 	
 	@FXML
@@ -77,23 +99,50 @@ public class MainController implements Initializable {
 
 		//Get all the items from the table as a list, then add the new person to
 		//the list
-		TableView.getItems().add(newProject);
+		ProjectsTable.getItems().add(newProject);
     }
 	
 	@FXML
-    private void deleteSelected(ActionEvent event)
+    private void AddActivity(ActionEvent event)
+    {
+		System.out.println("You tried to AddActivity");
+    }
+	
+	@FXML
+    private void deleteSelectedProjects(ActionEvent event)
     {
         ObservableList<Project> selectedRows, allProjects;
-        allProjects = TableView.getItems();
+        allProjects = ProjectsTable.getItems();
         
         //this gives us the rows that were selected
-        selectedRows = TableView.getSelectionModel().getSelectedItems();
+        selectedRows = ProjectsTable.getSelectionModel().getSelectedItems();
         
         //loop over the selected rows and remove the Person objects from the table
         for (Project p: selectedRows)
         {
             allProjects.remove(p);
         }
+    }
+	
+	@FXML
+    private void deleteSelectedActivities(ActionEvent event)
+    {
+        System.out.println("You tried to add activity");
+    }
+	
+	
+	
+    private void ProjectOnSelectStart()
+    {
+        System.out.println("Hi, you selected a row");
+        ObservableList<Project> selectedRows;
+        selectedRows = ProjectsTable.getSelectionModel().getSelectedItems();
+        System.out.println("It contained");
+        for (Project p: selectedRows)
+        {
+            System.out.println(p.getProjectName());
+        }
+        
     }
 	
 	
