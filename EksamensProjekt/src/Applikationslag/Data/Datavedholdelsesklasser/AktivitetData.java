@@ -2,13 +2,14 @@ package Applikationslag.Data.Datavedholdelsesklasser;
 
 import Applikationslag.Domaeneklasser.*;
 import java.util.HashMap;
+import java.util.UUID;
 
-final class AktivitetData
+public final class AktivitetData
 {
 	private AktivitetData()
 	{
 		
 	}
 	
-    public static HashMap<Integer, Aktivitet> Bibliotek = new HashMap<>();
+    public static HashMap<UUID, Aktivitet> Bibliotek = new HashMap<>();
 }

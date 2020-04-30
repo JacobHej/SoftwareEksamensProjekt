@@ -2,6 +2,7 @@ package Applikationslag.Data.Datavedholdelsesklasser;
 
 import Applikationslag.Domaeneklasser.*;
 import java.util.HashMap;
+import java.util.UUID;
 
 final class MedarbejderData
 {
@@ -10,5 +11,5 @@ final class MedarbejderData
 		
 	}
 	
-    public static HashMap<Integer, Medarbejder> Bibliotek = new HashMap<>();
+    public static HashMap<UUID, Medarbejder> Bibliotek = new HashMap<>();
 }
