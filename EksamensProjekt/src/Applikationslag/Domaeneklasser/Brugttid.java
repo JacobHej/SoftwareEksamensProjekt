@@ -12,7 +12,9 @@ public class Brugttid {
 	//metoder
 	public Brugttid(Aktivitet aktivitet, Medarbejder medarbejder, int tid)
 	{
-		
+		this.aktivitet = aktivitet;
+		this.medarbejder = medarbejder;
+		this.tid = tid;
 	}
 	
 	public void AendreTid(int nyTid)

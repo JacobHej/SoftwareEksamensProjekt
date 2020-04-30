@@ -3,6 +3,10 @@ package Applikationslag.Domaeneklasser;
 import java.util.Date;
 import java.util.UUID;
 
+import Applikationslag.Infrastruktur.ServiceInterfaces.IAktivitetManager;
+import Applikationslag.Infrastruktur.ServiceInterfaces.IBrugttidManager;
+import Applikationslag.Redskaber.Managers;
+
 public class Aktivitet {
 	// klassevariable
 	private Date start;
@@ -13,15 +17,27 @@ public class Aktivitet {
 	private String navn;
 	private Boolean faerdig;
 	
+	private IAktivitetManager aktivitetManager = Managers.FaaAktivitetManager();
+	private IBrugttidManager brugttidManager = Managers.FaaBrugttidManager();
+	
 	//Metoder
 	public Aktivitet(Date start, Date slut, Projekt projekt, Medarbejder medarbejder, String navn)
 	{
+		this.start = start;
+		this.slut = slut;
+		this.projekt = projekt;
+		this.medarbejder = medarbejder;
+		this.navn = navn;
 		
+		aktivitetManager.GemAktivitet(this);
 	}
 	
 	public Aktivitet(String navn, Projekt projekt)
 	{
+		this.projekt = projekt;
+		this.navn = navn;
 		
+		aktivitetManager.GemAktivitet(this);
 	}
 	
 	public void SaetMedarbejder(Medarbejder nyMedarbejder)
@@ -34,14 +50,14 @@ public class Aktivitet {
 		
 	}
 	
-	public void TilfoejTid(int tid)
+	public Boolean TilfoejTid(int tid)
 	{
-		
+		return brugttidManager.GemBrugttid(new Brugttid(this, this.medarbejder, tid));
 	}
 	
-	public void TilfoejTid(int tid, Medarbejder medarbejder)
+	public Boolean TilfoejTid(int tid, Medarbejder medarbejder)
 	{
-		
+		return brugttidManager.GemBrugttid(new Brugttid(this, medarbejder, tid));
 	}
 	
 	//Funtioner for returnering af klassevariable

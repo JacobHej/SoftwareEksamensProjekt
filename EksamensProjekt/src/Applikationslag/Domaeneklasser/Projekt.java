@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 
 import Applikationslag.Infrastruktur.ServiceImplementationer.*;
 import Applikationslag.Infrastruktur.ServiceInterfaces.*;
+import Applikationslag.Redskaber.Managers;
 
 public class Projekt {
 	private UUID id = UUID.randomUUID();
@@ -14,8 +15,8 @@ public class Projekt {
 	private String navn;
 	private Date startTid;
 	
-	private IAktivitetManager aktivitetManager = new AktivitetManager();
-	private IProjektManager projektManager = new ProjektManager();
+	private IAktivitetManager aktivitetManager = Managers.FaaAktivitetManager();
+	private IProjektManager projektManager = Managers.FaaProjektManager();
 	
 	public Projekt(String navn, Date startTid)
 	{
@@ -44,11 +45,11 @@ public class Projekt {
 		return false;
 	}
 	
-	public Boolean tilfoejAktivitet(Date start, Date slut, Medarbejder medarbejder)
+	public Boolean tilfoejAktivitet(Date start, Date slut, Medarbejder medarbejder, String navn)
 	{
-		if (!aktivitetManager.eksisterer(new Aktivitet(start,slut,this,medarbejder)))
+		if (!aktivitetManager.eksisterer(new Aktivitet(start,slut,this,medarbejder, navn)))
 		{
-			aktivitetManager.GemAktivitet(new Aktivitet(start,slut,this,medarbejder));
+			aktivitetManager.GemAktivitet(new Aktivitet(start,slut,this,medarbejder, navn));
 			return true;
 		}
 		return false;

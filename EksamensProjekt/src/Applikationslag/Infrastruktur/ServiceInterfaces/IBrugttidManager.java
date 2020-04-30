@@ -1,5 +1,8 @@
 package Applikationslag.Infrastruktur.ServiceInterfaces;
 
-public interface IBrugttidManager {
+import Applikationslag.Domaeneklasser.Aktivitet;
+import Applikationslag.Domaeneklasser.Brugttid;
 
+public interface IBrugttidManager {
+	public Boolean GemBrugttid(Brugttid brugttid);
 }
