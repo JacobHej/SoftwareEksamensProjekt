@@ -1,4 +1,4 @@
-package Applikationslag.Domæneklasser;
+package Applikationslag.Domaeneklasser;
 
 public class Medarbejder
 {
