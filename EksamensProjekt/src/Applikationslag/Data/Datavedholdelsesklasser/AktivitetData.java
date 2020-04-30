@@ -3,12 +3,12 @@ package Applikationslag.Data.Datavedholdelsesklasser;
 import Applikationslag.Domaeneklasser.*;
 import java.util.HashMap;
 
-final class ProjektData
+final class AktivitetData
 {
-	private ProjektData()
+	private AktivitetData()
 	{
 		
 	}
 	
-    public static HashMap<Integer, Projekt> Bibliotek = new HashMap<>();
+    public static HashMap<Integer, Aktivitet> Bibliotek = new HashMap<>();
 }
