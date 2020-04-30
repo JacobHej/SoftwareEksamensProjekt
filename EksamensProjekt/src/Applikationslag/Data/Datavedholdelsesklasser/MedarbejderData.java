@@ -4,7 +4,7 @@ import Applikationslag.Domaeneklasser.*;
 import java.util.HashMap;
 import java.util.UUID;
 
-final class MedarbejderData
+public final class MedarbejderData
 {
 	private MedarbejderData()
 	{

@@ -4,7 +4,7 @@ import Applikationslag.Domaeneklasser.*;
 import java.util.HashMap;
 import java.util.UUID;
 
-final class BrugttidData
+public final class BrugttidData
 {
 	private BrugttidData()
 	{
