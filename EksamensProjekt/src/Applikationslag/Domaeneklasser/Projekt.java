@@ -46,7 +46,7 @@ public class Projekt {
 	
 	public Boolean TilfoejAktivitet(Date start, Date slut, Medarbejder medarbejder)
 	{
-		if (aktivitetManager.eksisterer(new Aktivitet(start,slut,this,medarbejder)))
+		if (!aktivitetManager.eksisterer(new Aktivitet(start,slut,this,medarbejder)))
 		{
 			aktivitetManager.GemAktivitet(new Aktivitet(start,slut,this,medarbejder));
 			return true;

@@ -17,6 +17,11 @@ public class Aktivitet {
 		
 	}
 	
+	public Aktivitet(Projekt projekt)
+	{
+		
+	}
+	
 	public void SaetMedarbejder(Medarbejder nyMedarbejder)
 	{
 		
