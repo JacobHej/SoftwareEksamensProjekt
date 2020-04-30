@@ -11,6 +11,7 @@ import java.util.Date;
 
 public class aktivitetSteps {
 	Projekt projekt;
+	Aktivitet aktivitet;
 	
 	@Given("der er et projekt med lederen leder med idet id {string}")
 	public void derErEtProjektMedLederenLederMedIdetId(String string) {
@@ -23,13 +24,13 @@ public class aktivitetSteps {
 	
 	@When("lederen laver en ny aktivitet med navnet {string}")
 	public void lederenLaverEnNyAktivitetMedNavnet(String string) {
-		assertTrue(projekt.tilføjAktivitet(new Aktivitet(string,projekt)));
-	    throw new io.cucumber.java.PendingException();
+		Aktivitet aktivitet = new Aktivitet(string,projekt);
+		assertTrue(projekt.tilfoejAktivitet(aktivitet));
 	}
 	
 	@Then("projektet har en ny aktivitet med navnet {string}")
 	public void projektetHarEnNyAktivitetMedNavnet(String string) {
-//		assertTrue(Aktivitet findes i projektet)
+		assertTrue(Aktivitet findes i projektet)
 	    throw new io.cucumber.java.PendingException();
 	}
 	
