@@ -3,18 +3,18 @@ package Præsentationslag.UIOmråde.Controllers;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Project {
-	private SimpleStringProperty projectName;
+	private String projectName;
 	
 	public Project(String projectName) {
-		this.projectName = new SimpleStringProperty(projectName);
+		this.projectName = projectName;
 
 	}
 	
 	public String getProjectName() {
-        return projectName.get();
+        return projectName;
     }
 	
 	public void setProjectName(String name) {
-		this.projectName = new SimpleStringProperty(name);
+		this.projectName = name;
 	}
 }
