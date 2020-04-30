@@ -34,7 +34,7 @@ public class Projekt {
 		projektManager.GemProjekt(this);
 	}
 	
-	public Boolean TilfoejAktivitet(Aktivitet aktivitet)
+	public Boolean tilfoejAktivitet(Aktivitet aktivitet)
 	{
 		if (!aktivitetManager.eksisterer(aktivitet))
 		{
@@ -44,7 +44,7 @@ public class Projekt {
 		return false;
 	}
 	
-	public Boolean TilfoejAktivitet(Date start, Date slut, Medarbejder medarbejder)
+	public Boolean tilfoejAktivitet(Date start, Date slut, Medarbejder medarbejder)
 	{
 		if (!aktivitetManager.eksisterer(new Aktivitet(start,slut,this,medarbejder)))
 		{
@@ -55,22 +55,22 @@ public class Projekt {
 		
 	}
 
-	public List<Entry<UUID, Aktivitet>> AlleAktiviteter()
+	public List<Entry<UUID, Aktivitet>> getAlleAktiviteter()
 	{
 		return aktivitetManager.AlleAktiviteterEfterProjekt(this);
 	}
 	
-	public Rapport GenererRapport()
+	public Rapport genererRapport()
 	{
 		return new Rapport();
 	}
 	
-	public void SaetLeder(Medarbejder leder)
+	public void setLeder(Medarbejder leder)
 	{
 		this.leder = leder;
 	}
 	
-	public void SaetStartTid(Date startTid)
+	public void setStartTid(Date startTid)
 	{
 		this.startTid = startTid;
 	}
@@ -82,17 +82,21 @@ public class Projekt {
 		return this.id;
 	}
 	
-	public Medarbejder Leder()
+	public Medarbejder getLeder()
 	{
 		return this.leder;
 	}
 	
-	public String Navn()
+	public String getNavn()
 	{
 		return this.navn;
 	}
+	
+	public void setNavn(String navn) {
+		this.navn=navn;
+	}
 
-	public Date StartTid()
+	public Date startTid()
 	{
 		return this.startTid;
 	}
