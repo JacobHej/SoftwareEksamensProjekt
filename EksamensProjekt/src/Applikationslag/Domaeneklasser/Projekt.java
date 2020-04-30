@@ -1,7 +1,9 @@
 package Applikationslag.Domaeneklasser;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
+import java.util.Map.Entry;
 
 import Applikationslag.Infrastruktur.ServiceImplementationer.AktivitetManager;
 import Applikationslag.Infrastruktur.ServiceInterfaces.IAktivitetManager;
@@ -46,6 +48,11 @@ public class Projekt {
 		
 	}
 
+	public List<Entry<UUID, Aktivitet>> AlleAktiviteter()
+	{
+		return aktivitetManager.AlleAktiviteterEfterProjekt(this);
+	}
+	
 	public Rapport GenererRapport()
 	{
 		return new Rapport();
