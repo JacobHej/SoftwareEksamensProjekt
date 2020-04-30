@@ -1,4 +1,4 @@
-Feature: tilføj aktivitet
+Feature: tilfoej aktivitet
   Description: Lav en aktivitet for et projekt
 	Actor: Projekt-Leder
 
