@@ -25,10 +25,13 @@ public class Projekt {
 	}
 	
 	public void TilfoejAktivitet(Date start, Date slut, Medarbejder medarbejder)
-	
-	public Rapport GenererRapport()
 	{
 		
+	}
+
+	public Rapport GenererRapport()
+	{
+		return new Rapport();
 	}
 	
 	public void SaetLeder(Medarbejder leder)
@@ -36,7 +39,7 @@ public class Projekt {
 		this.leder = leder;
 	}
 	
-	public SaetStartTid(Date startTid)
+	public void SaetStartTid(Date startTid)
 	{
 		this.startTid = startTid;
 	}
