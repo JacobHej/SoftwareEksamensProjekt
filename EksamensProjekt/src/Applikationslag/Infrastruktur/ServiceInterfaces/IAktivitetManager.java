@@ -1,5 +1,7 @@
 package Applikationslag.Infrastruktur.ServiceInterfaces;
 
-public interface IAktivitetManager {
+import Applikationslag.Domaeneklasser.Aktivitet;
 
+public interface IAktivitetManager {
+	public Boolean GemAktivitet(Aktivitet aktivitet);
 }
