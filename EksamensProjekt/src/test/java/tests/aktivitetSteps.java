@@ -10,7 +10,7 @@ public class aktivitetSteps {
 	
 	@Given("der er et projekt med lederen leder med idet id {string}")
 	public void derErEtProjektMedLederenLederMedIdetId(String string) {
-	    // Write code here that turns the phrase above into concrete actions
+	    //assertTrue(Projekt.Leder() == string));
 		assertFalse(false);
 	}
 	
