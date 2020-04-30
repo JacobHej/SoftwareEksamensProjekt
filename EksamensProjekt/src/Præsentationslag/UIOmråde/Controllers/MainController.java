@@ -1,6 +1,8 @@
 package Præsentationslag.UIOmråde.Controllers;
 
 import java.net.URL;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 import Applikationslag.Domaeneklasser.Aktivitet;
@@ -14,6 +16,7 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
@@ -33,6 +36,7 @@ public class MainController implements Initializable {
 	//The add and remove project features
 	@FXML private Button AddProjectButton;
 	@FXML private TextField AddProjectName;
+	@FXML private DatePicker AddProjectDate;
 	
 	//The add and remove activity features
 	@FXML private Button AddActivityButton;
@@ -75,10 +79,10 @@ public class MainController implements Initializable {
 	public ObservableList<Projekt>  getTestProjects()
     {
         ObservableList<Projekt> projects = FXCollections.observableArrayList();
-        test = new Projekt("Stater");
+        test = new Projekt("Stater",new Date());
         projects.add(test);
         for(int i = 0;i<10; i++) {
-        	projects.add(new Projekt("Project nr: "+i));
+        	projects.add(new Projekt("Project nr: "+i,new Date()));
         }
         return projects;
     }
@@ -86,8 +90,8 @@ public class MainController implements Initializable {
 	@FXML
     private void addProject(ActionEvent event)
     {
-		
-		Projekt newProject = new Projekt(AddProjectName.getText());
+		LocalDate date = AddProjectDate.getValue();
+		Projekt newProject = new Projekt(AddProjectName.getText(),new Date(date.getYear()-1900,date.getMonthValue()-1,date.getDayOfMonth()));
 
 		//Get all the items from the table as a list, then add the new person to
 		//the list
@@ -132,7 +136,8 @@ public class MainController implements Initializable {
         System.out.println("It contained");
         for (Projekt p: selectedRows)
         {
-            System.out.println(p.getNavn());
+            System.out.println(p.getNavn()+"   "+p.startTid());
+            
         }
         
     }
