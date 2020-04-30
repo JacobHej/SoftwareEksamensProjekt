@@ -10,14 +10,16 @@ public class Aktivitet {
 	private UUID id = UUID.randomUUID();
 	private Projekt projekt;
 	private Medarbejder medarbejder;
+	private String navn;
+	private Boolean faerdig;
 	
 	//Metoder
-	public Aktivitet(Date start, Date slut, Projekt projekt, Medarbejder medarbejder)
+	public Aktivitet(Date start, Date slut, Projekt projekt, Medarbejder medarbejder, String navn)
 	{
 		
 	}
 	
-	public Aktivitet(Projekt projekt)
+	public Aktivitet(String navn, Projekt projekt)
 	{
 		
 	}
@@ -66,5 +68,15 @@ public class Aktivitet {
 	public Medarbejder Medarbejder()
 	{
 		return this.medarbejder;
+	}
+
+	public String Navn()
+	{
+		return this.navn;
+	}
+
+	public Boolean Feardig()
+	{
+		return this.faerdig;
 	}
 }
