@@ -12,4 +12,9 @@ public class AktivitetManager implements IAktivitetManager{
 		return true;
 	}
 
+	//@Override
+	public Boolean eksisterer(Aktivitet aktivitet) {
+		return AktivitetData.Bibliotek.containsValue(aktivitet);
+	}
+
 }

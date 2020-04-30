@@ -4,4 +4,6 @@ import Applikationslag.Domaeneklasser.Aktivitet;
 
 public interface IAktivitetManager {
 	public Boolean GemAktivitet(Aktivitet aktivitet);
+	
+	public Boolean eksisterer(Aktivitet aktivitet);
 }

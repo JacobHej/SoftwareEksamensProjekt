@@ -25,14 +25,25 @@ public class Projekt {
 		
 	}
 	
-	public void TilfoejAktivitet(Aktivitet aktivitet)
+	public Boolean TilfoejAktivitet(Aktivitet aktivitet)
 	{
-		aktivitetManager.GemAktivitet(aktivitet);
+		if (aktivitetManager.eksisterer(aktivitet))
+		{
+			aktivitetManager.GemAktivitet(aktivitet);
+			return true;
+		}
+		return false;
 	}
 	
-	public void TilfoejAktivitet(Date start, Date slut, Medarbejder medarbejder)
+	public Boolean TilfoejAktivitet(Date start, Date slut, Medarbejder medarbejder)
 	{
-		aktivitetManager.GemAktivitet(new Aktivitet(start,slut,this,medarbejder));
+		if (aktivitetManager.eksisterer(new Aktivitet(start,slut,this,medarbejder)))
+		{
+			aktivitetManager.GemAktivitet(new Aktivitet(start,slut,this,medarbejder));
+			return true;
+		}
+		return false;
+		
 	}
 
 	public Rapport GenererRapport()
