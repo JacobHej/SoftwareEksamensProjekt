@@ -28,7 +28,7 @@ public class AktivitetManager implements IAktivitetManager{
 	//@Override
 	public List<Entry<UUID, Aktivitet>> AlleAktiviteterEfterProjekt(Projekt projekt) {
 		return AktivitetData.Bibliotek.entrySet().stream()
-			.filter(e -> e.getValue().Projekt().Navn() == projekt.Navn())
+			.filter(e -> e.getValue().Projekt().getNavn() == projekt.getNavn())
 			.collect(Collectors.toList());
 	}
 
