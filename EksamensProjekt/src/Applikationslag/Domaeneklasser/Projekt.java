@@ -45,6 +45,12 @@ public class Projekt {
 		return false;
 	}
 	
+	public Boolean tilfoejAktivitet(String navn)
+	{
+		aktivitetManager.GemAktivitet(new Aktivitet(navn,this));
+		return true;
+	}
+	
 	public Boolean tilfoejAktivitet(Date start, Date slut, String navn)
 	{
 		if (!aktivitetManager.eksisterer(new Aktivitet(start,slut,this,navn)))
