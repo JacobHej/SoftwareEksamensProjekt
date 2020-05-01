@@ -37,7 +37,6 @@ public class aktivitetSteps {
 	@Then("projektet {string} har en ny aktivitet med navnet {string}")
 	public void projektetHarEnNyAktivitetMedNavnet(String projektID, String aktivitetID) {
 	    // Write code here that turns the phrase above into concrete actions
-		
 	    throw new io.cucumber.java.PendingException();
 	}
 	
