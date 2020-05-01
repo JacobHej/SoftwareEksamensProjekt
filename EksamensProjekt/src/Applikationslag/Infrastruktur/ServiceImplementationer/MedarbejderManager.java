@@ -1,8 +1,5 @@
 package Applikationslag.Infrastruktur.ServiceImplementationer;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
@@ -10,7 +7,6 @@ import java.util.UUID;
 
 import Applikationslag.Data.Datavedholdelsesklasser.AktivitetData;
 import Applikationslag.Data.Datavedholdelsesklasser.MedarbejderData;
-import Applikationslag.Domaeneklasser.Aktivitet;
 import Applikationslag.Domaeneklasser.Medarbejder;
 import Applikationslag.Infrastruktur.ServiceInterfaces.IMedarbejderManager;
 import Applikationslag.Redskaber.Dates;
@@ -38,8 +34,8 @@ public class MedarbejderManager implements IMedarbejderManager {
 	public long AktiviteterIDenneUge(int week, Medarbejder medarbejder) {
 		return AktivitetData.Bibliotek.entrySet().stream()
 			.filter(e -> e.getValue().Medarbejder().ID() == medarbejder.ID())
-			.filter(e -> e.getValue().getStartUge() < week
-					&& e.getValue().getSlutUge() > week)
+			.filter(e -> e.getValue().getStartUge() <= week
+					&& e.getValue().getSlutUge() >= week)
 			.count();
 	}
 	

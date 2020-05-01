@@ -2,7 +2,6 @@ package Applikationslag.Domaeneklasser;
 
 import java.util.Date;
 import java.util.UUID;
-import java.util;
 
 public class Brugttid {
 	// klassevariable
