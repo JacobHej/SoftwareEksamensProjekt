@@ -13,21 +13,26 @@ public class Projekt {
 	private UUID id = UUID.randomUUID();
 	private Medarbejder leder;
 	private String navn;
-	private Date startTid, slutTid;
+	private int startUge;
 	
 	private IAktivitetManager aktivitetManager = Managers.FaaAktivitetManager();
 	private IProjektManager projektManager = Managers.FaaProjektManager();
 	
-	public Projekt(String navn, Date startTid)
+	public Projekt(String navn, int startUge)
 	{
 		this.navn = navn;
-		this.startTid = startTid;
+		this.startUge = startUge;
 	}
 	
-	public Projekt(String navn, Date startTid, Medarbejder leder)
+	public Projekt(String navn)
 	{
 		this.navn = navn;
-		this.startTid = startTid;
+	}
+	
+	public Projekt(String navn, int startUge, Medarbejder leder)
+	{
+		this.navn = navn;
+		this.startUge = startUge;
 		this.leder = leder;
 	}
 	
@@ -45,7 +50,7 @@ public class Projekt {
 		return true;
 	}
 	
-	public Boolean tilfoejAktivitet(Date start, Date slut, String navn)
+	public Boolean tilfoejAktivitet(int start, int slut, String navn)
 	{
 		Aktivitet a = new Aktivitet(start,slut,navn);
 		a.setProjekt(this);
@@ -94,21 +99,11 @@ public class Projekt {
 	
 	public void setStartTid(Date startTid)
 	{
-		this.startTid = startTid;
+		this.startUge = startUge;
 	}
 
-	public Date getStartTid()
+	public int getStartUge()
 	{
-		return this.startTid;
-	}
-	
-	public void setSlutTid(Date startTid)
-	{
-		this.slutTid = startTid;
-	}
-
-	public Date getSlutTid()
-	{
-		return this.slutTid;
+		return this.startUge;
 	}
 }

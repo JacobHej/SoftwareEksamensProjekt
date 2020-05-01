@@ -21,7 +21,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-
+import javafx.scene.text.Text;
 import javafx.event.ActionEvent;
 
 public class MainController implements Initializable {
@@ -34,6 +34,7 @@ public class MainController implements Initializable {
 	//The projekt info
 	@FXML private DatePicker projektInfoStartDato;
 	@FXML private DatePicker projektInfoSlutDato;
+	@FXML private Text projektInfoNavn;
 	
 	//The activity table
 	@FXML private TableView<Aktivitet> aktivitetTabel;
@@ -53,17 +54,7 @@ public class MainController implements Initializable {
 	//Initialize ----------------------------------------------------------------------------------------------------------
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		Projekt p = new Projekt("Project nr: "+1,new Date());
-		Aktivitet a = new Aktivitet(new Date(), new Date(), "Aktivitet "+1+" for "+p.getNavn());
-		Aktivitet b = new Aktivitet(new Date(), new Date(), "Aktivitet "+2+" for "+p.getNavn());
-		p.tilfoejAktivitet(a);
-		p.tilfoejAktivitet(b);
 		
-		Projekt q = new Projekt("Project nr: "+2,new Date());
-		Aktivitet a = new Aktivitet(new Date(), new Date(), "Aktivitet "+1+" for "+p.getNavn());
-		Aktivitet b = new Aktivitet(new Date(), new Date(), "Aktivitet "+2+" for "+p.getNavn());
-		p.tilfoejAktivitet(a);
-		p.tilfoejAktivitet(b);
 		
 		System.out.println("Initializing main Controller");
 		
@@ -107,11 +98,14 @@ public class MainController implements Initializable {
         return projects;
     }
 	
+	//Dummy date aktiviteter
 	public void  tilfoejAktiviteter(Projekt p)
     {
         for(int i = 0; i<10; i++) {
         	Aktivitet a = new Aktivitet(new Date(), new Date(), "Aktivitet "+i+" for "+p.getNavn());
-        	p.tilfoejAktivitet(a);
+        	if(p.tilfoejAktivitet(a)) {
+        		//System.out.println("Aktivitet tilføjet");
+        	}
         }
     }
 	
@@ -120,16 +114,16 @@ public class MainController implements Initializable {
 	@FXML
     private void tilfoejProjekt(ActionEvent event)
     {
-		LocalDate dato = tilfoejProjektDato.getValue();
-		Projekt newProject = new Projekt(tilfoejProjektNavn.getText(),localToUtilDate(dato));
-
+		Projekt p = new Projekt(tilfoejProjektNavn.getText());
+		p.Gem();
 		//Get all the items from the table as a list, then add the new person to
 		//the list
-		projektTabel.getItems().add(newProject);
+		projektTabel.getItems().add(p);
+		
     }
 	
 	@FXML
-    private void fjernValgteProjekter(ActionEvent event)
+    private void fjernValgteProjekt(ActionEvent event)
     {
         ObservableList<Projekt> selectedRows, allProjects;
         allProjects = projektTabel.getItems();
@@ -150,9 +144,9 @@ public class MainController implements Initializable {
     {
         Projekt p = projektTabel.getSelectionModel().getSelectedItems().get(0);
         if(p!=null) {
-        	System.out.println("Hi, you selected a row");
-            System.out.println("It contained");
-        	System.out.println(p.getNavn()+"   "+p.getStartTid());
+        	//System.out.println("Hi, you selected a row");
+            //System.out.println("It contained");
+        	//System.out.println(p.getNavn()+"   "+p.getStartTid());
             
             visAktiviteter(p);
             visProjektInfo(p);
@@ -176,12 +170,31 @@ public class MainController implements Initializable {
     	
     	if(p.getStartTid()!=null) {
     		projektInfoStartDato.setValue(utilToLocalDate(p.getStartTid()));
+    	}else {
+    		projektInfoStartDato.setValue(null);
     	}
     	
     	if(p.getSlutTid()!=null) {
     		projektInfoSlutDato.setValue(utilToLocalDate(p.getSlutTid()));
+    	}else {
+    		projektInfoSlutDato.setValue(null);
     	}
     	
+    	projektInfoNavn.setText(p.getNavn());
+    	
+    }
+    
+    
+    @FXML
+    private void gemProjektTidsperiode(ActionEvent event)
+    {
+    	Projekt p = projektTabel.getSelectionModel().getSelectedItems().get(0);
+    	if(projektInfoStartDato.getValue()!=null) {
+    		p.setStartTid(localToUtilDate(projektInfoStartDato.getValue()));
+    	}
+    	if(projektInfoSlutDato.getValue()!=null) {
+    		p.setSlutTid(localToUtilDate(projektInfoSlutDato.getValue()));
+    	}
     }
     
 //Aktivitet metoder -------------------------------------------------------------------------------------------------------------------
@@ -199,7 +212,7 @@ public class MainController implements Initializable {
     }
 	
 	@FXML
-    private void fjernValgteAktiviteter(ActionEvent event)
+    private void fjernValgteAktivitet(ActionEvent event)
 	{
         System.out.println("You tried to remove activity");
         

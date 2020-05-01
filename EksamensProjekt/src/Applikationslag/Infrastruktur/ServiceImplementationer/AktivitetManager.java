@@ -15,10 +15,10 @@ public class AktivitetManager implements IAktivitetManager{
 
 	//@Override
 	public Boolean GemAktivitet(Aktivitet aktivitet) {
-		if(aktivitet.Projekt() == null)
+		if(aktivitet.getProjekt() == null)
 			return false;
 		if (!AktivitetData.Bibliotek.containsValue(aktivitet) 
-				&& ProjektData.Bibliotek.containsValue(aktivitet.Projekt()))
+				&& ProjektData.Bibliotek.containsValue(aktivitet.getProjekt()))
 			return (AktivitetData.Bibliotek.put(aktivitet.ID(), aktivitet) == null);
 		else
 			return false;
@@ -27,7 +27,7 @@ public class AktivitetManager implements IAktivitetManager{
 	//@Override
 	public List<Entry<UUID, Aktivitet>> AlleAktiviteterEfterProjekt(Projekt projekt) {
 		return AktivitetData.Bibliotek.entrySet().stream()
-			.filter(e -> e.getValue().Projekt().getNavn() == projekt.getNavn())
+			.filter(e -> e.getValue().getProjekt().getNavn() == projekt.getNavn())
 			.collect(Collectors.toList());
 	}
 

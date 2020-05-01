@@ -24,7 +24,7 @@
                       <TableColumn fx:id="projektNavnKolonne" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="200.0" resizable="false" text="Projekter" />
                     </columns>
                   </TableView>
-                  <Button fx:id="fjernValgteProjekterKnap" mnemonicParsing="false" onAction="#fjernValgteProjekter" text="Fjern valgte projekter">
+                  <Button fx:id="fjernValgteProjekterKnap" mnemonicParsing="false" onAction="#fjernValgteProjekt" text="Fjern valgte projekt">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
@@ -48,19 +48,25 @@
                         <Font size="20.0" />
                      </font>
                   </Text>
-                  <SplitPane dividerPositions="0.13131313131313133" orientation="VERTICAL" prefHeight="107.0" prefWidth="200.0">
+                  <Text fx:id="projektInfoNavn" strokeType="OUTSIDE" strokeWidth="0.0" text="Projekt navn" textAlignment="CENTER">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Text>
+                  <SplitPane dividerPositions="0.13131313131313133" orientation="VERTICAL" prefHeight="138.0" prefWidth="200.0">
                     <items>
                       <AnchorPane minHeight="25.0" minWidth="0.0" prefHeight="25.0" prefWidth="160.0">
                            <children>
                               <Text layoutX="-1.0" layoutY="-23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tidsperiode" textAlignment="CENTER" wrappingWidth="197.9999914765358" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                            </children>
                         </AnchorPane>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="22.0" prefWidth="198.0">
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="98.0" prefWidth="198.0">
                            <children>
                               <DatePicker fx:id="projektInfoStartDato" layoutX="60.0" layoutY="2.0" prefHeight="16.0" prefWidth="138.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
                               <DatePicker fx:id="projektInfoSlutDato" layoutX="55.0" layoutY="41.0" prefHeight="25.0" prefWidth="138.0" AnchorPane.rightAnchor="5.0" />
                               <Text layoutX="14.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start" />
                               <Text layoutX="15.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Slut" />
+                              <Button layoutX="47.0" layoutY="72.0" mnemonicParsing="false" onAction="#gemProjektTidsperiode" text="Gem tidsperiode" textAlignment="CENTER" />
                            </children>
                         </AnchorPane>
                     </items>
@@ -74,7 +80,7 @@
                         <TableColumn fx:id="aktivitetNavnKolonne" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="200.0" resizable="false" text="Aktiviteter" />
                      </columns>
                   </TableView>
-                  <Button fx:id="fjernValgteAktiviteterKnap" mnemonicParsing="false" onAction="#fjernValgteAktiviteter" text="Delete selected">
+                  <Button fx:id="fjernValgteAktiviteterKnap" mnemonicParsing="false" onAction="#fjernValgteAktivitet" text="Fjern valgte aktivitet">
                      <VBox.margin>
                         <Insets top="10.0" />
                      </VBox.margin>

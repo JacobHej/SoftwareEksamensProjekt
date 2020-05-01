@@ -13,6 +13,7 @@ import Applikationslag.Data.Datavedholdelsesklasser.MedarbejderData;
 import Applikationslag.Domaeneklasser.Aktivitet;
 import Applikationslag.Domaeneklasser.Medarbejder;
 import Applikationslag.Infrastruktur.ServiceInterfaces.IMedarbejderManager;
+import Applikationslag.Redskaber.Dates;
 
 public class MedarbejderManager implements IMedarbejderManager {
 
@@ -26,14 +27,17 @@ public class MedarbejderManager implements IMedarbejderManager {
 
 	//@Override
 	public List<Entry<UUID, Medarbejder>> AlleLedigeMedarbejdere() {
-		
+		return MedarbejderData.Bibliotek.entrySet().stream()
+			.filter(e -> AktiviteterIDenneUge(Dates.getCurrentWeek(), e.getValue()) < 21)
+			.collect(Collectors.toList());
 	}
 
 	@Override
 	public long AktiviteterIDenneUge(int week, Medarbejder medarbejder) {
 		return AktivitetData.Bibliotek.entrySet().stream()
 			.filter(e -> e.getValue().Medarbejder().ID() == medarbejder.ID())
-			.filter(e -> e.getValue().Uge() == week)
+			.filter(e -> e.getValue().getStartUge() < week
+					&& e.getValue().getSlutUge() > week)
 			.count();
 	}
 	

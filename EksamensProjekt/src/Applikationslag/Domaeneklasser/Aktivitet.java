@@ -9,8 +9,8 @@ import Applikationslag.Redskaber.Managers;
 
 public class Aktivitet {
 	// klassevariable
-	private Date start;
-	private Date slut;
+	private int startUge;
+	private int slutUge;
 	private UUID id = UUID.randomUUID();
 	private Projekt projekt;
 	private Medarbejder medarbejder;
@@ -21,16 +21,18 @@ public class Aktivitet {
 	private IBrugttidManager brugttidManager = Managers.FaaBrugttidManager();
 	
 	//Metoder
-	public Aktivitet(Date start, Date slut, Medarbejder medarbejder, String navn)
+	public Aktivitet(int startUge, int slutUge, Medarbejder medarbejder, String navn)
 	{
+		this.startUge = startUge;
+		this.slutUge = slutUge;
 		this.medarbejder = medarbejder;
 		this.navn = navn;
 	}
 	
-	public Aktivitet(Date start, Date slut, String navn)
+	public Aktivitet(int startUge, int slutUge, String navn)
 	{
-		this.start = start;
-		this.slut = slut;
+		this.startUge = startUge;
+		this.slutUge = slutUge;
 		this.navn = navn;
 	}
 	
@@ -48,8 +50,6 @@ public class Aktivitet {
 	
 	public void SaetBudgetteretTid(Date start, Date slut)
 	{
-		this.start = start;
-		this.slut = slut;
 	}
 	
 	public Boolean TilfoejTid(int tid)
@@ -64,14 +64,14 @@ public class Aktivitet {
 	}
 	
 	//Funtioner for returnering af klassevariable
-	public Date Start()
+	public int getStartUge()
 	{
-		return this.start;
+		return this.startUge;
 	}
 	
-	public Date Slut()
+	public int getSlutUge()
 	{
-		return this.slut;
+		return this.slutUge;
 	}
 	
 	public UUID ID()
@@ -79,14 +79,14 @@ public class Aktivitet {
 		return this.id;
 	}
 	
-	public Projekt Projekt()
+	public Projekt getProjekt()
 	{
 		return this.projekt;
 	}
 	
 	public void setProjekt(Projekt p) {
 		// eksisterer projekt
-		this.projekt = projekt;
+		this.projekt = p;
 	}
 	
 	public Medarbejder Medarbejder()

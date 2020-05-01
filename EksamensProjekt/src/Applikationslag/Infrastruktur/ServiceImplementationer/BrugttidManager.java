@@ -42,7 +42,7 @@ public class BrugttidManager implements IBrugttidManager {
 	//@Override
 	public List<Entry<UUID, Brugttid>> AlleBrugttidEfterProjekt(Projekt projekt) {
 		return BrugttidData.Bibliotek.entrySet().stream()
-			.filter(e -> e.getValue().Aktivitet().Projekt().ID() == projekt.ID())
+			.filter(e -> e.getValue().Aktivitet().getProjekt().ID() == projekt.ID())
 			.collect(Collectors.toList());
 	}
 
