@@ -34,8 +34,7 @@ public class aktivitetSteps {
 	
 	@Then("projektet har en ny aktivitet med navnet {string}")
 	public void projektetHarEnNyAktivitetMedNavnet(String aktivitetID) {
-		System.out.println(AktivitetData.Bibliotek.containsValue(aktivitet));
-	    throw new io.cucumber.java.PendingException();
+		assertTrue(AktivitetData.Bibliotek.containsValue(this.aktivitetID));
 	}
 	
 }
