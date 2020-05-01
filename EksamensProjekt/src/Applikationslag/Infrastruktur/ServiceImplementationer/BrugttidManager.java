@@ -1,5 +1,6 @@
 package Applikationslag.Infrastruktur.ServiceImplementationer;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
@@ -44,6 +45,30 @@ public class BrugttidManager implements IBrugttidManager {
 		return BrugttidData.Bibliotek.entrySet().stream()
 			.filter(e -> e.getValue().Aktivitet().getProjekt().ID() == projekt.ID())
 			.collect(Collectors.toList());
+	}
+
+	@Override
+	public List<Entry<UUID, Brugttid>> AlleBrugttidEfterDag(Date dato) {
+		return BrugttidData.Bibliotek.entrySet().stream()
+				.filter(e -> e.getValue().Dato().getDay() == dato.getDay())
+				.collect(Collectors.toList());
+	}
+
+	@Override
+	public List<Entry<UUID, Brugttid>> AlleBrugttidEfterDagOgMedarbejder(Date dato, Medarbejder medarbejder) {
+		return BrugttidData.Bibliotek.entrySet().stream()
+				.filter(e -> e.getValue().Dato().getDay() == dato.getDay())
+				.filter(e -> e.getValue().Medarbejder().Navn() == medarbejder.Navn())
+				.collect(Collectors.toList());
+	}
+	
+	@Override
+	public List<Entry<UUID, Brugttid>> AlleBrugttidEfterAktivitetOgMedarbejder(Aktivitet aktivitet,
+			Medarbejder medarbejder) {
+		return BrugttidData.Bibliotek.entrySet().stream()
+				.filter(e -> e.getValue().Aktivitet().ID() == aktivitet.ID())
+				.filter(e -> e.getValue().Medarbejder().Navn() == medarbejder.Navn())
+				.collect(Collectors.toList());
 	}
 
 }

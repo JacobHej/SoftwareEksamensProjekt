@@ -26,7 +26,7 @@ public class MedarbejderManager implements IMedarbejderManager {
 			return false;
 	}
 
-	//@Override
+	@Override
 	public List<Entry<UUID, Medarbejder>> AlleLedigeMedarbejdere() {
 		return MedarbejderData.Bibliotek.entrySet().stream()
 			.filter(e -> AktiviteterIDenneUge(Dates.getCurrentWeek(), e.getValue()) 

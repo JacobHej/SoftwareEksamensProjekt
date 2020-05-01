@@ -1,11 +1,14 @@
 package Applikationslag.Domaeneklasser;
 
+import java.util.Date;
 import java.util.UUID;
+import java.util;
 
 public class Brugttid {
 	// klassevariable
 	private Aktivitet aktivitet;
 	private Medarbejder medarbejder;
+	private Date dato;
 	private int tid;
 	private UUID id = UUID.randomUUID();
 	
@@ -15,6 +18,15 @@ public class Brugttid {
 		this.aktivitet = aktivitet;
 		this.medarbejder = medarbejder;
 		this.tid = tid;
+		this.dato = new Date();
+	}
+	
+	public Brugttid(Aktivitet aktivitet, Medarbejder medarbejder, int tid, Date dato)
+	{
+		this.aktivitet = aktivitet;
+		this.medarbejder = medarbejder;
+		this.tid = tid;
+		this.dato = dato;
 	}
 	
 	public void AendreTid(int nyTid)
@@ -41,5 +53,10 @@ public class Brugttid {
 	public UUID ID()
 	{
 		return this.id;
+	}
+
+	public Date Dato ()
+	{
+		return this.dato;
 	}
 }
