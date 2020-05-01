@@ -58,14 +58,12 @@ public class aktivitetSteps {
 
 	@When("lederen proever at lave en ny aktivitet med navnet {string}")
 	public void lederenProeverAtLaveEnNyAktivitetMedNavnet(String string) {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+		assertFalse(projekt.tilfoejAktivitet(aktivitet));
 	}
 
 	@Then("Kast exception {string}")
-	public void kastException(String string) {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	public void kastException(String ErrorMessage) {
+//	    throw new IllegalArgumentException(ErrorMessage);
 	}
 	
 }
