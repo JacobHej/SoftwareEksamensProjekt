@@ -15,9 +15,9 @@ public class ProjektManager implements IProjektManager{
 			return false;
 	}
 	
-	public Boolean eksisterer(Projekt Projekt)
+	public Boolean eksisterer(Projekt projekt)
 	{
-		return ProjektData.Bibliotek.containsValue(Projekt);
+		return ProjektData.Bibliotek.containsValue(projekt);
 	}
 
 }

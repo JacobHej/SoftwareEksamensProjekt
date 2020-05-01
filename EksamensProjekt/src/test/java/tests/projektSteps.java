@@ -19,7 +19,7 @@ public class projektSteps {
 	Medarbejder medarbejder;
 	Projekt projekt;
 	IMedarbejderManager medarbejderManager= Managers.FaaMedarbejderManager();
-	IProjektManager prjektManager= Managers.FaaProjektManager();
+	IProjektManager projektManager= Managers.FaaProjektManager();
 	
 	@Given("der er en medarbejder med ID'et {string}")
 	public void derErEnMedarbejderMedIDEt(String MedarbejderID) {
@@ -35,7 +35,8 @@ public class projektSteps {
 	@Then("Der findes et nyt projekt med ID'et {string}")
 	public void derFindesEtNytProjektMedIDEt(String projektID) {
 		assertTrue(projekt.getNavn()==projektID);
-	    assertTrue(ProjektManager.eksisterer(projekt));
+	    assertTrue(projektManager.eksisterer(projekt));
+
 	}
 
 
