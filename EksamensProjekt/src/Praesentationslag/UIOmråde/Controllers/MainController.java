@@ -32,12 +32,17 @@ public class MainController implements Initializable {
 	@FXML private TableColumn<Projekt,String> projektNavnKolonne;
 	
 	//The projekt info
-	@FXML private TextField UgeNrProjektStart;
+	@FXML private TextField ugeNrProjektStart;
 	@FXML private Text projektInfoNavn;
 	
 	//The activity table
 	@FXML private TableView<Aktivitet> aktivitetTabel;
 	@FXML private TableColumn<Aktivitet,String> aktivitetNavnKolonne;
+	
+	//Aktivitet info
+	@FXML private TextField ugeNrAktivitetStart;
+	@FXML private TextField ugeNrAktivitetSlut;
+	@FXML private Text aktivitetInfoNavn;
 	
 	//The add and remove project 
 	@FXML private TextField tilfoejProjektNavn;
@@ -83,6 +88,12 @@ public class MainController implements Initializable {
 
 		//set up the columns in the table
 		aktivitetNavnKolonne.setCellValueFactory(new PropertyValueFactory<Aktivitet, String>("navn"));
+		
+		aktivitetTabel.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+		    if (newSelection != null) {
+		    	aktivitetOnSelectStart();
+		    }
+		});
 	}
 	
 	public ObservableList<Projekt>  getTestProjekter()
@@ -168,9 +179,9 @@ public class MainController implements Initializable {
     private void visProjektInfo(Projekt p) {
     	
     	if(p.getStartUge() != 0) {
-    		UgeNrProjektStart.setText(p.getStartUge()+"");
+    		ugeNrProjektStart.setText(p.getStartUge()+"");
     	}else {
-    		UgeNrProjektStart.setText(null);
+    		ugeNrProjektStart.setText("");
     	}
     	
     	projektInfoNavn.setText(p.getNavn());
@@ -182,13 +193,18 @@ public class MainController implements Initializable {
     private void gemProjektStart(ActionEvent event)
     {
     	Projekt p = projektTabel.getSelectionModel().getSelectedItems().get(0);
-    	if(UgeNrProjektStart.getText()!=null) {
-    		String s = UgeNrProjektStart.getText();
+    	if(ugeNrProjektStart.getText()!=null) {
+    		String s = ugeNrProjektStart.getText();
     		try{
     			int i = Integer.parseInt(s);
-    			p.setStartUge(i);
+    			if(i<=53&&i>0) {
+    				p.setStartUge(i);
+    			}else {
+    				ugeNrProjektStart.setText("Uger går mellem 1 og 53!");
+    			}
+    			
     		}catch(Exception e) {
-    			UgeNrProjektStart.setText("Nummer tak!");
+    			ugeNrProjektStart.setText("Nummer tak!");
     		}
     		
     	}
@@ -224,6 +240,63 @@ public class MainController implements Initializable {
         {
         	alleAktiviteter.remove(a);
         }
+    }
+	
+	@FXML
+    private void gemAktivitetTid(ActionEvent event)
+    {
+    	Aktivitet a = aktivitetTabel.getSelectionModel().getSelectedItems().get(0);
+    	if(ugeNrAktivitetStart.getText()!=null&&ugeNrAktivitetSlut.getText()!=null) {
+    		String start = ugeNrAktivitetStart.getText();
+    		String slut = ugeNrAktivitetSlut.getText();
+    		try{
+    			int istart = Integer.parseInt(start);
+    			int islut = Integer.parseInt(slut);
+    			if(istart<=53&&istart>0 && islut<=53&&islut>0) {
+    				a.setStartUge(istart);
+    				a.setSlutUge(islut);
+    			}else {
+    				ugeNrAktivitetStart.setText("Uger går mellem 1 og 53!");
+    				ugeNrAktivitetSlut.setText("Uger går mellem 1 og 53!");
+    			}
+    			
+    		}catch(Exception e) {
+    			ugeNrAktivitetStart.setText("Nummer tak!");
+    			ugeNrAktivitetSlut.setText("Nummer tak!");
+    		}
+    		
+    	}
+    }
+	
+	private void aktivitetOnSelectStart()
+    {
+        Aktivitet a = aktivitetTabel.getSelectionModel().getSelectedItems().get(0);
+        if(a!=null) {
+        	//System.out.println("Hi, you selected a row");
+            //System.out.println("It contained");
+        	//System.out.println(p.getNavn()+"   "+p.getStartTid());
+            
+            visAktivitetInfo(a);
+        }
+        
+    }
+	
+	private void visAktivitetInfo(Aktivitet a) {
+    	
+		if(a.getStartUge() != 0) {
+    		ugeNrAktivitetStart.setText(a.getStartUge()+"");
+    	}else {
+    		ugeNrAktivitetStart.setText("");
+    	}
+		
+		if(a.getSlutUge() != 0) {
+    		ugeNrAktivitetSlut.setText(a.getSlutUge()+"");
+    	}else {
+    		ugeNrAktivitetSlut.setText("");
+    	}
+    	
+    	aktivitetInfoNavn.setText(a.getNavn());
+    	
     }
 	
 //Brugbare metoder----------------------------------------------------------------------------------------------------------------
