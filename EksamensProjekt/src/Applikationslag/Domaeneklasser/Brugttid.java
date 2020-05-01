@@ -19,7 +19,7 @@ public class Brugttid {
 	
 	public void AendreTid(int nyTid)
 	{
-		
+		this.tid = nyTid;
 	}
 		
 	//Funtioner for returnering af klassevariable
