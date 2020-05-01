@@ -1,4 +1,4 @@
-Feature: tilfoej til til aktivitet
+Feature: tilfoej tid til aktivitet
   Description: Tilfoej tid til en aktivitet
 	Actor: Medarbejder
 
