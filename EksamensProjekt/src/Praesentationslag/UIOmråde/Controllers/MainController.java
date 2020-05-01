@@ -32,8 +32,7 @@ public class MainController implements Initializable {
 	@FXML private TableColumn<Projekt,String> projektNavnKolonne;
 	
 	//The projekt info
-	@FXML private DatePicker projektInfoStartDato;
-	@FXML private DatePicker projektInfoSlutDato;
+	@FXML private TextField UgeNrProjektStart;
 	@FXML private Text projektInfoNavn;
 	
 	//The activity table
@@ -91,7 +90,7 @@ public class MainController implements Initializable {
     {
         ObservableList<Projekt> projects = FXCollections.observableArrayList();
         for(int i = 0;i<10; i++) {
-        	Projekt p = new Projekt("Project nr: "+i,new Date());
+        	Projekt p = new Projekt("Project nr: "+i);
         	p.Gem();
         	projects.add(p);
         	tilfoejAktiviteter(p);
@@ -103,7 +102,7 @@ public class MainController implements Initializable {
 	public void  tilfoejAktiviteter(Projekt p)
     {
         for(int i = 0; i<10; i++) {
-        	Aktivitet a = new Aktivitet(new Date(), new Date(), "Aktivitet "+i+" for "+p.getNavn());
+        	Aktivitet a = new Aktivitet(0, 0, "Aktivitet "+i+" for "+p.getNavn());
         	if(p.tilfoejAktivitet(a)) {
         		//System.out.println("Aktivitet tilføjet");
         	}
@@ -169,16 +168,10 @@ public class MainController implements Initializable {
     //Viser Projekt Info
     private void visProjektInfo(Projekt p) {
     	
-    	if(p.getStartTid()!=null) {
-    		projektInfoStartDato.setValue(utilToLocalDate(p.getStartTid()));
+    	if(p.getStartUge() != 0) {
+    		UgeNrProjektStart.setText(p.getStartUge()+"");
     	}else {
-    		projektInfoStartDato.setValue(null);
-    	}
-    	
-    	if(p.getSlutTid()!=null) {
-    		projektInfoSlutDato.setValue(utilToLocalDate(p.getSlutTid()));
-    	}else {
-    		projektInfoSlutDato.setValue(null);
+    		UgeNrProjektStart.setText(null);
     	}
     	
     	projektInfoNavn.setText(p.getNavn());
@@ -187,14 +180,18 @@ public class MainController implements Initializable {
     
     
     @FXML
-    private void gemProjektTidsperiode(ActionEvent event)
+    private void gemProjektStart(ActionEvent event)
     {
     	Projekt p = projektTabel.getSelectionModel().getSelectedItems().get(0);
-    	if(projektInfoStartDato.getValue()!=null) {
-    		p.setStartTid(localToUtilDate(projektInfoStartDato.getValue()));
-    	}
-    	if(projektInfoSlutDato.getValue()!=null) {
-    		p.setSlutTid(localToUtilDate(projektInfoSlutDato.getValue()));
+    	if(UgeNrProjektStart.getText()!=null) {
+    		String s = UgeNrProjektStart.getText();
+    		try{
+    			int i = Integer.parseInt(s);
+    			p.setStartUge(i);
+    		}catch(Exception e) {
+    			UgeNrProjektStart.setText("Nummer tak!");
+    		}
+    		
     	}
     }
     
@@ -231,13 +228,5 @@ public class MainController implements Initializable {
     }
 	
 //Brugbare metoder----------------------------------------------------------------------------------------------------------------
-	private Date localToUtilDate(LocalDate local) {
-		Date util = new Date(local.getYear()-1900,local.getMonthValue()-1,local.getDayOfMonth());
-		return util;
-	}
 	
-	private LocalDate utilToLocalDate(Date util) {
-		LocalDate local = LocalDate.of(util.getYear()+1900, util.getMonth()+1, util.getDate());
-		return local;
-	}
 }
