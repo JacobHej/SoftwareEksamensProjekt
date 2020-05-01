@@ -36,6 +36,12 @@ public class Projekt {
 		return aktivitetManager.GemAktivitet(aktivitet);
 	}
 	
+	public Boolean tilfoejAktivitet(String navn)
+	{
+		aktivitetManager.GemAktivitet(new Aktivitet(navn,this));
+		return true;
+	}
+	
 	public Boolean tilfoejAktivitet(Date start, Date slut, String navn)
 	{
 		return aktivitetManager.GemAktivitet(new Aktivitet(start,slut,this,navn));

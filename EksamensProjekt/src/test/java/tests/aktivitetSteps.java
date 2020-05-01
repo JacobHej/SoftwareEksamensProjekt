@@ -6,6 +6,7 @@ import static org.junit.Assert.assertTrue;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import Applikationslag.Data.Datavedholdelsesklasser.AktivitetData;
 import Applikationslag.Domaeneklasser.*;
 import java.util.Date;
 
@@ -14,26 +15,26 @@ public class aktivitetSteps {
 	static Projekt projekt;
 	static Aktivitet aktivitet;
 	static Date startdate;
+	String aktivitetID;
 	
-	@Given("der er et projekt med lederen leder med idet id {string}")
-	public void derErEtProjektMedLederenLederMedIdetId(String string) {
-	    //opret projekt med leder "string";
-		Medarbejder leder = new Medarbejder(string);
+	
+	@Given("der er et projekt {string} med lederen {string}")
+	public void derErEtProjektMedLederen(String projektID, String lederID) {
+		leder = new Medarbejder(lederID);
 		Date startDate = new Date();
-		projekt = new Projekt("string", startDate, leder);
-		assertTrue(true); //¯\_(ツ)_/¯
+		projekt = new Projekt(projektID, startDate, leder);
+		//¯\_(ツ)_/¯
 	}
-	
+
 	@When("lederen laver en ny aktivitet med navnet {string}")
-	public void lederenLaverEnNyAktivitetMedNavnet(String string) {
-		Aktivitet aktivitet = new Aktivitet(string,projekt);
-		System.out.println(projekt.tilfoejAktivitet(aktivitet));
-		assertTrue(projekt.tilfoejAktivitet(aktivitet));
+	public void lederenLaverEnNyAktivitetMedNavnet(String aktivitetID) {
+		this.aktivitetID=aktivitetID;
+		assertTrue(projekt.tilfoejAktivitet(this.aktivitetID));
 	}
 	
 	@Then("projektet har en ny aktivitet med navnet {string}")
-	public void projektetHarEnNyAktivitetMedNavnet(String string) {
-		assertTrue(Aktivitet findes i projektet)
+	public void projektetHarEnNyAktivitetMedNavnet(String aktivitetID) {
+		System.out.println(AktivitetData.Bibliotek.containsValue(aktivitet));
 	    throw new io.cucumber.java.PendingException();
 	}
 	
