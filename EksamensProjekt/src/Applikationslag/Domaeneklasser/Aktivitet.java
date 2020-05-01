@@ -84,6 +84,10 @@ public class Aktivitet {
 		return this.projekt;
 	}
 	
+	public void setProjekt(Projekt p) {
+		this.projekt = projekt;
+	}
+	
 	public Medarbejder Medarbejder()
 	{
 		return this.medarbejder;

@@ -33,17 +33,21 @@ public class Projekt {
 	
 	public Boolean tilfoejAktivitet(Aktivitet aktivitet)
 	{
+		aktivitet.setProjekt(this);
 		return aktivitetManager.GemAktivitet(aktivitet);
 	}
 	
 	public Boolean tilfoejAktivitet(String navn)
 	{
-		return aktivitetManager.GemAktivitet(new Aktivitet(navn,this));	
+		Aktivitet a = new Aktivitet(navn,this);
+		aktivitetManager.GemAktivitet(a);
+		return true;
 	}
 	
 	public Boolean tilfoejAktivitet(Date start, Date slut, String navn)
 	{
-		return aktivitetManager.GemAktivitet(new Aktivitet(start,slut,this,navn));
+		Aktivitet a = new Aktivitet(start,slut,this,navn);
+		return aktivitetManager.GemAktivitet(a);
 	}
 
 	public Boolean Gem()
