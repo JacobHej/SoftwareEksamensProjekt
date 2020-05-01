@@ -85,7 +85,7 @@ public class Aktivitet {
 	}
 	
 	public void setProjekt(Projekt p) {
-		this.projekt = projekt;
+		this.projekt = p;
 	}
 	
 	public Medarbejder Medarbejder()

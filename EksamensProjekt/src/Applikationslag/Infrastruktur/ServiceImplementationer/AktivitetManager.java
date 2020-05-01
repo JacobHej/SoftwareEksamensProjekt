@@ -17,11 +17,14 @@ public class AktivitetManager implements IAktivitetManager{
 	public Boolean GemAktivitet(Aktivitet aktivitet) {
 		if(aktivitet.Projekt() == null)
 			return false;
-		if (!AktivitetData.Bibliotek.containsValue(aktivitet) 
-				&& ProjektData.Bibliotek.containsValue(aktivitet.Projekt())
-				&& (MedarbejderData.Bibliotek.containsKey(aktivitet.Medarbejder())
-						|| aktivitet.Medarbejder() == null))
-			return (AktivitetData.Bibliotek.put(aktivitet.ID(), aktivitet) == null);
+		if ((!AktivitetData.Bibliotek.containsValue(aktivitet)) 
+				&& ProjektData.Bibliotek.containsValue(aktivitet.Projekt()))
+//				&& (MedarbejderData.Bibliotek.containsKey(aktivitet.Medarbejder())
+//				|| aktivitet.Medarbejder() == null))
+		{
+			AktivitetData.Bibliotek.put(aktivitet.ID(), aktivitet);
+			return true;
+		}
 		else
 			return false;
 	}

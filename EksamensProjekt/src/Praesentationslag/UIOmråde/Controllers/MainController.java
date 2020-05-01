@@ -98,11 +98,14 @@ public class MainController implements Initializable {
         return projects;
     }
 	
+	//Dummy date aktiviteter
 	public void  tilfoejAktiviteter(Projekt p)
     {
         for(int i = 0; i<10; i++) {
         	Aktivitet a = new Aktivitet(new Date(), new Date(), "Aktivitet "+i+" for "+p.getNavn());
-        	p.tilfoejAktivitet(a);
+        	if(p.tilfoejAktivitet(a)) {
+        		System.out.println("Aktivitet tilføjet");
+        	}
         }
     }
 	
