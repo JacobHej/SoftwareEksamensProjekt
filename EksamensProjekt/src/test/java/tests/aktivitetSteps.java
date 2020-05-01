@@ -69,7 +69,7 @@ public class aktivitetSteps {
 	public void derErEnMedarbejderMedIDEtOgEtProjektMedNavnet(String MedarbejderID, String ProjektNavn) {
 	    this.medarbejder = new Medarbejder (MedarbejderID);
 	    this.medarbejder.Gem();
-	    this.projekt= new Projekt (ProjektNavn);
+	    this.projekt = new Projekt (ProjektNavn);
 	    this.projekt.Gem();
 	}
 

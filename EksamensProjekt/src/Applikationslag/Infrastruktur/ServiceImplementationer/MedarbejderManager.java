@@ -33,6 +33,7 @@ public class MedarbejderManager implements IMedarbejderManager {
 	@Override
 	public long AktiviteterIDenneUge(int week, Medarbejder medarbejder) {
 		return AktivitetData.Bibliotek.entrySet().stream()
+			.filter(e -> e.getValue().Medarbejder() != null)
 			.filter(e -> e.getValue().Medarbejder().ID() == medarbejder.ID())
 			.filter(e -> e.getValue().getStartUge() <= week
 					&& e.getValue().getSlutUge() >= week)
