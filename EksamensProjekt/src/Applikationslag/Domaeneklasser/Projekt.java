@@ -22,8 +22,6 @@ public class Projekt {
 	{
 		this.navn = navn;
 		this.startTid = startTid;
-		
-		projektManager.GemProjekt(this);
 	}
 	
 	public Projekt(String navn, Date startTid, Medarbejder leder)
@@ -31,31 +29,23 @@ public class Projekt {
 		this.navn = navn;
 		this.startTid = startTid;
 		this.leder = leder;
-		
-		projektManager.GemProjekt(this);
 	}
 	
 	public Boolean tilfoejAktivitet(Aktivitet aktivitet)
 	{
-		if (!aktivitetManager.eksisterer(aktivitet))
-		{
-			aktivitetManager.GemAktivitet(aktivitet);
-			return true;
-		}
-		return false;
+		return aktivitetManager.GemAktivitet(aktivitet);
 	}
 	
 	public Boolean tilfoejAktivitet(Date start, Date slut, String navn)
 	{
-		if (!aktivitetManager.eksisterer(new Aktivitet(start,slut,this,navn)))
-		{
-			aktivitetManager.GemAktivitet(new Aktivitet(start,slut,this,navn));
-			return true;
-		}
-		return false;
-		
+		return aktivitetManager.GemAktivitet(new Aktivitet(start,slut,this,navn));
 	}
 
+	public Boolean Gem()
+	{
+		return projektManager.GemProjekt(this);
+	}
+	
 	public List<Entry<UUID, Aktivitet>> getAlleAktiviteter()
 	{
 		return aktivitetManager.AlleAktiviteterEfterProjekt(this);
