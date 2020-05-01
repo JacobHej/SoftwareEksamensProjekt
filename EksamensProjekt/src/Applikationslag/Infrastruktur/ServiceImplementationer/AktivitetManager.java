@@ -4,7 +4,6 @@ import Applikationslag.Domaeneklasser.Aktivitet;
 import Applikationslag.Domaeneklasser.Projekt;
 import Applikationslag.Infrastruktur.ServiceInterfaces.IAktivitetManager;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.UUID;
@@ -16,13 +15,12 @@ public class AktivitetManager implements IAktivitetManager{
 
 	//@Override
 	public Boolean GemAktivitet(Aktivitet aktivitet) {
-		AktivitetData.Bibliotek.put(aktivitet.ID(), aktivitet);
-		return true;
-	}
-
-	//@Override
-	public Boolean eksisterer(Aktivitet aktivitet) {
-		return AktivitetData.Bibliotek.containsValue(aktivitet);
+		if (!AktivitetData.Bibliotek.containsValue(aktivitet) 
+				&& ProjektData.Bibliotek.containsValue(aktivitet.Projekt())
+				&& MedarbejderData.Bibliotek.containsKey(aktivitet.Medarbejder()))
+			return (AktivitetData.Bibliotek.put(aktivitet.ID(), aktivitet) == null);
+		else
+			return false;
 	}
 
 	//@Override

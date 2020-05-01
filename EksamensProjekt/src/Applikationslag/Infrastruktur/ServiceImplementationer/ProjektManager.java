@@ -8,8 +8,10 @@ public class ProjektManager implements IProjektManager{
 
 	//@Override
 	public Boolean GemProjekt(Projekt projekt) {
-		ProjektData.Bibliotek.put(projekt.ID(), projekt);
-		return true;
+		if (!ProjektData.Bibliotek.containsValue(projekt))
+			return (ProjektData.Bibliotek.put(projekt.ID(), projekt) == null);
+		else 
+			return false;
 	}
 
 }

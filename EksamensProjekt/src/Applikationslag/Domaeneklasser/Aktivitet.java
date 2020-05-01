@@ -28,8 +28,6 @@ public class Aktivitet {
 		this.projekt = projekt;
 		this.medarbejder = medarbejder;
 		this.navn = navn;
-		
-		aktivitetManager.GemAktivitet(this);
 	}
 	
 	public Aktivitet(Date start, Date slut, Projekt projekt, String navn)
@@ -38,8 +36,6 @@ public class Aktivitet {
 		this.slut = slut;
 		this.projekt = projekt;
 		this.navn = navn;
-		
-		aktivitetManager.GemAktivitet(this);
 	}
 	
 	public Aktivitet(String navn, Projekt projekt)
@@ -48,6 +44,11 @@ public class Aktivitet {
 		this.navn = navn;
 		
 		aktivitetManager.GemAktivitet(this);
+	}
+	
+	public Boolean Gem()
+	{
+		return aktivitetManager.GemAktivitet(this);
 	}
 	
 	public void SaetMedarbejder(Medarbejder nyMedarbejder)
