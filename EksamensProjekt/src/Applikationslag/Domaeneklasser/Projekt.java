@@ -13,7 +13,7 @@ public class Projekt {
 	private UUID id = UUID.randomUUID();
 	private Medarbejder leder;
 	private String navn;
-	private Date startTid;
+	private Date startTid, slutTid;
 	
 	private IAktivitetManager aktivitetManager = Managers.FaaAktivitetManager();
 	private IProjektManager projektManager = Managers.FaaProjektManager();
@@ -67,13 +67,6 @@ public class Projekt {
 		this.leder = leder;
 	}
 	
-	public void setStartTid(Date startTid)
-	{
-		this.startTid = startTid;
-	}
-	
-	
-	
 	public UUID ID()
 	{
 		return this.id;
@@ -92,9 +85,24 @@ public class Projekt {
 	public void setNavn(String navn) {
 		this.navn=navn;
 	}
+	
+	public void setStartTid(Date startTid)
+	{
+		this.startTid = startTid;
+	}
 
 	public Date getStartTid()
 	{
 		return this.startTid;
+	}
+	
+	public void setSlutTid(Date startTid)
+	{
+		this.slutTid = startTid;
+	}
+
+	public Date getSlutTid()
+	{
+		return this.slutTid;
 	}
 }
