@@ -10,15 +10,17 @@ import Applikationslag.Domaeneklasser.*;
 import java.util.Date;
 
 public class aktivitetSteps {
-	Projekt projekt;
-	Aktivitet aktivitet;
+	static Medarbejder leder;
+	static Projekt projekt;
+	static Aktivitet aktivitet;
+	static Date startdate;
 	
 	@Given("der er et projekt med lederen leder med idet id {string}")
 	public void derErEtProjektMedLederenLederMedIdetId(String string) {
 	    //opret projekt med leder "string";
-		Medarbejder leder = new Medarbejder();
+		Medarbejder leder = new Medarbejder(string);
 		Date startDate = new Date();
-		Projekt projekt = new Projekt("string", startDate, leder);
+		new Projekt("string", startDate, leder);
 		assertTrue(true); //¯\_(ツ)_/¯
 	}
 	
