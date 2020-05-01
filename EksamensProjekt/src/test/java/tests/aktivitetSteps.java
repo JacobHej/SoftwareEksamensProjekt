@@ -23,8 +23,7 @@ public class aktivitetSteps {
 	public void derErEtProjektMedLederen(String projektID, String lederID) {
 		this.projektID=projektID;
 		leder = new Medarbejder(lederID);
-		Date startDate = new Date();
-		projekt = new Projekt(projektID, startDate, leder);
+		projekt = new Projekt(projektID);
 		//¯\_(ツ)_/¯
 	}
 
@@ -36,7 +35,6 @@ public class aktivitetSteps {
 	
 	@Then("projektet {string} har en ny aktivitet med navnet {string}")
 	public void projektetHarEnNyAktivitetMedNavnet(String projektID, String aktivitetID) {
-	    // Write code here that turns the phrase above into concrete actions
 	    throw new io.cucumber.java.PendingException();
 	}
 	
