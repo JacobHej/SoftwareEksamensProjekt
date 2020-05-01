@@ -2,8 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -32,7 +30,6 @@
                   <HBox prefHeight="5.0" prefWidth="301.0" spacing="10.0">
                      <children>
                         <TextField fx:id="tilfoejProjektNavn" promptText="Projekt navn" />
-                        <DatePicker fx:id="tilfoejProjektDato" prefHeight="25.0" prefWidth="143.0" />
                      </children>
                      <padding>
                         <Insets left="10.0" right="10.0" />
@@ -53,24 +50,17 @@
                         <Font size="18.0" />
                      </font>
                   </Text>
-                  <SplitPane dividerPositions="0.13131313131313133" orientation="VERTICAL" prefHeight="138.0" prefWidth="200.0">
-                    <items>
-                      <AnchorPane minHeight="25.0" minWidth="0.0" prefHeight="25.0" prefWidth="160.0">
-                           <children>
-                              <Text layoutX="-1.0" layoutY="-23.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tidsperiode" textAlignment="CENTER" wrappingWidth="197.9999914765358" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                           </children>
-                        </AnchorPane>
-                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="98.0" prefWidth="198.0">
-                           <children>
-                              <DatePicker fx:id="projektInfoStartDato" layoutX="60.0" layoutY="2.0" prefHeight="16.0" prefWidth="138.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0" />
-                              <DatePicker fx:id="projektInfoSlutDato" layoutX="55.0" layoutY="41.0" prefHeight="25.0" prefWidth="138.0" AnchorPane.rightAnchor="5.0" />
-                              <Text layoutX="14.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start" />
-                              <Text layoutX="15.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Slut" />
-                              <Button layoutX="47.0" layoutY="72.0" mnemonicParsing="false" onAction="#gemProjektTidsperiode" text="Gem tidsperiode" textAlignment="CENTER" />
-                           </children>
-                        </AnchorPane>
-                    </items>
-                  </SplitPane>
+                  <AnchorPane prefHeight="59.0" prefWidth="200.0">
+                     <children>
+                        <TextField fx:id="UgeNrProjektStart" layoutX="55.0" layoutY="5.0" prefHeight="25.0" prefWidth="131.0" promptText="UgeNr for projekt start">
+                           <font>
+                              <Font size="10.0" />
+                           </font>
+                        </TextField>
+                        <Text layoutX="14.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start" />
+                        <Button layoutX="66.0" layoutY="38.0" mnemonicParsing="false" onAction="#gemProjektStart" text="Gem start" textAlignment="CENTER" />
+                     </children>
+                  </AnchorPane>
                </children>
             </VBox>
             <VBox alignment="TOP_CENTER" prefHeight="500.0" prefWidth="200.0">

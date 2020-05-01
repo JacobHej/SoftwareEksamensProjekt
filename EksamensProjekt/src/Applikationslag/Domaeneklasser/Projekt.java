@@ -97,7 +97,7 @@ public class Projekt {
 		this.navn=navn;
 	}
 	
-	public void setStartTid(Date startTid)
+	public void setStartUge(int startUge)
 	{
 		this.startUge = startUge;
 	}
