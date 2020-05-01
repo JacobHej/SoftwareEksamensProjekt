@@ -133,17 +133,22 @@ public class MainController implements Initializable {
         {
             allProjects.remove(p);
         }
+        
+        projectOnSelectStart();
     }
 	
     private void projectOnSelectStart()
     {
-        System.out.println("Hi, you selected a row");
-        System.out.println("It contained");
         Projekt p = projektTabel.getSelectionModel().getSelectedItems().get(0);
-        System.out.println(p.getNavn()+"   "+p.getStartTid());
+        if(p!=null) {
+        	System.out.println("Hi, you selected a row");
+            System.out.println("It contained");
+        	System.out.println(p.getNavn()+"   "+p.getStartTid());
+            
+            visAktiviteter(p);
+            visProjektInfo(p);
+        }
         
-        visAktiviteter(p);
-        visProjektInfo(p);
     }
     
     //Viser aktiviteter for valgte projekt
@@ -160,7 +165,14 @@ public class MainController implements Initializable {
     //Viser Projekt Info
     private void visProjektInfo(Projekt p) {
     	
-    	projektInfoStartDato.setValue(utilToLocalDate(p.getStartTid()));
+    	if(p.getStartTid()!=null) {
+    		projektInfoStartDato.setValue(utilToLocalDate(p.getStartTid()));
+    	}
+    	
+    	if(p.getSlutTid()!=null) {
+    		projektInfoSlutDato.setValue(utilToLocalDate(p.getSlutTid()));
+    	}
+    	
     }
     
 //Aktivitet metoder -------------------------------------------------------------------------------------------------------------------

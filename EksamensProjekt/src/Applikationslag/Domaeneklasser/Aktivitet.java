@@ -42,8 +42,6 @@ public class Aktivitet {
 	{
 		this.projekt = projekt;
 		this.navn = navn;
-		
-		aktivitetManager.GemAktivitet(this);
 	}
 	
 	public Boolean Gem()
