@@ -9,6 +9,7 @@ import io.cucumber.java.en.When;
 import Applikationslag.Data.Datavedholdelsesklasser.AktivitetData;
 import Applikationslag.Domaeneklasser.*;
 import Applikationslag.Infrastruktur.ServiceInterfaces.IAktivitetManager;
+import Applikationslag.Infrastruktur.ServiceInterfaces.IBrugttidManager;
 import Applikationslag.Redskaber.Managers;
 
 import java.util.Date;
@@ -19,11 +20,10 @@ public class aktivitetSteps {
 	Projekt projekt;
 	Aktivitet aktivitet;
 	IAktivitetManager aktivitetManager= Managers.FaaAktivitetManager();
-	
+	IBrugttidManager brugttidManager= Managers.FaaBrugttidManager();
 	
 	@Given("der er et projekt {string} med lederen {string}")
 	public void derErEtProjektMedLederen(String projektNavn, String lederID) {
-		//this.projektNavn=projektNavn;
 		this.leder = new Medarbejder(lederID);
 		this.projekt = new Projekt(projektNavn);
 		this.projekt.Gem();
@@ -87,22 +87,20 @@ public class aktivitetSteps {
 	} 
 	
 	@Given("Aktiviteten {string} har mere end {int} ubrugte budgetterede timer")
-	public void aktivitetenHarMereEndUbrugteBudgetteredeTimer(String string, Integer int1) {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	public void aktivitetenHarMereEndUbrugteBudgetteredeTimer(String AktivitetID, Integer BudgetteretTid) {
+	    this.aktivitet.SaetBudgetteretTid(BudgetteretTid);
 	}
-//	
-//	@When("Medarbejderen {string} tilfoejer {string} timer til aktiviteten {string}")
-//	public void medarbejderenTilfoejerTimerTilAktiviteten(String string, String string2, String string3) {
-//	    // this.aktivitet.TilfoejTid(tid, medarbejder)
-//	    throw new io.cucumber.java.PendingException();
-//	}
-
+	
+	@When("Medarbejderen {string} tilfoejer {int} timer til aktiviteten {string}")
+	public void medarbejderenTilfoejerTimerTilAktiviteten(String MedarbejderID, Integer int1, String AktivitetID) {
+		System.out.println(this.aktivitet.TilfoejTid(int1));
+		assertTrue(this.aktivitet.TilfoejTid(int1, this.medarbejder));
+	}
 
 //	@Then("Medarbejderens timer er blevet noteret")
 //	public void medarbejderensTimerErBlevetNoteret() {
-//	    // Write code here that turns the phrase above into concrete actions
+//	    System.out.println(this.brugttidManager.AlleBrugttidEfterAktivitetOgMedarbejder(this.aktivitet, this.medarbejder));
 //	    throw new io.cucumber.java.PendingException();
 //	}
-	
+//	
 }

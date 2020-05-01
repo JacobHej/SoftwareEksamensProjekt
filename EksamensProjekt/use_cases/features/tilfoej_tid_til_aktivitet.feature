@@ -7,7 +7,7 @@ Scenario: Medarbejder tilfoejer arbejdstimer til aktivitet som har nok budgetter
     And Projektet "ProjektNavn" har en aktivitet "AktivitetID"
     And Medarbejderen "MedarbejderID" arbejder paa aktiviteten "AktivitetID"
     And Aktiviteten "AktivitetID" har mere end 2 ubrugte budgetterede timer
-    When Medarbejderen "MedarbejderID" tilfoejer "2" timer til aktiviteten "AktivitetID"
+    When Medarbejderen "MedarbejderID" tilfoejer 2 timer til aktiviteten "AktivitetID"
     Then Medarbejderens timer er blevet noteret
     
 
