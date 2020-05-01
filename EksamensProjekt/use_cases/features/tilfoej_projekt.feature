@@ -6,3 +6,9 @@ Scenario: Medarbejder opretter nyt projekt
     Given der er en medarbejder med ID'et "MedarbejderID"
     When Medarbejderen opretter et projekt med ID'et "ProjektID"
     Then Der findes et nyt projekt med ID'et "ProjektID"
+    
+    
+Scenario: Medarbejder forsoeger at oprette projekt som allerede findes
+    Given der er en medarbejder med ID'et "MedarbejderID" og et projekt med ID'et "ProjektID"
+    When Medarbejderen opretter et projekt med ID'et "ProjektID"
+    Then Kast exception "Projekt med dette ID findes allerede!"
