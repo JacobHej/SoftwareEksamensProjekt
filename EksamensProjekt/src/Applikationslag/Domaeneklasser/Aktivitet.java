@@ -23,8 +23,6 @@ public class Aktivitet {
 	//Metoder
 	public Aktivitet(Date start, Date slut, Medarbejder medarbejder, String navn)
 	{
-		this.start = start;
-		this.slut = slut;
 		this.medarbejder = medarbejder;
 		this.navn = navn;
 	}
@@ -44,12 +42,14 @@ public class Aktivitet {
 	
 	public void SaetMedarbejder(Medarbejder nyMedarbejder)
 	{
+		// tjek for timer/aktiviteter
 		this.medarbejder = nyMedarbejder;
 	}
 	
 	public void SaetBudgetteretTid(Date start, Date slut)
 	{
-		
+		this.start = start;
+		this.slut = slut;
 	}
 	
 	public Boolean TilfoejTid(int tid)
@@ -85,6 +85,7 @@ public class Aktivitet {
 	}
 	
 	public void setProjekt(Projekt p) {
+		// eksisterer projekt
 		this.projekt = projekt;
 	}
 	

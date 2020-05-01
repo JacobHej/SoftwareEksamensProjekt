@@ -53,8 +53,17 @@ public class MainController implements Initializable {
 	//Initialize ----------------------------------------------------------------------------------------------------------
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		Projekt p = new Projekt("Project nr: "+1,new Date());
+		Aktivitet a = new Aktivitet(new Date(), new Date(), "Aktivitet "+1+" for "+p.getNavn());
+		Aktivitet b = new Aktivitet(new Date(), new Date(), "Aktivitet "+2+" for "+p.getNavn());
+		p.tilfoejAktivitet(a);
+		p.tilfoejAktivitet(b);
 		
-		
+		Projekt q = new Projekt("Project nr: "+2,new Date());
+		Aktivitet a = new Aktivitet(new Date(), new Date(), "Aktivitet "+1+" for "+p.getNavn());
+		Aktivitet b = new Aktivitet(new Date(), new Date(), "Aktivitet "+2+" for "+p.getNavn());
+		p.tilfoejAktivitet(a);
+		p.tilfoejAktivitet(b);
 		
 		System.out.println("Initializing main Controller");
 		

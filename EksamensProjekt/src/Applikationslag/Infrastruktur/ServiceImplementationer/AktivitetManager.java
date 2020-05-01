@@ -18,9 +18,7 @@ public class AktivitetManager implements IAktivitetManager{
 		if(aktivitet.Projekt() == null)
 			return false;
 		if (!AktivitetData.Bibliotek.containsValue(aktivitet) 
-				&& ProjektData.Bibliotek.containsValue(aktivitet.Projekt())
-				&& (MedarbejderData.Bibliotek.containsKey(aktivitet.Medarbejder())
-						|| aktivitet.Medarbejder() == null))
+				&& ProjektData.Bibliotek.containsValue(aktivitet.Projekt()))
 			return (AktivitetData.Bibliotek.put(aktivitet.ID(), aktivitet) == null);
 		else
 			return false;
