@@ -10,4 +10,6 @@ public interface IAktivitetManager {
 	public Boolean GemAktivitet(Aktivitet aktivitet);
 	
 	public List<Entry<UUID, Aktivitet>> AlleAktiviteterEfterProjekt(Projekt projekt);
+	
+	public Boolean eksisterer(Aktivitet aktivitet);
 }

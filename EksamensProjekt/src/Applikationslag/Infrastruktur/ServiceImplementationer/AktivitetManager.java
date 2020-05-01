@@ -30,5 +30,10 @@ public class AktivitetManager implements IAktivitetManager{
 			.filter(e -> e.getValue().getProjekt().getNavn() == projekt.getNavn())
 			.collect(Collectors.toList());
 	}
+	
+	public Boolean eksisterer(Aktivitet aktivitet)
+	{
+		return AktivitetData.Bibliotek.containsValue(aktivitet);
+	}
 
 }
