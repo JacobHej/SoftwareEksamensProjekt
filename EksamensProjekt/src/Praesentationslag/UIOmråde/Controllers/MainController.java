@@ -47,7 +47,7 @@ public class MainController implements Initializable {
 	@FXML private TextField tilfoejAktivitetNavn;
 	
 	//Variables used in initialize and smaller tests
-	private Projekt test;
+	//empty for now
 	
 	
 	//Initialize ----------------------------------------------------------------------------------------------------------
@@ -89,10 +89,9 @@ public class MainController implements Initializable {
 	public ObservableList<Projekt>  getTestProjekter()
     {
         ObservableList<Projekt> projects = FXCollections.observableArrayList();
-        test = new Projekt("Stater",new Date());
-        projects.add(test);
         for(int i = 0;i<10; i++) {
         	Projekt p = new Projekt("Project nr: "+i,new Date());
+        	p.Gem();
         	projects.add(p);
         	tilfoejAktiviteter(p);
         }
@@ -102,7 +101,8 @@ public class MainController implements Initializable {
 	public void  tilfoejAktiviteter(Projekt p)
     {
         for(int i = 0; i<10; i++) {
-        	Aktivitet a = new Aktivitet(new Date(), new Date(),p, "Aktivitet "+i+" for "+p.getNavn());
+        	Aktivitet a = new Aktivitet(new Date(), new Date(), "Aktivitet "+i+" for "+p.getNavn());
+        	p.tilfoejAktivitet(a);
         }
     }
 	
@@ -183,7 +183,7 @@ public class MainController implements Initializable {
 		System.out.println("You tried to AddActivity");
         Projekt p = projektTabel.getSelectionModel().getSelectedItems().get(0);
         if(p!=null) {
-        	Aktivitet a = new Aktivitet(tilfoejAktivitetNavn.getText(),p);
+        	Aktivitet a = new Aktivitet(tilfoejAktivitetNavn.getText());
         	p.tilfoejAktivitet(a);
         	aktivitetTabel.getItems().add(a);
         }

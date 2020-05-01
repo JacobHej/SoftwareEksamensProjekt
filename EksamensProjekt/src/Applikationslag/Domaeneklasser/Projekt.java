@@ -40,6 +40,10 @@ public class Projekt {
 	public Boolean tilfoejAktivitet(String navn)
 	{
 		Aktivitet a = new Aktivitet(navn);
+<<<<<<< HEAD
+=======
+		a.setProjekt(this);
+>>>>>>> bfca7f14f5268f62a7191cd908701dba8ae955eb
 		aktivitetManager.GemAktivitet(a);
 		return true;
 	}
@@ -47,6 +51,10 @@ public class Projekt {
 	public Boolean tilfoejAktivitet(Date start, Date slut, String navn)
 	{
 		Aktivitet a = new Aktivitet(start,slut,navn);
+<<<<<<< HEAD
+=======
+		a.setProjekt(this);
+>>>>>>> bfca7f14f5268f62a7191cd908701dba8ae955eb
 		return aktivitetManager.GemAktivitet(a);
 	}
 
