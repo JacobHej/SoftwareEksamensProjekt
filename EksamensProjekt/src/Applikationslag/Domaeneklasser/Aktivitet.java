@@ -19,6 +19,7 @@ public class Aktivitet {
 	private Medarbejder medarbejder;
 	private String navn;
 	private Boolean faerdig;
+	private int budgetTid;
 	
 	private IAktivitetManager aktivitetManager = Managers.FaaAktivitetManager();
 	private IBrugttidManager brugttidManager = Managers.FaaBrugttidManager();
@@ -58,8 +59,9 @@ public class Aktivitet {
 			return false;
 	}
 	
-	public void SaetBudgetteretTid()
+	public void SaetBudgetteretTid(int budgetTid)
 	{
+		this.budgetTid = budgetTid;
 	}
 	
 	public Boolean TilfoejTid(int tid)
