@@ -42,8 +42,6 @@ public class Aktivitet {
 	{
 		this.projekt = projekt;
 		this.navn = navn;
-		
-		aktivitetManager.GemAktivitet(this);
 	}
 	
 	public Boolean Gem()
@@ -56,7 +54,7 @@ public class Aktivitet {
 		
 	}
 	
-	public void SeatBudgetteretTid(Date start, Date slut)
+	public void SaetBudgetteretTid(Date start, Date slut)
 	{
 		
 	}

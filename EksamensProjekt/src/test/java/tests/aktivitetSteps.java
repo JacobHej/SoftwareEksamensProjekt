@@ -16,10 +16,12 @@ public class aktivitetSteps {
 	static Aktivitet aktivitet;
 	static Date startdate;
 	String aktivitetID;
+	String projektID;
 	
 	
 	@Given("der er et projekt {string} med lederen {string}")
 	public void derErEtProjektMedLederen(String projektID, String lederID) {
+		this.projektID=projektID;
 		leder = new Medarbejder(lederID);
 		Date startDate = new Date();
 		projekt = new Projekt(projektID, startDate, leder);
@@ -32,9 +34,10 @@ public class aktivitetSteps {
 		assertTrue(projekt.tilfoejAktivitet(this.aktivitetID));
 	}
 	
-	@Then("projektet har en ny aktivitet med navnet {string}")
-	public void projektetHarEnNyAktivitetMedNavnet(String aktivitetID) {
-		assertTrue(AktivitetData.Bibliotek.containsValue(this.aktivitetID));
+	@Then("projektet {string} har en ny aktivitet med navnet {string}")
+	public void projektetHarEnNyAktivitetMedNavnet(String projektID, String aktivitetID) {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new io.cucumber.java.PendingException();
 	}
 	
 }
