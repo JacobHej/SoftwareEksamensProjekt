@@ -44,7 +44,7 @@ public class Aktivitet {
 	
 	public void SaetMedarbejder(Medarbejder nyMedarbejder)
 	{
-		// tjek hvor mange aktiviteter medarbejderen har
+		this.medarbejder = nyMedarbejder;
 	}
 	
 	public void SaetBudgetteretTid(Date start, Date slut)
