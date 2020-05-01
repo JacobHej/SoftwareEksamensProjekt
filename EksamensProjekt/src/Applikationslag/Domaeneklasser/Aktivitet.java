@@ -79,9 +79,19 @@ public class Aktivitet {
 		return this.startUge;
 	}
 	
+	public void setStartUge(int startUge)
+	{
+		this.startUge = startUge;
+	}
+	
 	public int getSlutUge()
 	{
 		return this.slutUge;
+	}
+	
+	public void setSlutUge(int slutUge)
+	{
+		this.slutUge = slutUge;
 	}
 	
 	public UUID ID()
