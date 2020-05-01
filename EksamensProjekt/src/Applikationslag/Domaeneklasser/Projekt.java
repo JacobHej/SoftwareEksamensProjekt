@@ -93,7 +93,7 @@ public class Projekt {
 		this.navn=navn;
 	}
 
-	public Date startTid()
+	public Date getStartTid()
 	{
 		return this.startTid;
 	}

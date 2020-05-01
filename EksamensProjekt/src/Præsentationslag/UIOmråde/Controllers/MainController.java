@@ -31,6 +31,10 @@ public class MainController implements Initializable {
 	@FXML private TableView<Projekt> projektTabel;
 	@FXML private TableColumn<Projekt,String> projektNavnKolonne;
 	
+	//The projekt info
+	@FXML private DatePicker projektInfoStartDato;
+	@FXML private DatePicker projektInfoSlutDato;
+	
 	//The activity table
 	@FXML private TableView<Aktivitet> aktivitetTabel;
 	@FXML private TableColumn<Aktivitet,String> aktivitetNavnKolonne;
@@ -45,6 +49,8 @@ public class MainController implements Initializable {
 	//Variables used in initialize and smaller tests
 	private Projekt test;
 	
+	
+	//Initialize ----------------------------------------------------------------------------------------------------------
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
@@ -65,9 +71,6 @@ public class MainController implements Initializable {
         
         //load dummy data
 		projektTabel.setItems(getTestProjekter());
-        
-        //This will allow the table to select multiple rows at once
-		projektTabel.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		
 		//adds a listener for when selecting on the table
 		projektTabel.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
@@ -103,21 +106,17 @@ public class MainController implements Initializable {
         }
     }
 	
+	
+//Projekt metoder ----------------------------------------------------------------------------------------------------------
 	@FXML
     private void tilfoejProjekt(ActionEvent event)
     {
 		LocalDate dato = tilfoejProjektDato.getValue();
-		Projekt newProject = new Projekt(tilfoejProjektNavn.getText(),new Date(dato.getYear()-1900,dato.getMonthValue()-1,dato.getDayOfMonth()));
+		Projekt newProject = new Projekt(tilfoejProjektNavn.getText(),localToUtilDate(dato));
 
 		//Get all the items from the table as a list, then add the new person to
 		//the list
 		projektTabel.getItems().add(newProject);
-    }
-	
-	@FXML
-    private void tilfoejAktivitet(ActionEvent event)
-    {
-		System.out.println("You tried to AddActivity");
     }
 	
 	@FXML
@@ -136,33 +135,73 @@ public class MainController implements Initializable {
         }
     }
 	
-	@FXML
-    private void fjernValgteAktiviteter(ActionEvent event)
-    {
-        System.out.println("You tried to remove activity");
-    }
-	
-	
-	
     private void projectOnSelectStart()
     {
         System.out.println("Hi, you selected a row");
-        ObservableList<Projekt> selectedRows;
-        selectedRows = projektTabel.getSelectionModel().getSelectedItems();
         System.out.println("It contained");
-        Projekt p = selectedRows.get(0);
-        System.out.println(p.getNavn()+"   "+p.startTid());
+        Projekt p = projektTabel.getSelectionModel().getSelectedItems().get(0);
+        System.out.println(p.getNavn()+"   "+p.getStartTid());
         
-        ObservableList<Aktivitet> aktiviteter = FXCollections.observableArrayList();
+        visAktiviteter(p);
+        visProjektInfo(p);
+    }
+    
+    //Viser aktiviteter for valgte projekt
+    private void visAktiviteter(Projekt p) {
+    	
+    	ObservableList<Aktivitet> aktiviteter = FXCollections.observableArrayList();
         aktivitetTabel.setItems(aktiviteter);
         
         for(Entry<UUID, Aktivitet> e : p.getAlleAktiviteter()) {
         	aktivitetTabel.getItems().add(e.getValue());
         }
-        
+    }
+    
+    //Viser Projekt Info
+    private void visProjektInfo(Projekt p) {
+    	
+    	projektInfoStartDato.setValue(utilToLocalDate(p.getStartTid()));
+    }
+    
+//Aktivitet metoder -------------------------------------------------------------------------------------------------------------------
+	
+	@FXML
+    private void tilfoejAktivitet(ActionEvent event)
+    {
+		System.out.println("You tried to AddActivity");
+        Projekt p = projektTabel.getSelectionModel().getSelectedItems().get(0);
+        if(p!=null) {
+        	Aktivitet a = new Aktivitet(tilfoejAktivitetNavn.getText(),p);
+        	aktivitetTabel.getItems().add(a);
+        }
     }
 	
+	@FXML
+    private void fjernValgteAktiviteter(ActionEvent event)
+	{
+        System.out.println("You tried to remove activity");
+        
+        ObservableList<Aktivitet> valgteRaekker, alleAktiviteter;
+        alleAktiviteter = aktivitetTabel.getItems();
+        
+        //this gives us the rows that were selected
+        valgteRaekker = aktivitetTabel.getSelectionModel().getSelectedItems();
+        
+        //loop over the selected rows and remove the Person objects from the table
+        for (Aktivitet a: valgteRaekker)
+        {
+        	alleAktiviteter.remove(a);
+        }
+    }
 	
+//Brugbare metoder----------------------------------------------------------------------------------------------------------------
+	private Date localToUtilDate(LocalDate local) {
+		Date util = new Date(local.getYear()-1900,local.getMonthValue()-1,local.getDayOfMonth());
+		return util;
+	}
 	
-
+	private LocalDate utilToLocalDate(Date util) {
+		LocalDate local = LocalDate.of(util.getYear()+1900, util.getMonth()+1, util.getDate());
+		return local;
+	}
 }
