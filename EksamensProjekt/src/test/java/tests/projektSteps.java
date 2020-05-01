@@ -26,15 +26,15 @@ public class projektSteps {
 		medarbejder=new Medarbejder(MedarbejderID);					//opret ny medarbjder
 	}
 
-	@When("Medarbejderen opretter et projekt med ID'et {string}")
-	public void medarbejderenOpretterEtProjektMedIDEt(String projektID) {
-	    projekt = new Projekt(projektID);
+	@When("Medarbejderen opretter et projekt med navnet {string}")
+	public void medarbejderenOpretterEtProjektMedNavnet(String projektNavn) {
+	    projekt = new Projekt(projektNavn);
 	    projekt.Gem();
 	}
 
-	@Then("Der findes et nyt projekt med ID'et {string}")
-	public void derFindesEtNytProjektMedIDEt(String projektID) {
-		assertTrue(projekt.getNavn()==projektID);
+	@Then("Der findes et nyt projekt med navnet {string}")
+	public void derFindesEtNytProjektMedNavnet(String projektNavn) {
+		assertTrue(projekt.getNavn().equals(projektNavn));
 	    assertTrue(projektManager.eksisterer(projekt));
 
 	}

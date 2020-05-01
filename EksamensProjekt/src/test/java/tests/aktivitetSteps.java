@@ -19,15 +19,15 @@ public class aktivitetSteps {
 	static Aktivitet aktivitet;
 	static Date startdate;
 	String aktivitetID;
-	String projektID;
+	String projektNavn;
 	IAktivitetManager aktivitetManager= Managers.FaaAktivitetManager();
 	
 	
 	@Given("der er et projekt {string} med lederen {string}")
 	public void derErEtProjektMedLederen(String projektID, String lederID) {
-		this.projektID=projektID;
+		this.projektNavn=projektNavn;
 		leder = new Medarbejder(lederID);
-		projekt = new Projekt(projektID);
+		projekt = new Projekt(projektNavn);
 		projekt.Gem();
 		//¯\_(ツ)_/¯
 	}
@@ -39,7 +39,7 @@ public class aktivitetSteps {
 	}
 	
 	@Then("projektet {string} har en ny aktivitet med navnet {string}")
-	public void projektetHarEnNyAktivitetMedNavnet(String projektID, String aktivitetID) {
+	public void projektetHarEnNyAktivitetMedNavnet(String projektNavn, String aktivitetID) {
 		assertTrue(aktivitetManager.eksisterer(aktivitet));
 		assertTrue(aktivitet.getProjekt() == projekt);
 	}
@@ -47,8 +47,8 @@ public class aktivitetSteps {
 	
 	// Forsoeger at tilfoeje aktivitet som allerede findes i projektet
 	@Given("Projektet {string} har aktiviteten {string}")
-	public void projektetHarAktiviteten(String ProjektID, String aktivitetID) {
-	    projekt = new Projekt(projektID);
+	public void projektetHarAktiviteten(String ProjektNavn, String aktivitetID) {
+	    projekt = new Projekt(projektNavn);
 	    projekt.Gem();										//opret projekt
 	    aktivitet = new Aktivitet(aktivitetID);				//opret aktivitet
 	    projekt.tilfoejAktivitet(aktivitet);				//tilfoej aktivitet til projekt
