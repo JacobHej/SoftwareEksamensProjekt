@@ -2,11 +2,16 @@ package Applikationslag.Domaeneklasser;
 
 import java.util.UUID;
 
+import Applikationslag.Infrastruktur.ServiceInterfaces.IMedarbejderManager;
+import Applikationslag.Redskaber.Managers;
+
 public class Medarbejder
 {
 	// klassevariable
     private UUID id = UUID.randomUUID();
     private String navn;
+    
+    private IMedarbejderManager medarbejderManager = Managers.FaaMedarbejderManager();
     
     //metoder
     public Medarbejder(String navn)
@@ -24,4 +29,8 @@ public class Medarbejder
     	return this.navn;
     }
    
+    public Boolean Gem()
+    {
+    	return medarbejderManager.GemMedarbejder(this);
+    }
 }

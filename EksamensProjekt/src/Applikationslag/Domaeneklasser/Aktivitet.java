@@ -58,7 +58,7 @@ public class Aktivitet {
 			return false;
 	}
 	
-	public void SaetBudgetteretTid(Date start, Date slut)
+	public void SaetBudgetteretTid()
 	{
 	}
 	
