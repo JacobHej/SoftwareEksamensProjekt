@@ -1,4 +1,4 @@
-package Præsentationslag.UIOmråde.Views;
+package Praesentationslag.UIOmråde.Views;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

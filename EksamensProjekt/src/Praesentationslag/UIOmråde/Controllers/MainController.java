@@ -1,4 +1,4 @@
-package Præsentationslag.UIOmråde.Controllers;
+package Praesentationslag.UIOmråde.Controllers;
 
 import java.net.URL;
 import java.time.LocalDate;
