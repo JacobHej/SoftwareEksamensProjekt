@@ -46,12 +46,13 @@ public class Aktivitet {
 	
 	public Boolean Gem()
 	{
+		// tjek hvor mange aktiviteter medarbejderen har
 		return aktivitetManager.GemAktivitet(this);
 	}
 	
 	public void SaetMedarbejder(Medarbejder nyMedarbejder)
 	{
-		
+		// tjek hvor mange aktiviteter medarbejderen har
 	}
 	
 	public void SaetBudgetteretTid(Date start, Date slut)
@@ -61,6 +62,7 @@ public class Aktivitet {
 	
 	public Boolean TilfoejTid(int tid)
 	{
+		// er det mere tid end aktiviteten har eksisteret
 		return brugttidManager.GemBrugttid(new Brugttid(this, this.medarbejder, tid));
 	}
 	
