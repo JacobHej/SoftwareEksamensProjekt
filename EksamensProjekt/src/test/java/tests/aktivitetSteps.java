@@ -81,17 +81,16 @@ public class aktivitetSteps {
 	
 	@Given("Medarbejderen {string} arbejder paa aktiviteten {string}")
 	public void medarbejderenArbejderPaaAktiviteten(String MedarbejderID, String AktivitetID) {
-		System.out.println(this.aktivitet.SaetMedarbejder(this.medarbejder));
-//	    this.aktivitet.SaetMedarbejder(this.medarbejder);
-//	    System.out.println(this.aktivitet.Medarbejder());
+	    this.aktivitet.SaetMedarbejder(this.medarbejder);
+	    assertTrue((this.aktivitet.Medarbejder()==this.medarbejder));
 	    
 	} 
-//	
-//	@Given("Aktiviteten {string} har mere end {int} ubrugte budgetterede timer")
-//	public void aktivitetenHarMereEndUbrugteBudgetteredeTimer(String string, Integer int1) {
-//	    // Write code here that turns the phrase above into concrete actions
-//	    throw new io.cucumber.java.PendingException();
-//	}
+	
+	@Given("Aktiviteten {string} har mere end {int} ubrugte budgetterede timer")
+	public void aktivitetenHarMereEndUbrugteBudgetteredeTimer(String string, Integer int1) {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new io.cucumber.java.PendingException();
+	}
 //	
 //	@When("Medarbejderen {string} tilfoejer {string} timer til aktiviteten {string}")
 //	public void medarbejderenTilfoejerTimerTilAktiviteten(String string, String string2, String string3) {
