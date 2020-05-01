@@ -20,13 +20,14 @@ public class aktivitetSteps {
 	    //opret projekt med leder "string";
 		Medarbejder leder = new Medarbejder(string);
 		Date startDate = new Date();
-		new Projekt("string", startDate, leder);
+		projekt = new Projekt("string", startDate, leder);
 		assertTrue(true); //¯\_(ツ)_/¯
 	}
 	
 	@When("lederen laver en ny aktivitet med navnet {string}")
 	public void lederenLaverEnNyAktivitetMedNavnet(String string) {
 		Aktivitet aktivitet = new Aktivitet(string,projekt);
+		System.out.println(projekt.tilfoejAktivitet(aktivitet));
 		assertTrue(projekt.tilfoejAktivitet(aktivitet));
 	}
 	
