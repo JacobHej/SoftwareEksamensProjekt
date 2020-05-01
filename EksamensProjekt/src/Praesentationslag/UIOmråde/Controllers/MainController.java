@@ -184,6 +184,7 @@ public class MainController implements Initializable {
         Projekt p = projektTabel.getSelectionModel().getSelectedItems().get(0);
         if(p!=null) {
         	Aktivitet a = new Aktivitet(tilfoejAktivitetNavn.getText(),p);
+        	p.tilfoejAktivitet(a);
         	aktivitetTabel.getItems().add(a);
         }
     }
