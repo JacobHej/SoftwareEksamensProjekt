@@ -14,6 +14,7 @@ import Applikationslag.Domaeneklasser.Aktivitet;
 import Applikationslag.Domaeneklasser.Medarbejder;
 import Applikationslag.Infrastruktur.ServiceInterfaces.IMedarbejderManager;
 import Applikationslag.Redskaber.Dates;
+import Applikationslag.Redskaber.GlobaleVariable;
 
 public class MedarbejderManager implements IMedarbejderManager {
 
@@ -28,7 +29,8 @@ public class MedarbejderManager implements IMedarbejderManager {
 	//@Override
 	public List<Entry<UUID, Medarbejder>> AlleLedigeMedarbejdere() {
 		return MedarbejderData.Bibliotek.entrySet().stream()
-			.filter(e -> AktiviteterIDenneUge(Dates.getCurrentWeek(), e.getValue()) < 21)
+			.filter(e -> AktiviteterIDenneUge(Dates.getCurrentWeek(), e.getValue()) 
+					< GlobaleVariable.MaksimaleVagter())
 			.collect(Collectors.toList());
 	}
 
