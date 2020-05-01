@@ -39,14 +39,16 @@ public class Projekt {
 	
 	public Boolean tilfoejAktivitet(String navn)
 	{
-		Aktivitet a = new Aktivitet(navn,this);
+		Aktivitet a = new Aktivitet(navn);
+		a.setProjekt(this);
 		aktivitetManager.GemAktivitet(a);
 		return true;
 	}
 	
 	public Boolean tilfoejAktivitet(Date start, Date slut, String navn)
 	{
-		Aktivitet a = new Aktivitet(start,slut,this,navn);
+		Aktivitet a = new Aktivitet(start,slut,navn);
+		a.setProjekt(this);
 		return aktivitetManager.GemAktivitet(a);
 	}
 
