@@ -15,9 +15,12 @@ public class AktivitetManager implements IAktivitetManager{
 
 	//@Override
 	public Boolean GemAktivitet(Aktivitet aktivitet) {
+		if(aktivitet.Projekt() == null)
+			return false;
 		if (!AktivitetData.Bibliotek.containsValue(aktivitet) 
 				&& ProjektData.Bibliotek.containsValue(aktivitet.Projekt())
-				&& MedarbejderData.Bibliotek.containsKey(aktivitet.Medarbejder()))
+				&& (MedarbejderData.Bibliotek.containsKey(aktivitet.Medarbejder())
+						|| aktivitet.Medarbejder() == null))
 			return (AktivitetData.Bibliotek.put(aktivitet.ID(), aktivitet) == null);
 		else
 			return false;

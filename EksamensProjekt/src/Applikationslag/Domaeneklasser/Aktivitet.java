@@ -21,38 +21,30 @@ public class Aktivitet {
 	private IBrugttidManager brugttidManager = Managers.FaaBrugttidManager();
 	
 	//Metoder
-	public Aktivitet(Date start, Date slut, Projekt projekt, Medarbejder medarbejder, String navn)
+	public Aktivitet(Date start, Date slut, Medarbejder medarbejder, String navn)
 	{
 		this.start = start;
 		this.slut = slut;
-		this.projekt = projekt;
 		this.medarbejder = medarbejder;
 		this.navn = navn;
 	}
 	
-	public Aktivitet(Date start, Date slut, Projekt projekt, String navn)
+	public Aktivitet(Date start, Date slut, String navn)
 	{
 		this.start = start;
 		this.slut = slut;
-		this.projekt = projekt;
 		this.navn = navn;
 	}
 	
-	public Aktivitet(String navn, Projekt projekt)
+	public Aktivitet(String navn)
 	{
-		this.projekt = projekt;
 		this.navn = navn;
 	}
 	
-	public Boolean Gem()
-	{
-		// tjek hvor mange aktiviteter medarbejderen har
-		return aktivitetManager.GemAktivitet(this);
-	}
 	
 	public void SaetMedarbejder(Medarbejder nyMedarbejder)
 	{
-		// tjek hvor mange aktiviteter medarbejderen har
+		this.medarbejder = nyMedarbejder;
 	}
 	
 	public void SaetBudgetteretTid(Date start, Date slut)
@@ -90,6 +82,10 @@ public class Aktivitet {
 	public Projekt Projekt()
 	{
 		return this.projekt;
+	}
+	
+	public void setProjekt(Projekt p) {
+		this.projekt = projekt;
 	}
 	
 	public Medarbejder Medarbejder()
