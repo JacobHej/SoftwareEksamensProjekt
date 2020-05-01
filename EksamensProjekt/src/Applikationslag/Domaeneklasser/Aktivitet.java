@@ -5,6 +5,9 @@ import java.util.UUID;
 
 import Applikationslag.Infrastruktur.ServiceInterfaces.IAktivitetManager;
 import Applikationslag.Infrastruktur.ServiceInterfaces.IBrugttidManager;
+import Applikationslag.Infrastruktur.ServiceInterfaces.IMedarbejderManager;
+import Applikationslag.Redskaber.Dates;
+import Applikationslag.Redskaber.GlobaleVariable;
 import Applikationslag.Redskaber.Managers;
 
 public class Aktivitet {
@@ -19,6 +22,7 @@ public class Aktivitet {
 	
 	private IAktivitetManager aktivitetManager = Managers.FaaAktivitetManager();
 	private IBrugttidManager brugttidManager = Managers.FaaBrugttidManager();
+	private IMedarbejderManager medarbejderManager = Managers.FaaMedarbejderManager();
 	
 	//Metoder
 	public Aktivitet(int startUge, int slutUge, Medarbejder medarbejder, String navn)
@@ -42,10 +46,16 @@ public class Aktivitet {
 	}
 	
 	
-	public void SaetMedarbejder(Medarbejder nyMedarbejder)
+	public Boolean SaetMedarbejder(Medarbejder nyMedarbejder)
 	{
-		// tjek for timer/aktiviteter
-		this.medarbejder = nyMedarbejder;
+		if (medarbejderManager.AktiviteterIDenneUge(Dates.getCurrentWeek(), nyMedarbejder) 
+				< GlobaleVariable.MaksimaleVagter())
+		{
+			this.medarbejder = nyMedarbejder;
+			return true;
+		}
+		else
+			return false;
 	}
 	
 	public void SaetBudgetteretTid(Date start, Date slut)
