@@ -148,14 +148,14 @@ public class aktivitetSteps {
 
 	@When("aktivitetens start- og slut-tidspunkter aendres til hhv. uge {int} og {int}")
 	public void aktivitetensStartOgSlutTidspunkterAendresTilHhvUgeOg(Integer int1, Integer int2) {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	    this.aktivitet.setStartUge(int1);
+	    this.aktivitet.setSlutUge(int2);
 	}
 
 	@Then("aktivitetens start- og slut-tidspunkter er nu hhv. {int} og {int}")
 	public void aktivitetensStartOgSlutTidspunkterErNuHhvOg(Integer int1, Integer int2) {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+		assertTrue(this.aktivitet.getStartUge()==int1);
+		assertTrue(this.aktivitet.getSlutUge() ==int2);
 	}
 
 
