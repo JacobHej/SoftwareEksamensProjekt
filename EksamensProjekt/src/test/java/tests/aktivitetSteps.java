@@ -13,6 +13,9 @@ import Applikationslag.Infrastruktur.ServiceInterfaces.IBrugttidManager;
 import Applikationslag.Redskaber.Managers;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Map.Entry;
+import java.util.UUID;
 
 public class aktivitetSteps {
 	Medarbejder leder;
@@ -56,12 +59,14 @@ public class aktivitetSteps {
 
 	@When("lederen proever at lave en ny aktivitet med navnet {string}")
 	public void lederenProeverAtLaveEnNyAktivitetMedNavnet(String string) {
-		assertFalse(this.projekt.tilfoejAktivitet(this.aktivitet));
+		Aktivitet sammeNavn= new Aktivitet(this.aktivitet.getNavn());
+		assertFalse(this.projekt.tilfoejAktivitet(sammeNavn));
 	}
 
-	@Then("Kast exception {string}")
-	public void kastException(String ErrorMessage) {
-//	    throw new IllegalArgumentException(ErrorMessage);
+	@Then("Aktiviteten er ikke tilfoejet")
+	public void aktivitetenErIkkeTilfoejet() {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new io.cucumber.java.PendingException();
 	}
 	
 // 	Medarbejder tilfoejer tid til en aktivitet.
@@ -88,19 +93,70 @@ public class aktivitetSteps {
 	
 	@Given("Aktiviteten {string} har mere end {int} ubrugte budgetterede timer")
 	public void aktivitetenHarMereEndUbrugteBudgetteredeTimer(String AktivitetID, Integer BudgetteretTid) {
-	    this.aktivitet.SaetBudgetteretTid(BudgetteretTid);
+	    this.aktivitet.SaetBudgetteretTid(BudgetteretTid+1);
 	}
 	
 	@When("Medarbejderen {string} tilfoejer {int} timer til aktiviteten {string}")
 	public void medarbejderenTilfoejerTimerTilAktiviteten(String MedarbejderID, Integer int1, String AktivitetID) {
-		System.out.println(this.aktivitet.TilfoejTid(int1));
-		assertTrue(this.aktivitet.TilfoejTid(int1, this.medarbejder));
+		Brugttid brugttid = new Brugttid(this.aktivitet, this.medarbejder, int1);
+		assertTrue(this.aktivitet.TilfoejTid(brugttid));
+	}
+	
+	@Then("Medarbejderens timer {int} er blevet noteret")
+	public void medarbejderensTimerErBlevetNoteret(Integer int1) {
+		
+		//Kan vi se at timerne er registreret paa aktiviteten?
+		boolean passThisTest = false;
+		for(Entry<UUID, Brugttid> e : this.brugttidManager.AlleBrugttidEfterAktivitetOgMedarbejder(this.aktivitet, this.medarbejder)) {
+			if (e.getValue().Aktivitet() == this.aktivitet && e.getValue().Medarbejder()==this.medarbejder && e.getValue().Tid()==int1) {
+				passThisTest = true;
+				break;
+			}
+		}
+		assertTrue(passThisTest);
+		
+		//Kan medarbejderens se paa sit daglige timebrug, at han/hun har registreret timer i dag?
+		passThisTest=false;
+		for(Entry<UUID, Brugttid> e : this.brugttidManager.AlleBrugttidEfterMedarbejder(this.medarbejder)) {
+			if (e.getValue().Dato().getDay()==(new Date()).getDay() && e.getValue().Medarbejder() == this.medarbejder) {
+				passThisTest=true;
+				break;
+			}
+		}
+		assertTrue(passThisTest);
+	}
+	
+	@When("aktivitetens navn aendres til {string}")
+	public void aktivitetensNavnAendresTil(String nytNavn) {
+	    this.aktivitet.setNavn(nytNavn);
+	}
+	
+	@Then("aktivitetens navn er nu {string}")
+	public void aktivitetensNavnErNu(String nytNavn) {
+	    assertTrue(this.aktivitet.getNavn().equals(nytNavn));
 	}
 
-//	@Then("Medarbejderens timer er blevet noteret")
-//	public void medarbejderensTimerErBlevetNoteret() {
-//	    System.out.println(this.brugttidManager.AlleBrugttidEfterAktivitetOgMedarbejder(this.aktivitet, this.medarbejder));
-//	    throw new io.cucumber.java.PendingException();
-//	}
-//	
+	@When("aktivitetens budgetterede tid aendres til {int}")
+	public void aktivitetensBudgetteredeTidAendresTil(Integer int1) {
+	    this.aktivitet.SaetBudgetteretTid(int1);
+	}
+
+	@Then("aktivitetens budgetterede tid er nu {int}")
+	public void aktivitetensBudgetteredeTidErNu(Integer int1) {
+	    assertTrue(this.aktivitet.getBudgetTid()==int1);
+	}
+
+	@When("aktivitetens start- og slut-tidspunkter aendres til hhv. uge {int} og {int}")
+	public void aktivitetensStartOgSlutTidspunkterAendresTilHhvUgeOg(Integer int1, Integer int2) {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new io.cucumber.java.PendingException();
+	}
+
+	@Then("aktivitetens start- og slut-tidspunkter er nu hhv. {int} og {int}")
+	public void aktivitetensStartOgSlutTidspunkterErNuHhvOg(Integer int1, Integer int2) {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new io.cucumber.java.PendingException();
+	}
+
+
 }

@@ -77,6 +77,10 @@ public class Aktivitet {
 		return brugttidManager.GemBrugttid(new Brugttid(this, medarbejder, tid));
 	}
 	
+	public boolean TilfoejTid(Brugttid brugttid) {
+		return brugttidManager.GemBrugttid(brugttid);
+	}
+	
 	//Funtioner for returnering af klassevariable
 	public int getStartUge()
 	{
@@ -143,6 +147,10 @@ public class Aktivitet {
 		return this.navn;
 	}
 	
+	public int getBudgetTid() {
+		return this.budgetTid;
+	}
+	
 	public void setNavn(String navn)
 	{
 		this.navn = navn;
@@ -152,4 +160,5 @@ public class Aktivitet {
 	{
 		return this.faerdig;
 	}
+
 }

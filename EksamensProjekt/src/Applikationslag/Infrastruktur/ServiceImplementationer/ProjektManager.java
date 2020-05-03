@@ -9,7 +9,7 @@ public class ProjektManager implements IProjektManager{
 
 	//@Override
 	public Boolean GemProjekt(Projekt projekt) {
-		if (!ProjektData.Bibliotek.containsValue(projekt))
+		if (!ProjektData.Bibliotek.entrySet().stream().anyMatch(e -> e.getValue().getNavn() == projekt.getNavn()) )
 			return (ProjektData.Bibliotek.put(projekt.ID(), projekt) == null);
 		else 
 			return false;
