@@ -1,5 +1,10 @@
 package Applikationslag.Infrastruktur.ServiceImplementationer;
 
+import java.util.List;
+import java.util.UUID;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
+
 import Applikationslag.Data.Datavedholdelsesklasser.*;
 import Applikationslag.Domaeneklasser.Aktivitet;
 import Applikationslag.Domaeneklasser.Projekt;
@@ -13,6 +18,20 @@ public class ProjektManager implements IProjektManager{
 			return (ProjektData.Bibliotek.put(projekt.ID(), projekt) == null);
 		else 
 			return false;
+	}
+	
+	public List<Entry<UUID, Projekt>> AlleProjekter() {
+		return ProjektData.Bibliotek.entrySet().stream()
+			.collect(Collectors.toList());
+	}
+	
+	public Projekt projektUdFraNavn(String navn) {
+		for(Entry<UUID, Projekt> e : AlleProjekter()) {
+			if (e.getValue().getNavn() == navn) {
+				return e.getValue();
+			}
+		}
+		return null;
 	}
 	
 	public Boolean eksisterer(Projekt projekt)
