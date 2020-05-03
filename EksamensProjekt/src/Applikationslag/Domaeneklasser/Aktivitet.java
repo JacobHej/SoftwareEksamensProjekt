@@ -160,5 +160,9 @@ public class Aktivitet {
 	{
 		return this.faerdig;
 	}
+	
+	public String toString() {
+    	return navn;
+    }
 
 }

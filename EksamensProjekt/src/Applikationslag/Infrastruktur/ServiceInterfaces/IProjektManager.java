@@ -14,4 +14,6 @@ public interface IProjektManager {
 	public Projekt projektUdFraNavn(String navn);
 	
 	public Boolean eksisterer(Projekt projekt);
+	
+	public void PrintAlleProjekter();
 }

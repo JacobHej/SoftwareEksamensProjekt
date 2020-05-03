@@ -12,4 +12,5 @@ public final class AktivitetData
 	}
 	
     public static HashMap<UUID, Aktivitet> Bibliotek = new HashMap<>();
+    
 }

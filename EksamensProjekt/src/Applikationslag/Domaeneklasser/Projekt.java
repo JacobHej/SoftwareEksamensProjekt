@@ -37,7 +37,7 @@ public class Projekt {
 	}
 	
 	public String toString() {
-		String s = (projektnummer + " " + navn);
+		String s = (projektnummer + ": " + navn);
 		return s;
 	}
 	
@@ -82,7 +82,6 @@ public class Projekt {
 			String id = String.format("%04d", LoebeNummer.genererloebeNummer());
 			
 			projektnummer = Integer.parseInt(formattedDate+id);
-			System.out.println(projektnummer+"");
 			return true;
 		}catch(Exception e) {
 			return false;

@@ -4,7 +4,7 @@ Feature: Ret i projekt
 	
 Scenario: Projektleder oensker at rette i data for sit projekt
 	Given der er et projekt "GammeltNavn" med lederen "leder"
-    And Projektet "GammeltNavn" har aktiviteten "aktivitetID"
+	And Projektet "GammeltNavn" har aktiviteten "aktivitetID"
     When Projektets navn aendres fra "GammeltNavn" til "Banksystem"
     Then Projektets navn er "Banksystem"
     When Projektet faar en ny projektleder med navnet "HACR"
@@ -12,13 +12,13 @@ Scenario: Projektleder oensker at rette i data for sit projekt
     When Projektet faar sat sin starttid til uge 2 aar 2021
     Then Projektets starttid er uge 2 aar 2021
     
-#Scenario: Projektleder oensker at slette en aktivitet som ikke har timer registreret
-#	Given der er et projekt "ProjektNavn" med lederen "leder"
-#    And Projektet "ProjektNavn" har aktiviteten "aktivitetID"
-#    When Projektlederen sletter aktiviteten "aktivitetID"
-#    Then Projektet har ikke laengere aktiviteten
-#
-#
+Scenario: Projektleder oensker at slette en aktivitet som ikke har timer registreret
+	Given der er et projekt "Hospitalsovervaagning" med lederen "EAL"
+    And Projektet "Hospitalsovervaagning" har aktiviteten "Udvikling af brugergraenseflade"
+    When Projektlederen sletter aktiviteten "Udvikling af brugergraenseflade" fra projektet "Hospitalsovervaagning"
+    Then Projektet har ikke laengere aktiviteten
+
+
 #Scenario: Projektleder proever at slette en aktivitet som har timer registreret
 #	Given der er et projekt "ProjektNavn" med lederen "leder"
 #    And Projektet "ProjektNavn" har aktiviteten "aktivitetID"

@@ -48,9 +48,7 @@ public class aktivitetSteps {
 	
 	// Forsoeger at tilfoeje aktivitet som allerede findes i projektet
 	@Given("Projektet {string} har aktiviteten {string}")
-	public void projektetHarAktiviteten(String projektNavn, String aktivitetID) {
-	    this.projekt = new Projekt(projektNavn);
-	    this.projekt.Gem();										//opret projekt
+	public void projektetHarAktiviteten(String projektNavn, String aktivitetID) {									//opret projekt
 	    this.aktivitet = new Aktivitet(aktivitetID);				//opret aktivitet
 	    this.projekt.tilfoejAktivitet(this.aktivitet);				//tilfoej aktivitet til projekt
 		assertTrue(aktivitetManager.eksisterer(this.aktivitet));	//tjek at aktiviteten findes
