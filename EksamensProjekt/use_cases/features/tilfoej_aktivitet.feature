@@ -11,4 +11,4 @@ Scenario: Lederen proever at lave en ny aktivitet som findes
     Given der er et projekt "ProjektNavn" med lederen "leder"
     And Projektet "ProjektNavn" har aktiviteten "aktivitetID"
     When lederen proever at lave en ny aktivitet med navnet "aktivitetID"
-    Then Kast exception "Aktivitet med dette ID findes allerede!"
+    Then Aktiviteten er ikke tilfoejet
