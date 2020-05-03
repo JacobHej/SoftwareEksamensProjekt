@@ -17,7 +17,7 @@ public class AktivitetManager implements IAktivitetManager{
 	public Boolean GemAktivitet(Aktivitet aktivitet) {
 		if(aktivitet.getProjekt() == null)
 			return false;
-		if (!AktivitetData.Bibliotek.containsValue(aktivitet) 
+		if (!AktivitetData.Bibliotek.entrySet().stream().anyMatch(e -> e.getValue().getNavn() == aktivitet.getNavn()) 
 				&& ProjektData.Bibliotek.containsValue(aktivitet.getProjekt()))
 			return (AktivitetData.Bibliotek.put(aktivitet.ID(), aktivitet) == null);
 		else

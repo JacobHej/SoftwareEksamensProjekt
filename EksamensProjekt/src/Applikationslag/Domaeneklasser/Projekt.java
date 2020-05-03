@@ -11,6 +11,9 @@ import java.util.Random;
 
 import Applikationslag.Infrastruktur.ServiceImplementationer.*;
 import Applikationslag.Infrastruktur.ServiceInterfaces.*;
+import Applikationslag.Redskaber.*;
+import Applikationslag.Redskaber.LoebeNummer;
+import Applikationslag.Redskaber.Dates;
 import Applikationslag.Redskaber.Managers;
 
 public class Projekt {
@@ -70,9 +73,9 @@ public class Projekt {
 	
 	private boolean genererProjektnummer() {
 		try {
-			String formattedDate = ""+((Calendar.getInstance().get(Calendar.YEAR))%100);
-			String id = String.format("%04d", loebenummerCounter);
-			forstoerLoebenummer();
+			String formattedDate = ""+((Dates.getYear())%100);
+			String id = String.format("%04d", LoebeNummer.genererloebeNummer());
+			
 			projektnummer = Integer.parseInt(formattedDate+id);
 			System.out.println(projektnummer+"");
 			return true;
@@ -82,12 +85,7 @@ public class Projekt {
 		
 	}
 	
-	private static void forstoerLoebenummer() {
-		loebenummerCounter++;
-		if(loebenummerCounter>9999) {
-			loebenummerCounter = loebenummerCounter%10000;
-		}
-	}
+	
 
 	public Boolean Gem()
 	{

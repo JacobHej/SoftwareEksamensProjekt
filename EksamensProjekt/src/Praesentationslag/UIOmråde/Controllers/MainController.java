@@ -9,6 +9,7 @@ import java.util.Map.Entry;
 
 import Applikationslag.Domaeneklasser.Aktivitet;
 import Applikationslag.Domaeneklasser.Projekt;
+import Praesentationslag.UIOmråde.Views.App;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -17,11 +18,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.event.ActionEvent;
 
 public class MainController implements Initializable {
@@ -207,6 +212,7 @@ public class MainController implements Initializable {
     {
     	Projekt p = projektTabel.getSelectionModel().getSelectedItems().get(0);
     	if(p==null) {
+    		popup("Der er ikke valgt et projekt");
     		return;
     	}
     	if(ugeNrProjektStart.getText()!=null) {
@@ -218,10 +224,10 @@ public class MainController implements Initializable {
         			if(i<=53&&i>0) {
         				p.setStartUge(i);
         			}else {
-        				ugeNrProjektStart.setText("Uger går mellem 1 og 53!");
+        				popup("Vær sød at vælge et ugenr mellem 1 og 53");
         			}
         		}catch(Exception e) {
-        			ugeNrProjektStart.setText("Nummer tak!");
+        			popup("Ugenummeret skal gerne være et nummer");
         		}
     		}
     		
@@ -232,10 +238,10 @@ public class MainController implements Initializable {
         			if(i>=1900) {
         				p.setStartÅr(i);
         			}else {
-        				årstalProjektStart.setText("Laveste år 1900");
+        				popup("Årstallet må lavest være 1900");
         			}
         		}catch(Exception e) {
-        			årstalProjektStart.setText("Nummer tak!");
+        			popup("Årstallet skal være et nummer");
         		}
     		}
     	}
@@ -279,6 +285,7 @@ public class MainController implements Initializable {
     	Aktivitet a = aktivitetTabel.getSelectionModel().getSelectedItems().get(0);
     	
     	if(a==null) {
+    		popup("Der er ikke valgt en aktivitet");
     		return;
     	}
     	if(ugeNrAktivitetStart.getText()!=null) {
@@ -293,10 +300,10 @@ public class MainController implements Initializable {
         			if(i<=53&&i>0) {
         				a.setStartUge(i);
         			}else {
-        				ugeNrAktivitetStart.setText("Uger går mellem 1 og 53!");
+        				popup("Aktivitetens start-ugeNr skal være mellem 1 og 53");
         			}
         		}catch(Exception e) {
-        			ugeNrAktivitetStart.setText("Nummer tak!");
+        			popup("Aktivitetens start-ugeNr skal være et nummer");
         		}
     		}
     		
@@ -307,10 +314,10 @@ public class MainController implements Initializable {
         			if(i>=1900) {
         				a.setStartÅr(i);
         			}else {
-        				årstalAktivitetStart.setText("Laveste år 1900");
+        				popup("Aktivitetens start-årstal må lavest være 1900");
         			}
         		}catch(Exception e) {
-        			årstalAktivitetStart.setText("Nummer tak!");
+        			popup("Aktivitetens start-årstal skal være et nummer");
         		}
     		}
     		//SlutTid ...............
@@ -320,10 +327,10 @@ public class MainController implements Initializable {
         			if(i<=53&&i>0) {
         				a.setSlutUge(i);
         			}else {
-        				ugeNrAktivitetSlut.setText("Uger går mellem 1 og 53!");
+        				popup("Aktivitetens slut-ugeNr skal være mellem 1 og 53");
         			}
         		}catch(Exception e) {
-        			ugeNrAktivitetSlut.setText("Nummer tak!");
+        			popup("Aktivitetens slut-ugeNr skal være et nummer");
         		}
     		}
     		
@@ -334,10 +341,10 @@ public class MainController implements Initializable {
         			if(i>=1900) {
         				a.setSlutÅr(i);
         			}else {
-        				årstalAktivitetSlut.setText("Laveste år 1900");
+        				popup("Aktivitetens slut-årstal må lavest være 1900");
         			}
         		}catch(Exception e) {
-        			årstalAktivitetSlut.setText("Nummer tak!");
+        			popup("Aktivitetens slut-årstal skal være et nummer");
         		}
     		}
     	}
@@ -392,5 +399,20 @@ public class MainController implements Initializable {
     }
 	
 //Brugbare metoder----------------------------------------------------------------------------------------------------------------
-	
+	private void popup(String s){
+        final Stage popup = new Stage();
+        popup.initModality(Modality.APPLICATION_MODAL);
+        App.initOwner(popup);
+        VBox dialogVbox = new VBox(10);
+        dialogVbox.getChildren().add(new Text(s));
+        Scene dialogScene = new Scene(dialogVbox, 300, 200);
+        popup.setScene(dialogScene);
+        popup.show();
+	}
+//Test tab-------------------------------------------------------------------------------------------------------------------------
+	@FXML
+    private void popUpTest(ActionEvent event)
+	{
+		popup("This is a popuptest");
+	}
 }
