@@ -36,6 +36,11 @@ public class Projekt {
 
 	}
 	
+	public String toString (Projekt p) {
+		String s = (p.projektnummer + " " + p.navn);
+		return s;
+	}
+	
 	public Projekt(String navn)
 	{
 		this.navn = navn;

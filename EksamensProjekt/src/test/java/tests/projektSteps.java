@@ -47,13 +47,13 @@ public class projektSteps {
 	
 	@When("Projektets navn aendres fra {string} til {string}")
 	public void projektetsNavnAendresFraTil(String GammeltNavn, String NytNavn) {
-		System.out.println("hejejgnaoigfna" + projektManager.projektUdFraNavn(GammeltNavn).getNavn());
+		//System.out.println(projektManager.AlleProjekter().get(3).getValue().getNavn());
+		
+		//System.out.println(projektManager.projektUdFraNavn(GammeltNavn).getNavn());
+		
 		
 		for(Entry<UUID, Projekt> p : projektManager.AlleProjekter()) {
-//			if (e.getValue().Aktivitet() == this.aktivitet && e.getValue().Medarbejder()==this.medarbejder && e.getValue().Tid()==int1) {
-//				passThisTest = true;
-//				break;
-//			}
+			System.out.println(p.getValue().getNavn());
 		}
 		
 	    throw new io.cucumber.java.PendingException();
