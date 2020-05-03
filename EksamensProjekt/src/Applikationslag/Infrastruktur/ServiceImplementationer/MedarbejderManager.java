@@ -7,7 +7,9 @@ import java.util.UUID;
 
 import Applikationslag.Data.Datavedholdelsesklasser.AktivitetData;
 import Applikationslag.Data.Datavedholdelsesklasser.MedarbejderData;
+import Applikationslag.Domaeneklasser.Aktivitet;
 import Applikationslag.Domaeneklasser.Medarbejder;
+import Applikationslag.Domaeneklasser.Projekt;
 import Applikationslag.Infrastruktur.ServiceInterfaces.IMedarbejderManager;
 import Applikationslag.Redskaber.Dates;
 import Applikationslag.Redskaber.GlobaleVariable;
@@ -38,6 +40,11 @@ public class MedarbejderManager implements IMedarbejderManager {
 			.filter(e -> e.getValue().getStartUge() <= week
 					&& e.getValue().getSlutUge() >= week)
 			.count();
+	}
+	
+	@Override
+	public List<Entry<UUID, Medarbejder>> hentAlleMedarbejdere() {
+		return MedarbejderData.Bibliotek.entrySet().stream().collect(Collectors.toList());
 	}
 	
 }

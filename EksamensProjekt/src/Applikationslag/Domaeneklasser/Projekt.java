@@ -23,7 +23,7 @@ public class Projekt {
 	private String navn;
 	private int projektnummer;
 	private int startUge;
-	private int startÅr;
+	private int startaar;
 	
 	private IAktivitetManager aktivitetManager = Managers.FaaAktivitetManager();
 	private IProjektManager projektManager = Managers.FaaProjektManager();
@@ -150,13 +150,13 @@ public class Projekt {
 		return this.startUge;
 	}
 	
-	public void setStartÅr(int startÅr)
+	public void setStartaar(int startaar)
 	{
-		this.startÅr = startÅr;
+		this.startaar = startaar;
 	}
 
-	public int getStartÅr()
+	public int getStartaar()
 	{
-		return this.startÅr;
+		return this.startaar;
 	}
 }
