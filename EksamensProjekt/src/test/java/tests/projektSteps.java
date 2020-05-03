@@ -41,7 +41,7 @@ public class projektSteps {
 	
 	@Then("projektet {string} har et loebenummer som er tildelt af systemet")
 	public void projektetHarEtLoebenummerSomErTildeltAfSystemet(String ProjektNavn) {
-	    assertTrue(new String("" + projekt.getProjektnummer()).substring(0,2).equals("20"));
+	    assertTrue(projekt.getProjektnummer()>0);
 	}
 	
 	/*******AEndre i projektdata (Her udnytter vi bibliotekets lagring af data)********/
@@ -74,23 +74,24 @@ public class projektSteps {
 	@When("Projektet faar sat sin starttid til uge {int} aar {int}")
 	public void projektetFaarSatSinStarttidTilUgeAar(Integer int1, Integer int2) {
 	    Currentprojekt.setStartUge(int1);
-	    Currentprojekt.setStartÅr(int2);
+	    Currentprojekt.setStartaar(int2);
 	}
 
 	@Then("Projektets starttid er uge {int} aar {int}")
 	public void projektetsStarttidErUgeAar(Integer int1, Integer int2) {
 		assertTrue(Currentprojekt.getStartUge()==(int1));
-	    assertTrue(Currentprojekt.getStartÅr()==(int2));
+	    assertTrue(Currentprojekt.getStartaar()==(int2));
 	}
 	
 	@When("Projektlederen sletter aktiviteten {string} fra projektet {string}")
 	public void projektlederenSletterAktivitetenFraProjektet(String aktivitetsNavn, String projektNavn) {
 		Currentprojekt = (projektManager.projektUdFraNavn(projektNavn));
-		System.out.println(aktivitetManager.AlleAktiviteterEfterProjekt(Currentprojekt));
+		// Write code here that turns the phrase above into concrete actions
+	    throw new io.cucumber.java.PendingException();
 	}
 
-	@Then("Projektet har ikke laengere aktiviteten")
-	public void projektetHarIkkeLaengereAktiviteten() {
+	@Then("Projektet har ikke laengere aktiviteten {string}")
+	public void projektetHarIkkeLaengereAktiviteten(String string) {
 	    // Write code here that turns the phrase above into concrete actions
 	    throw new io.cucumber.java.PendingException();
 	}

@@ -16,7 +16,7 @@ Scenario: Projektleder oensker at slette en aktivitet som ikke har timer registr
 	Given der er et projekt "Hospitalsovervaagning" med lederen "EAL"
     And Projektet "Hospitalsovervaagning" har aktiviteten "Udvikling af brugergraenseflade"
     When Projektlederen sletter aktiviteten "Udvikling af brugergraenseflade" fra projektet "Hospitalsovervaagning"
-    Then Projektet har ikke laengere aktiviteten
+    Then Projektet har ikke laengere aktiviteten "Udvikling af brugergraenseflade"
 
 
 #Scenario: Projektleder proever at slette en aktivitet som har timer registreret
