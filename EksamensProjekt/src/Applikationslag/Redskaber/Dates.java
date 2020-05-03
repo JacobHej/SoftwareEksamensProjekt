@@ -10,4 +10,9 @@ public final class Dates {
 	    WeekFields weekFields = WeekFields.of(Locale.getDefault());
 	    return date.get(weekFields.weekOfWeekBasedYear());
 	}
+	
+	public static int getYear()
+	{
+		return 5;
+	}
 }
