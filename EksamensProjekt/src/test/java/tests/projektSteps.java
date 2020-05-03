@@ -12,6 +12,7 @@ import Applikationslag.Domaeneklasser.*;
 import Applikationslag.Infrastruktur.ServiceInterfaces.IProjektManager;
 import Applikationslag.Infrastruktur.ServiceImplementationer.ProjektManager;
 import Applikationslag.Infrastruktur.ServiceInterfaces.IMedarbejderManager;
+import Applikationslag.Infrastruktur.ServiceInterfaces.IAktivitetManager;
 import Applikationslag.Redskaber.Managers;
 
 import java.util.Date;
@@ -23,6 +24,7 @@ public class projektSteps {
 	Projekt projekt;
 	IMedarbejderManager medarbejderManager= Managers.FaaMedarbejderManager();
 	IProjektManager projektManager= Managers.FaaProjektManager();
+	IAktivitetManager aktivitetManager= Managers.FaaAktivitetManager();
 	
 	@When("Medarbejderen opretter et projekt med navnet {string}")
 	public void medarbejderenOpretterEtProjektMedNavnet(String projektNavn) {
@@ -43,49 +45,53 @@ public class projektSteps {
 	}
 	
 	/*******AEndre i projektdata (Her udnytter vi bibliotekets lagring af data)********/
-	Projekt Currentproject;
+	Projekt Currentprojekt;
+	Aktivitet Currentaktivitet;
 	
 	@When("Projektets navn aendres fra {string} til {string}")
 	public void projektetsNavnAendresFraTil(String GammeltNavn, String NytNavn) {
-		//System.out.println(projektManager.AlleProjekter().get(3).getValue().getNavn());
-		
-		//System.out.println(projektManager.projektUdFraNavn(GammeltNavn).getNavn());
-		
-		
-		for(Entry<UUID, Projekt> p : projektManager.AlleProjekter()) {
-			System.out.println(p.getValue());
-		}
-		
-	    throw new io.cucumber.java.PendingException();
+		Currentprojekt = (projektManager.projektUdFraNavn(GammeltNavn));
+		Currentprojekt.setNavn(NytNavn);
 	}
 
 	@Then("Projektets navn er {string}")
 	public void projektetsNavnEr(String NytNavn) {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	    assertTrue(Currentprojekt == projektManager.projektUdFraNavn(NytNavn));
 	}
 
 	@When("Projektet faar en ny projektleder med navnet {string}")
 	public void projektetFaarEnNyProjektlederMedNavnet(String nylederNavn) {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+		Medarbejder nyLeder = new Medarbejder(nylederNavn);
+		nyLeder.Gem();
+	    Currentprojekt.setLeder(nyLeder);
 	}
 
 	@Then("Projektets projektleder har navnet {string}")
 	public void projektetsProjektlederHarNavnet(String nylederNavn) {
-	    assertTrue(this.projekt.getLeder().Navn()==nylederNavn);
+	    assertTrue(Currentprojekt.getLeder().Navn().equals(nylederNavn));
 	}
 
 	@When("Projektet faar sat sin starttid til uge {int} aar {int}")
 	public void projektetFaarSatSinStarttidTilUgeAar(Integer int1, Integer int2) {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	    Currentprojekt.setStartUge(int1);
+	    Currentprojekt.setStartÅr(int2);
 	}
 
 	@Then("Projektets starttid er uge {int} aar {int}")
 	public void projektetsStarttidErUgeAar(Integer int1, Integer int2) {
+		assertTrue(Currentprojekt.getStartUge()==(int1));
+	    assertTrue(Currentprojekt.getStartÅr()==(int2));
+	}
+	
+	@When("Projektlederen sletter aktiviteten {string} fra projektet {string}")
+	public void projektlederenSletterAktivitetenFraProjektet(String aktivitetsNavn, String projektNavn) {
+		Currentprojekt = (projektManager.projektUdFraNavn(projektNavn));
+		System.out.println(aktivitetManager.AlleAktiviteterEfterProjekt(Currentprojekt));
+	}
+
+	@Then("Projektet har ikke laengere aktiviteten")
+	public void projektetHarIkkeLaengereAktiviteten() {
 	    // Write code here that turns the phrase above into concrete actions
 	    throw new io.cucumber.java.PendingException();
 	}
-
 }
