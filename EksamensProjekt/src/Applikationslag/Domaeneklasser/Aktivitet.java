@@ -14,8 +14,8 @@ public class Aktivitet {
 	// klassevariable
 	private int startUge;
 	private int slutUge;
-	private int start≈r;
-	private int slut≈r;
+	private int startaar;
+	private int slutaar;
 	private UUID id = UUID.randomUUID();
 	private Projekt projekt;
 	private Medarbejder medarbejder;
@@ -102,24 +102,24 @@ public class Aktivitet {
 		this.slutUge = slutUge;
 	}
 	
-	public int getStart≈r()
+	public int getStartaar()
 	{
-		return this.start≈r;
+		return this.startaar;
 	}
 	
-	public void setStart≈r(int start≈r)
+	public void setStartaar(int startaar)
 	{
-		this.start≈r = start≈r;
+		this.startaar = startaar;
 	}
 	
-	public int getSlut≈r()
+	public int getSlutaar()
 	{
-		return this.slut≈r;
+		return this.slutaar;
 	}
 	
-	public void setSlut≈r(int slut≈r)
+	public void setSlutaar(int slutaar)
 	{
-		this.slut≈r = slut≈r;
+		this.slutaar = slutaar;
 	}
 	
 	public UUID ID()

@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Praesentationslag.UIOmråde.Controllers.MainController">
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Praesentationslag.UIOmraade.Controllers.MainController">
    <children>
       <TabPane prefHeight="500.0" prefWidth="1000.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <tabs>
@@ -60,31 +60,45 @@
                                     <content>
                                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                              <children>
-                                                <Text fx:id="projektInfoNavn" layoutX="34.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Projekt navn" textAlignment="CENTER">
-                                                   <font>
-                                                      <Font size="24.0" />
-                                                   </font>
-                                                </Text>
-                                                <AnchorPane layoutY="75.0" prefHeight="118.0" prefWidth="200.0">
+                                                <VBox alignment="TOP_CENTER" prefHeight="485.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                    <children>
-                                                      <TextField fx:id="ugeNrProjektStart" layoutX="124.0" layoutY="49.0" prefHeight="25.0" prefWidth="62.0" promptText="UgeNr">
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Projekt navn" textAlignment="CENTER">
                                                          <font>
-                                                            <Font size="10.0" />
+                                                            <Font size="24.0" />
                                                          </font>
-                                                      </TextField>
-                                                      <Text layoutX="14.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start" />
-                                                      <Button layoutX="66.0" layoutY="79.0" mnemonicParsing="false" onAction="#gemProjektStart" text="Gem start" textAlignment="CENTER" />
-                                                      <Text layoutX="76.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="År" />
-                                                      <Text layoutX="134.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="UgeNr" />
-                                                      <TextField fx:id="årstalProjektStart" layoutX="48.0" layoutY="49.0" prefHeight="25.0" prefWidth="68.0" promptText="Årstal" />
-                                                      <Text layoutX="45.0" layoutY="17.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Projekt-start" textAlignment="CENTER" wrappingWidth="100.779296875" AnchorPane.leftAnchor="45.0" AnchorPane.rightAnchor="54.220703125" />
+                                                      </Text>
+                                                      <TextField fx:id="projektInfoNavn" promptText="Projekt Navn" />
+                                                      <Button fx:id="gemProjektNavn" mnemonicParsing="false" onAction="#gemProjektNavn" text="Gem Navn" />
+                                                      <HBox alignment="CENTER" prefHeight="30.0" prefWidth="171.0" spacing="5.0">
+                                                         <children>
+                                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Projektnummer:" />
+                                                            <Text fx:id="ProjektNummer" strokeType="OUTSIDE" strokeWidth="0.0" text="ProjektNummer" />
+                                                         </children>
+                                                      </HBox>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Projekt-start" textAlignment="CENTER" wrappingWidth="135.779296875">
+                                                         <font>
+                                                            <Font size="20.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <AnchorPane prefHeight="0.0" prefWidth="186.0">
+                                                         <children>
+                                                            <TextField fx:id="ugeNrProjektStart" layoutX="124.0" layoutY="27.0" prefHeight="25.0" prefWidth="62.0" promptText="UgeNr">
+                                                               <font>
+                                                                  <Font size="10.0" />
+                                                               </font>
+                                                            </TextField>
+                                                            <Text layoutX="14.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start" />
+                                                            <Button layoutX="66.0" layoutY="57.0" mnemonicParsing="false" onAction="#gemProjektStart" text="Gem start" textAlignment="CENTER" />
+                                                            <Text layoutX="76.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="aar" />
+                                                            <Text layoutX="134.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="UgeNr" />
+                                                            <TextField fx:id="aarstalProjektStart" layoutX="48.0" layoutY="27.0" prefHeight="25.0" prefWidth="68.0" promptText="aarstal" />
+                                                         </children>
+                                                      </AnchorPane>
                                                    </children>
-                                                </AnchorPane>
-                                                <Text layoutX="30.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ProjektNummer">
-                                                   <font>
-                                                      <Font size="20.0" />
-                                                   </font>
-                                                </Text>
+                                                   <padding>
+                                                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                                   </padding>
+                                                </VBox>
                                              </children>
                                           </AnchorPane>
                                     </content>
@@ -148,14 +162,14 @@
                                              </font>
                                           </TextField>
                                           <Text layoutX="16.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Slut" />
-                                          <Text layoutX="70.0" layoutY="13.0" strokeType="OUTSIDE" strokeWidth="0.0" text="År" />
+                                          <Text layoutX="70.0" layoutY="13.0" strokeType="OUTSIDE" strokeWidth="0.0" text="aar" />
                                           <Text layoutX="137.0" layoutY="15.0" strokeType="OUTSIDE" strokeWidth="0.0" text="UgeNr" />
-                                          <TextField fx:id="årstalAktivitetStart" layoutX="51.0" layoutY="24.0" prefHeight="25.0" prefWidth="62.0" promptText="Årstal">
+                                          <TextField fx:id="aarstalAktivitetStart" layoutX="51.0" layoutY="24.0" prefHeight="25.0" prefWidth="62.0" promptText="aarstal">
                                              <font>
                                                 <Font size="10.0" />
                                              </font>
                                           </TextField>
-                                          <TextField fx:id="årstalAktivitetSlut" layoutX="51.0" layoutY="57.0" prefHeight="25.0" prefWidth="62.0" promptText="Årstal">
+                                          <TextField fx:id="aarstalAktivitetSlut" layoutX="51.0" layoutY="57.0" prefHeight="25.0" prefWidth="62.0" promptText="aarstal">
                                              <font>
                                                 <Font size="10.0" />
                                              </font>
@@ -173,9 +187,32 @@
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab text="Medlemmer">
+          <Tab text="Medarbejdere">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <HBox layoutX="232.0" layoutY="186.0" prefHeight="571.0" prefWidth="1000.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="200.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Initialer">
+                                       <font>
+                                          <Font size="25.0" />
+                                       </font>
+                                    </Text>
+                                    <TableView fx:id="medarbejderTabel" prefHeight="351.0" prefWidth="200.0">
+                                      <columns>
+                                          <TableColumn fx:id="medarbejderInitialKolonne" prefWidth="199.0" text="ID" />
+                                      </columns>
+                                    </TableView>
+                                 </children>
+                              </VBox>
+                           </children>
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </HBox>
+                     </children></AnchorPane>
             </content>
           </Tab>
             <Tab text="Test Tab">

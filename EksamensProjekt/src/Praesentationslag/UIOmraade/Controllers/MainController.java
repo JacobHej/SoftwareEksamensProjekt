@@ -1,4 +1,4 @@
-package Praesentationslag.UIOmråde.Controllers;
+package Praesentationslag.UIOmraade.Controllers;
 
 import java.net.URL;
 import java.time.LocalDate;
@@ -8,8 +8,9 @@ import java.util.UUID;
 import java.util.Map.Entry;
 
 import Applikationslag.Domaeneklasser.Aktivitet;
+import Applikationslag.Domaeneklasser.Medarbejder;
 import Applikationslag.Domaeneklasser.Projekt;
-import Praesentationslag.UIOmråde.Views.App;
+import Praesentationslag.UIOmraade.Views.App;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -37,20 +38,24 @@ public class MainController implements Initializable {
 	@FXML private TableColumn<Projekt,String> projektNavnKolonne;
 	@FXML private TableColumn<Projekt,Integer> projektNummerKolonne;
 	
-	//The projekt info
-	@FXML private TextField ugeNrProjektStart;
-	@FXML private TextField årstalProjektStart;
-	@FXML private Text projektInfoNavn;
-	
 	//The activity table
 	@FXML private TableView<Aktivitet> aktivitetTabel;
 	@FXML private TableColumn<Aktivitet,String> aktivitetNavnKolonne;
 	
+	//Medlemmer tabellen
+	@FXML private TableView<Medarbejder> medarbejderTabel;
+	@FXML private TableColumn<Medarbejder,String> medarbejderInitialKolonne;
+	
+	//The projekt info
+	@FXML private TextField ugeNrProjektStart;
+	@FXML private TextField aarstalProjektStart;
+	@FXML private TextField projektInfoNavn;
+	
 	//Aktivitet info
 	@FXML private TextField ugeNrAktivitetStart;
 	@FXML private TextField ugeNrAktivitetSlut;
-	@FXML private TextField årstalAktivitetStart;
-	@FXML private TextField årstalAktivitetSlut;
+	@FXML private TextField aarstalAktivitetStart;
+	@FXML private TextField aarstalAktivitetSlut;
 	@FXML private Text aktivitetInfoNavn;
 	
 	//The add and remove project 
@@ -73,8 +78,7 @@ public class MainController implements Initializable {
 		
 		initializeProjectsTable();
 		initializeActivitiesTable();
-		
-		
+		initializeMedlemmerTabel();
 	}
 	
 	public void initializeProjectsTable() {
@@ -94,17 +98,7 @@ public class MainController implements Initializable {
 		});
 	}
 	
-	public void initializeActivitiesTable() {
 
-		//set up the columns in the table
-		aktivitetNavnKolonne.setCellValueFactory(new PropertyValueFactory<Aktivitet, String>("navn"));
-		
-		aktivitetTabel.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-		    if (newSelection != null) {
-		    	aktivitetOnSelectStart();
-		    }
-		});
-	}
 	
 	public ObservableList<Projekt>  getTestProjekter()
     {
@@ -129,6 +123,44 @@ public class MainController implements Initializable {
         }
     }
 	
+	public void initializeActivitiesTable() {
+
+		//set up the columns in the table
+		aktivitetNavnKolonne.setCellValueFactory(new PropertyValueFactory<Aktivitet, String>("navn"));
+		
+		aktivitetTabel.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+		    if (newSelection != null) {
+		    	aktivitetOnSelectStart();
+		    }
+		});
+	}
+	
+	public void initializeMedlemmerTabel() {
+		//set up the columns in the table
+		medarbejderInitialKolonne.setCellValueFactory(new PropertyValueFactory<Medarbejder, String>("initialer"));
+		tilfoejMedarbejdere();
+		visMedarbejdere();
+	}
+	
+	public void tilfoejMedarbejdere() {
+		Medarbejder m;
+		m = new Medarbejder("Søren Sven Svensen");
+		m.Gem();
+		m = new Medarbejder("Erik Aske Laforce");
+		m.Gem();
+		//nepotisme
+		m = new Medarbejder("Milo Karsten Sørensøn Kadaver");
+		m.Gem();
+		m = new Medarbejder("Dette er et navn");
+		m.Gem();
+		m = new Medarbejder("Henning Hansen");
+		m.Gem();
+		m = new Medarbejder("Tommy Jonas Rath");
+		m.Gem();
+		m = new Medarbejder("JESUS DETTE ER ET VIRKELIGT LANGT NAVN");
+		m.Gem();
+		
+	}
 	
 //Projekt metoder ----------------------------------------------------------------------------------------------------------
 	@FXML
@@ -196,15 +228,26 @@ public class MainController implements Initializable {
     		ugeNrProjektStart.setText("");
     	}
     	
-    	if(p.getStartÅr() != 0) {
-    		årstalProjektStart.setText(p.getStartÅr()+"");
+    	if(p.getStartaar() != 0) {
+    		aarstalProjektStart.setText(p.getStartaar()+"");
     	}else {
-    		årstalProjektStart.setText("");
+    		aarstalProjektStart.setText("");
     	}
     	
     	projektInfoNavn.setText(p.getNavn());
     	
     }
+    
+    @FXML
+    private void gemProjektNavn(ActionEvent event) {
+    	String navn = projektInfoNavn.getText();
+    	if(navn.length()>0) {
+    		Projekt p = projektTabel.getSelectionModel().getSelectedItems().get(0);
+    		p.setNavn(navn);
+    		updateTable(projektTabel);
+    	}
+    }
+    
     
     
     @FXML
@@ -217,7 +260,7 @@ public class MainController implements Initializable {
     	}
     	if(ugeNrProjektStart.getText()!=null) {
     		String ugeText = ugeNrProjektStart.getText();
-    		String årText = årstalProjektStart.getText();
+    		String aarText = aarstalProjektStart.getText();
     		if(ugeText.length()>0) {
     			try{
         			int i = Integer.parseInt(ugeText);
@@ -231,17 +274,17 @@ public class MainController implements Initializable {
         		}
     		}
     		
-    		if(årText.length()>0) {
+    		if(aarText.length()>0) {
     			try{
         			
-        			int i = Integer.parseInt(årText);
+        			int i = Integer.parseInt(aarText);
         			if(i>=1900) {
-        				p.setStartÅr(i);
+        				p.setStartaar(i);
         			}else {
-        				popup("Årstallet må lavest være 1900");
+        				popup("aarstallet maa lavest være 1900");
         			}
         		}catch(Exception e) {
-        			popup("Årstallet skal være et nummer");
+        			popup("aarstallet skal være et nummer");
         		}
     		}
     	}
@@ -290,9 +333,9 @@ public class MainController implements Initializable {
     	}
     	if(ugeNrAktivitetStart.getText()!=null) {
     		String ugeStartText = ugeNrAktivitetStart.getText();
-    		String årStartText = årstalAktivitetStart.getText();
+    		String aarStartText = aarstalAktivitetStart.getText();
     		String ugeSlutText = ugeNrAktivitetSlut.getText();
-    		String årSlutText = årstalAktivitetSlut.getText();
+    		String aarSlutText = aarstalAktivitetSlut.getText();
     		//StartTid...............
     		if(ugeStartText.length()>0) {
     			try{
@@ -307,17 +350,17 @@ public class MainController implements Initializable {
         		}
     		}
     		
-    		if(årStartText.length()>0) {
+    		if(aarStartText.length()>0) {
     			try{
         			
-        			int i = Integer.parseInt(årStartText);
+        			int i = Integer.parseInt(aarStartText);
         			if(i>=1900) {
-        				a.setStartÅr(i);
+        				a.setStartaar(i);
         			}else {
-        				popup("Aktivitetens start-årstal må lavest være 1900");
+        				popup("Aktivitetens start-aarstal maa lavest være 1900");
         			}
         		}catch(Exception e) {
-        			popup("Aktivitetens start-årstal skal være et nummer");
+        			popup("Aktivitetens start-aarstal skal være et nummer");
         		}
     		}
     		//SlutTid ...............
@@ -334,17 +377,17 @@ public class MainController implements Initializable {
         		}
     		}
     		
-    		if(årSlutText.length()>0) {
+    		if(aarSlutText.length()>0) {
     			try{
         			
-        			int i = Integer.parseInt(årSlutText);
+        			int i = Integer.parseInt(aarSlutText);
         			if(i>=1900) {
-        				a.setSlutÅr(i);
+        				a.setSlutaar(i);
         			}else {
-        				popup("Aktivitetens slut-årstal må lavest være 1900");
+        				popup("Aktivitetens slut-aarstal maa lavest være 1900");
         			}
         		}catch(Exception e) {
-        			popup("Aktivitetens slut-årstal skal være et nummer");
+        			popup("Aktivitetens slut-aarstal skal være et nummer");
         		}
     		}
     	}
@@ -372,11 +415,11 @@ public class MainController implements Initializable {
     		ugeNrAktivitetStart.setText("");
     	}
 		
-		//StartÅr
-		if(a.getStartÅr() != 0) {
-    		årstalAktivitetStart.setText(a.getStartÅr()+"");
+		//Startaar
+		if(a.getStartaar() != 0) {
+    		aarstalAktivitetStart.setText(a.getStartaar()+"");
     	}else {
-    		årstalAktivitetStart.setText("");
+    		aarstalAktivitetStart.setText("");
     	}
 		
 		//SlutUge
@@ -386,17 +429,33 @@ public class MainController implements Initializable {
     		ugeNrAktivitetSlut.setText("");
     	}
 		
-		//SlutÅr
+		//Slutaar
 		if(a.getSlutUge() != 0) {
-    		årstalAktivitetSlut.setText(a.getSlutÅr()+"");
+    		aarstalAktivitetSlut.setText(a.getSlutaar()+"");
     	}else {
-    		årstalAktivitetSlut.setText("");
+    		aarstalAktivitetSlut.setText("");
     	}
     	
 		//AktivitetNavn
     	aktivitetInfoNavn.setText(a.getNavn());
     	
     }
+
+//Medarbejder metoder -------------------------------------------------------------------------------------------------------------------
+	
+    //Viser aktiviteter for valgte projekt
+    private void visMedarbejdere() {
+    	
+    	ObservableList<Medarbejder> medarbejdere = FXCollections.observableArrayList();
+        medarbejderTabel.setItems(medarbejdere);
+        
+        for(Entry<UUID, Medarbejder> e : new Medarbejder("funktionsHenter").hentAlle()) {
+        	medarbejderTabel.getItems().add(e.getValue());
+        }
+    }
+	
+	
+	
 	
 //Brugbare metoder----------------------------------------------------------------------------------------------------------------
 	private void popup(String s){
@@ -409,6 +468,11 @@ public class MainController implements Initializable {
         popup.setScene(dialogScene);
         popup.show();
 	}
+	
+	private void updateTable(TableView table) {
+		table.refresh();
+	}
+	
 //Test tab-------------------------------------------------------------------------------------------------------------------------
 	@FXML
     private void popUpTest(ActionEvent event)
