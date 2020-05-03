@@ -36,8 +36,8 @@ public class Projekt {
 
 	}
 	
-	public String toString (Projekt p) {
-		String s = (p.projektnummer + " " + p.navn);
+	public String toString() {
+		String s = (projektnummer + " " + navn);
 		return s;
 	}
 	

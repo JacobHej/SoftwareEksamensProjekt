@@ -53,7 +53,7 @@ public class projektSteps {
 		
 		
 		for(Entry<UUID, Projekt> p : projektManager.AlleProjekter()) {
-			System.out.println(p.getValue().getNavn());
+			System.out.println(p.getValue());
 		}
 		
 	    throw new io.cucumber.java.PendingException();
