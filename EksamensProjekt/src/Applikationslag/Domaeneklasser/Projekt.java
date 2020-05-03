@@ -1,18 +1,24 @@
 package Applikationslag.Domaeneklasser;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.Map.Entry;
+import java.util.Random;
 
 import Applikationslag.Infrastruktur.ServiceImplementationer.*;
 import Applikationslag.Infrastruktur.ServiceInterfaces.*;
 import Applikationslag.Redskaber.Managers;
 
 public class Projekt {
+	static private int loebenummerCounter = 0;
 	private UUID id = UUID.randomUUID();
 	private Medarbejder leder;
 	private String navn;
+	private int Projektnummer;
 	private int startUge;
 	
 	private IAktivitetManager aktivitetManager = Managers.FaaAktivitetManager();
@@ -22,11 +28,14 @@ public class Projekt {
 	{
 		this.navn = navn;
 		this.startUge = startUge;
+		genererProjektnummer();
+
 	}
 	
 	public Projekt(String navn)
 	{
 		this.navn = navn;
+		genererProjektnummer();
 	}
 	
 	public Projekt(String navn, int startUge, Medarbejder leder)
@@ -34,6 +43,7 @@ public class Projekt {
 		this.navn = navn;
 		this.startUge = startUge;
 		this.leder = leder;
+		genererProjektnummer();
 	}
 	
 	public Boolean tilfoejAktivitet(Aktivitet aktivitet)
@@ -55,6 +65,27 @@ public class Projekt {
 		Aktivitet a = new Aktivitet(start,slut,navn);
 		a.setProjekt(this);
 		return aktivitetManager.GemAktivitet(a);
+	}
+	
+	private boolean genererProjektnummer() {
+		try {
+			String formattedDate = ""+((Calendar.getInstance().get(Calendar.YEAR))%100);
+			String id = String.format("%04d", loebenummerCounter);
+			forstoerLoebenummer();
+			Projektnummer = Integer.parseInt(formattedDate+id);
+			System.out.println(Projektnummer+"");
+			return true;
+		}catch(Exception e) {
+			return false;
+		}
+		
+	}
+	
+	private static void forstoerLoebenummer() {
+		loebenummerCounter++;
+		if(loebenummerCounter>9999) {
+			loebenummerCounter = loebenummerCounter%10000;
+		}
 	}
 
 	public Boolean Gem()
