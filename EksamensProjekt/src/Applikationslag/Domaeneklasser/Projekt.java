@@ -18,8 +18,9 @@ public class Projekt {
 	private UUID id = UUID.randomUUID();
 	private Medarbejder leder;
 	private String navn;
-	private int Projektnummer;
+	private int projektnummer;
 	private int startUge;
+	private int start≈r;
 	
 	private IAktivitetManager aktivitetManager = Managers.FaaAktivitetManager();
 	private IProjektManager projektManager = Managers.FaaProjektManager();
@@ -72,8 +73,8 @@ public class Projekt {
 			String formattedDate = ""+((Calendar.getInstance().get(Calendar.YEAR))%100);
 			String id = String.format("%04d", loebenummerCounter);
 			forstoerLoebenummer();
-			Projektnummer = Integer.parseInt(formattedDate+id);
-			System.out.println(Projektnummer+"");
+			projektnummer = Integer.parseInt(formattedDate+id);
+			System.out.println(projektnummer+"");
 			return true;
 		}catch(Exception e) {
 			return false;
@@ -124,6 +125,15 @@ public class Projekt {
 		return this.navn;
 	}
 	
+	public void setProjektnummer(int projektnummer) {
+		this.projektnummer=projektnummer;
+	}
+	
+	public int getProjektnummer()
+	{
+		return this.projektnummer;
+	}
+	
 	public void setNavn(String navn) {
 		this.navn=navn;
 	}
@@ -136,5 +146,15 @@ public class Projekt {
 	public int getStartUge()
 	{
 		return this.startUge;
+	}
+	
+	public void setStart≈r(int start≈r)
+	{
+		this.start≈r = start≈r;
+	}
+
+	public int getStart≈r()
+	{
+		return this.start≈r;
 	}
 }

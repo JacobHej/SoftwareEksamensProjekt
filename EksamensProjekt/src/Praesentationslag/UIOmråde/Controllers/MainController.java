@@ -30,9 +30,11 @@ public class MainController implements Initializable {
 	//The Project Table
 	@FXML private TableView<Projekt> projektTabel;
 	@FXML private TableColumn<Projekt,String> projektNavnKolonne;
+	@FXML private TableColumn<Projekt,Integer> projektNummerKolonne;
 	
 	//The projekt info
 	@FXML private TextField ugeNrProjektStart;
+	@FXML private TextField ÂrstalProjektStart;
 	@FXML private Text projektInfoNavn;
 	
 	//The activity table
@@ -42,6 +44,8 @@ public class MainController implements Initializable {
 	//Aktivitet info
 	@FXML private TextField ugeNrAktivitetStart;
 	@FXML private TextField ugeNrAktivitetSlut;
+	@FXML private TextField ÂrstalAktivitetStart;
+	@FXML private TextField ÂrstalAktivitetSlut;
 	@FXML private Text aktivitetInfoNavn;
 	
 	//The add and remove project 
@@ -72,7 +76,8 @@ public class MainController implements Initializable {
 
 		//set up the columns in the table
 		projektNavnKolonne.setCellValueFactory(new PropertyValueFactory<Projekt, String>("navn"));
-        
+		projektNummerKolonne.setCellValueFactory(new PropertyValueFactory<Projekt, Integer>("projektnummer"));
+		
         //load dummy data
 		projektTabel.setItems(getTestProjekter());
 		
@@ -178,10 +183,18 @@ public class MainController implements Initializable {
     //Viser Projekt Info
     private void visProjektInfo(Projekt p) {
     	
+    	
+    	
     	if(p.getStartUge() != 0) {
     		ugeNrProjektStart.setText(p.getStartUge()+"");
     	}else {
     		ugeNrProjektStart.setText("");
+    	}
+    	
+    	if(p.getStart≈r() != 0) {
+    		ÂrstalProjektStart.setText(p.getStart≈r()+"");
+    	}else {
+    		ÂrstalProjektStart.setText("");
     	}
     	
     	projektInfoNavn.setText(p.getNavn());
@@ -193,20 +206,38 @@ public class MainController implements Initializable {
     private void gemProjektStart(ActionEvent event)
     {
     	Projekt p = projektTabel.getSelectionModel().getSelectedItems().get(0);
+    	if(p==null) {
+    		return;
+    	}
     	if(ugeNrProjektStart.getText()!=null) {
-    		String s = ugeNrProjektStart.getText();
-    		try{
-    			int i = Integer.parseInt(s);
-    			if(i<=53&&i>0) {
-    				p.setStartUge(i);
-    			}else {
-    				ugeNrProjektStart.setText("Uger gÂr mellem 1 og 53!");
-    			}
-    			
-    		}catch(Exception e) {
-    			ugeNrProjektStart.setText("Nummer tak!");
+    		String ugeText = ugeNrProjektStart.getText();
+    		String ÂrText = ÂrstalProjektStart.getText();
+    		if(ugeText.length()>0) {
+    			try{
+        			int i = Integer.parseInt(ugeText);
+        			if(i<=53&&i>0) {
+        				p.setStartUge(i);
+        			}else {
+        				ugeNrProjektStart.setText("Uger gÂr mellem 1 og 53!");
+        			}
+        		}catch(Exception e) {
+        			ugeNrProjektStart.setText("Nummer tak!");
+        		}
     		}
     		
+    		if(ÂrText.length()>0) {
+    			try{
+        			
+        			int i = Integer.parseInt(ÂrText);
+        			if(i>=1900) {
+        				p.setStart≈r(i);
+        			}else {
+        				ÂrstalProjektStart.setText("Laveste Âr 1900");
+        			}
+        		}catch(Exception e) {
+        			ÂrstalProjektStart.setText("Nummer tak!");
+        		}
+    		}
     	}
     }
     
@@ -246,25 +277,69 @@ public class MainController implements Initializable {
     private void gemAktivitetTid(ActionEvent event)
     {
     	Aktivitet a = aktivitetTabel.getSelectionModel().getSelectedItems().get(0);
-    	if(ugeNrAktivitetStart.getText()!=null&&ugeNrAktivitetSlut.getText()!=null) {
-    		String start = ugeNrAktivitetStart.getText();
-    		String slut = ugeNrAktivitetSlut.getText();
-    		try{
-    			int istart = Integer.parseInt(start);
-    			int islut = Integer.parseInt(slut);
-    			if(istart<=53&&istart>0 && islut<=53&&islut>0) {
-    				a.setStartUge(istart);
-    				a.setSlutUge(islut);
-    			}else {
-    				ugeNrAktivitetStart.setText("Uger gÂr mellem 1 og 53!");
-    				ugeNrAktivitetSlut.setText("Uger gÂr mellem 1 og 53!");
-    			}
-    			
-    		}catch(Exception e) {
-    			ugeNrAktivitetStart.setText("Nummer tak!");
-    			ugeNrAktivitetSlut.setText("Nummer tak!");
+    	
+    	if(a==null) {
+    		return;
+    	}
+    	if(ugeNrAktivitetStart.getText()!=null) {
+    		String ugeStartText = ugeNrAktivitetStart.getText();
+    		String ÂrStartText = ÂrstalAktivitetStart.getText();
+    		String ugeSlutText = ugeNrAktivitetSlut.getText();
+    		String ÂrSlutText = ÂrstalAktivitetSlut.getText();
+    		//StartTid...............
+    		if(ugeStartText.length()>0) {
+    			try{
+        			int i = Integer.parseInt(ugeStartText);
+        			if(i<=53&&i>0) {
+        				a.setStartUge(i);
+        			}else {
+        				ugeNrAktivitetStart.setText("Uger gÂr mellem 1 og 53!");
+        			}
+        		}catch(Exception e) {
+        			ugeNrAktivitetStart.setText("Nummer tak!");
+        		}
     		}
     		
+    		if(ÂrStartText.length()>0) {
+    			try{
+        			
+        			int i = Integer.parseInt(ÂrStartText);
+        			if(i>=1900) {
+        				a.setStart≈r(i);
+        			}else {
+        				ÂrstalAktivitetStart.setText("Laveste Âr 1900");
+        			}
+        		}catch(Exception e) {
+        			ÂrstalAktivitetStart.setText("Nummer tak!");
+        		}
+    		}
+    		//SlutTid ...............
+    		if(ugeSlutText.length()>0) {
+    			try{
+        			int i = Integer.parseInt(ugeSlutText);
+        			if(i<=53&&i>0) {
+        				a.setSlutUge(i);
+        			}else {
+        				ugeNrAktivitetSlut.setText("Uger gÂr mellem 1 og 53!");
+        			}
+        		}catch(Exception e) {
+        			ugeNrAktivitetSlut.setText("Nummer tak!");
+        		}
+    		}
+    		
+    		if(ÂrSlutText.length()>0) {
+    			try{
+        			
+        			int i = Integer.parseInt(ÂrSlutText);
+        			if(i>=1900) {
+        				a.setSlut≈r(i);
+        			}else {
+        				ÂrstalAktivitetSlut.setText("Laveste Âr 1900");
+        			}
+        		}catch(Exception e) {
+        			ÂrstalAktivitetSlut.setText("Nummer tak!");
+        		}
+    		}
     	}
     }
 	
@@ -283,18 +358,35 @@ public class MainController implements Initializable {
 	
 	private void visAktivitetInfo(Aktivitet a) {
     	
+		//StartUge
 		if(a.getStartUge() != 0) {
     		ugeNrAktivitetStart.setText(a.getStartUge()+"");
     	}else {
     		ugeNrAktivitetStart.setText("");
     	}
 		
+		//Start≈r
+		if(a.getStart≈r() != 0) {
+    		ÂrstalAktivitetStart.setText(a.getStart≈r()+"");
+    	}else {
+    		ÂrstalAktivitetStart.setText("");
+    	}
+		
+		//SlutUge
 		if(a.getSlutUge() != 0) {
     		ugeNrAktivitetSlut.setText(a.getSlutUge()+"");
     	}else {
     		ugeNrAktivitetSlut.setText("");
     	}
+		
+		//Slut≈r
+		if(a.getSlutUge() != 0) {
+    		ÂrstalAktivitetSlut.setText(a.getSlut≈r()+"");
+    	}else {
+    		ÂrstalAktivitetSlut.setText("");
+    	}
     	
+		//AktivitetNavn
     	aktivitetInfoNavn.setText(a.getNavn());
     	
     }
