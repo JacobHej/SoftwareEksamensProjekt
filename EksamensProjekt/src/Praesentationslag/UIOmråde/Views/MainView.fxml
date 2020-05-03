@@ -1,141 +1,193 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Accordion?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="500.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Praesentationslag.UIOmråde.Controllers.MainController">
+<AnchorPane prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Praesentationslag.UIOmråde.Controllers.MainController">
    <children>
-      <HBox prefHeight="500.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <VBox alignment="TOP_CENTER" prefHeight="500.0" prefWidth="200.0" spacing="10.0">
-               <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Projekter" textAlignment="CENTER">
-                     <font>
-                        <Font size="25.0" />
-                     </font>
-                  </Text>
-                  <TableView fx:id="projektTabel" prefHeight="343.0" prefWidth="200.0">
-                    <columns>
-                      <TableColumn fx:id="projektNavnKolonne" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="99.0" resizable="false" text="Navn" />
-                        <TableColumn fx:id="projektNummerKolonne" prefWidth="99.0" text="Nummer" />
-                    </columns>
-                  </TableView>
-                  <Button fx:id="fjernValgteProjekterKnap" mnemonicParsing="false" onAction="#fjernValgteProjekt" text="Fjern valgte projekt">
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </Button>
-                  <HBox prefHeight="5.0" prefWidth="301.0" spacing="10.0">
+      <TabPane prefHeight="500.0" prefWidth="1000.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <tabs>
+          <Tab text="Projekter og Aktiviteter">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TextField fx:id="tilfoejProjektNavn" prefHeight="25.0" prefWidth="195.0" promptText="Projekt navn" />
+                        <HBox layoutX="15.0" prefHeight="571.0" prefWidth="1000.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <VBox alignment="TOP_CENTER" prefHeight="500.0" prefWidth="200.0" spacing="10.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Projekter" textAlignment="CENTER">
+                                       <font>
+                                          <Font size="25.0" />
+                                       </font>
+                                    </Text>
+                                    <TableView fx:id="projektTabel" prefHeight="343.0" prefWidth="200.0">
+                                       <columns>
+                                          <TableColumn fx:id="projektNavnKolonne" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="99.0" resizable="false" text="Navn" />
+                                          <TableColumn fx:id="projektNummerKolonne" prefWidth="99.0" text="Nummer" />
+                                       </columns>
+                                    </TableView>
+                                    <Button fx:id="fjernValgteProjekterKnap" mnemonicParsing="false" onAction="#fjernValgteProjekt" text="Fjern valgte projekt">
+                                       <VBox.margin>
+                                          <Insets />
+                                       </VBox.margin>
+                                    </Button>
+                                    <HBox prefHeight="5.0" prefWidth="301.0" spacing="10.0">
+                                       <children>
+                                          <TextField fx:id="tilfoejProjektNavn" prefHeight="25.0" prefWidth="195.0" promptText="Projekt navn" />
+                                       </children>
+                                       <padding>
+                                          <Insets left="10.0" right="10.0" />
+                                       </padding>
+                                    </HBox>
+                                    <Button fx:id="tilfoejProjektKnap" mnemonicParsing="false" onAction="#tilfoejProjekt" text="Tilfoej projekt" textAlignment="CENTER" />
+                                 </children>
+                              </VBox>
+                              <Accordion>
+                                <panes>
+                                  <TitledPane animated="false" text="Projekt Info">
+                                    <content>
+                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                             <children>
+                                                <Text fx:id="projektInfoNavn" layoutX="34.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Projekt navn" textAlignment="CENTER">
+                                                   <font>
+                                                      <Font size="24.0" />
+                                                   </font>
+                                                </Text>
+                                                <AnchorPane layoutY="75.0" prefHeight="118.0" prefWidth="200.0">
+                                                   <children>
+                                                      <TextField fx:id="ugeNrProjektStart" layoutX="124.0" layoutY="49.0" prefHeight="25.0" prefWidth="62.0" promptText="UgeNr">
+                                                         <font>
+                                                            <Font size="10.0" />
+                                                         </font>
+                                                      </TextField>
+                                                      <Text layoutX="14.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start" />
+                                                      <Button layoutX="66.0" layoutY="79.0" mnemonicParsing="false" onAction="#gemProjektStart" text="Gem start" textAlignment="CENTER" />
+                                                      <Text layoutX="76.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="År" />
+                                                      <Text layoutX="134.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="UgeNr" />
+                                                      <TextField fx:id="årstalProjektStart" layoutX="48.0" layoutY="49.0" prefHeight="25.0" prefWidth="68.0" promptText="Årstal" />
+                                                      <Text layoutX="45.0" layoutY="17.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Projekt-start" textAlignment="CENTER" wrappingWidth="100.779296875" AnchorPane.leftAnchor="45.0" AnchorPane.rightAnchor="54.220703125" />
+                                                   </children>
+                                                </AnchorPane>
+                                                <Text layoutX="30.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ProjektNummer">
+                                                   <font>
+                                                      <Font size="20.0" />
+                                                   </font>
+                                                </Text>
+                                             </children>
+                                          </AnchorPane>
+                                    </content>
+                                  </TitledPane>
+                                  <TitledPane animated="false" text="untitled 2">
+                                    <content>
+                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                    </content>
+                                  </TitledPane>
+                                  <TitledPane animated="false" text="untitled 3">
+                                    <content>
+                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                    </content>
+                                  </TitledPane>
+                                </panes>
+                              </Accordion>
+                              <VBox alignment="TOP_CENTER" prefHeight="500.0" prefWidth="200.0">
+                                 <children>
+                                    <TableView fx:id="aktivitetTabel" prefHeight="385.0" prefWidth="200.0">
+                                       <columns>
+                                          <TableColumn fx:id="aktivitetNavnKolonne" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="200.0" resizable="false" text="Aktiviteter" />
+                                       </columns>
+                                    </TableView>
+                                    <Button fx:id="fjernValgteAktiviteterKnap" mnemonicParsing="false" onAction="#fjernValgteAktivitet" text="Fjern valgte aktivitet">
+                                       <VBox.margin>
+                                          <Insets top="10.0" />
+                                       </VBox.margin>
+                                    </Button>
+                                    <TextField fx:id="tilfoejAktivitetNavn" promptText="Aktivitet's navn">
+                                       <VBox.margin>
+                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                       </VBox.margin>
+                                    </TextField>
+                                    <Button fx:id="tilfoejAktivitetKnap" mnemonicParsing="false" onAction="#tilfoejAktivitet" text="Tilfoej aktivitet" textAlignment="CENTER" />
+                                 </children>
+                              </VBox>
+                              <VBox alignment="TOP_CENTER" prefHeight="500.0" prefWidth="200.0" spacing="10.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Aktivitets info">
+                                       <font>
+                                          <Font size="20.0" />
+                                       </font>
+                                    </Text>
+                                    <Text fx:id="aktivitetInfoNavn" strokeType="OUTSIDE" strokeWidth="0.0" text="Aktivitet navn" textAlignment="CENTER">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Text>
+                                    <AnchorPane prefHeight="143.0" prefWidth="200.0">
+                                       <children>
+                                          <TextField fx:id="ugeNrAktivitetStart" layoutX="124.0" layoutY="24.0" prefHeight="25.0" prefWidth="62.0" promptText="UgeNr">
+                                             <font>
+                                                <Font size="10.0" />
+                                             </font>
+                                          </TextField>
+                                          <Text layoutX="14.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start" />
+                                          <Button layoutX="48.0" layoutY="90.0" mnemonicParsing="false" onAction="#gemAktivitetTid" text="Gem tidsperiode" textAlignment="CENTER" />
+                                          <TextField fx:id="ugeNrAktivitetSlut" layoutX="124.0" layoutY="57.0" prefHeight="25.0" prefWidth="62.0" promptText="UgeNr">
+                                             <font>
+                                                <Font size="10.0" />
+                                             </font>
+                                          </TextField>
+                                          <Text layoutX="16.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Slut" />
+                                          <Text layoutX="70.0" layoutY="13.0" strokeType="OUTSIDE" strokeWidth="0.0" text="År" />
+                                          <Text layoutX="137.0" layoutY="15.0" strokeType="OUTSIDE" strokeWidth="0.0" text="UgeNr" />
+                                          <TextField fx:id="årstalAktivitetStart" layoutX="51.0" layoutY="24.0" prefHeight="25.0" prefWidth="62.0" promptText="Årstal">
+                                             <font>
+                                                <Font size="10.0" />
+                                             </font>
+                                          </TextField>
+                                          <TextField fx:id="årstalAktivitetSlut" layoutX="51.0" layoutY="57.0" prefHeight="25.0" prefWidth="62.0" promptText="Årstal">
+                                             <font>
+                                                <Font size="10.0" />
+                                             </font>
+                                          </TextField>
+                                       </children>
+                                    </AnchorPane>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
                      </children>
                      <padding>
-                        <Insets left="10.0" right="10.0" />
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </padding>
-                  </HBox>
-                  <Button fx:id="tilfoejProjektKnap" mnemonicParsing="false" onAction="#tilfoejProjekt" text="Tilfoej projekt" textAlignment="CENTER" />
-               </children>
-            </VBox>
-            <VBox alignment="TOP_CENTER" prefHeight="500.0" prefWidth="200.0" spacing="10.0">
-               <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Projekt info">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Text>
-                  <Text fx:id="projektInfoNavn" strokeType="OUTSIDE" strokeWidth="0.0" text="Projekt navn" textAlignment="CENTER">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Text>
-                  <AnchorPane prefHeight="95.0" prefWidth="200.0">
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Medlemmer">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+          </Tab>
+            <Tab text="Test Tab">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TextField fx:id="ugeNrProjektStart" layoutX="124.0" layoutY="26.0" prefHeight="25.0" prefWidth="62.0" promptText="UgeNr">
-                           <font>
-                              <Font size="10.0" />
-                           </font>
-                        </TextField>
-                        <Text layoutX="14.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start" />
-                        <Button layoutX="66.0" layoutY="56.0" mnemonicParsing="false" onAction="#gemProjektStart" text="Gem start" textAlignment="CENTER" />
-                        <Text layoutX="76.0" layoutY="18.0" strokeType="OUTSIDE" strokeWidth="0.0" text="År" />
-                        <Text layoutX="134.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="UgeNr" />
-                        <TextField fx:id="årstalProjektStart" layoutX="48.0" layoutY="26.0" prefHeight="25.0" prefWidth="68.0" promptText="Årstal" />
+                        <Button layoutX="183.0" layoutY="106.0" mnemonicParsing="false" onAction="#popUpTest" text="Pop-Up Test" />
                      </children>
                   </AnchorPane>
-               </children>
-            </VBox>
-            <VBox alignment="TOP_CENTER" prefHeight="500.0" prefWidth="200.0">
-               <children>
-                  <TableView fx:id="aktivitetTabel" prefHeight="385.0" prefWidth="200.0">
-                     <columns>
-                        <TableColumn fx:id="aktivitetNavnKolonne" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="200.0" resizable="false" text="Aktiviteter" />
-                     </columns>
-                  </TableView>
-                  <Button fx:id="fjernValgteAktiviteterKnap" mnemonicParsing="false" onAction="#fjernValgteAktivitet" text="Fjern valgte aktivitet">
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
-                  </Button>
-                  <TextField fx:id="tilfoejAktivitetNavn" promptText="Aktivitet's navn">
-                     <VBox.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </VBox.margin>
-                  </TextField>
-                  <Button fx:id="tilfoejAktivitetKnap" mnemonicParsing="false" onAction="#tilfoejAktivitet" text="Tilfoej aktivitet" textAlignment="CENTER" />
-               </children>
-            </VBox>
-            <VBox alignment="TOP_CENTER" prefHeight="500.0" prefWidth="200.0" spacing="10.0">
-               <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Aktivitets info">
-                     <font>
-                        <Font size="20.0" />
-                     </font>
-                  </Text>
-                  <Text fx:id="aktivitetInfoNavn" strokeType="OUTSIDE" strokeWidth="0.0" text="Aktivitet navn" textAlignment="CENTER">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Text>
-                  <AnchorPane prefHeight="143.0" prefWidth="200.0">
-                     <children>
-                        <TextField fx:id="ugeNrAktivitetStart" layoutX="124.0" layoutY="24.0" prefHeight="25.0" prefWidth="62.0" promptText="UgeNr">
-                           <font>
-                              <Font size="10.0" />
-                           </font>
-                        </TextField>
-                        <Text layoutX="14.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start" />
-                        <Button layoutX="48.0" layoutY="90.0" mnemonicParsing="false" onAction="#gemAktivitetTid" text="Gem tidsperiode" textAlignment="CENTER" />
-                        <TextField fx:id="ugeNrAktivitetSlut" layoutX="124.0" layoutY="57.0" prefHeight="25.0" prefWidth="62.0" promptText="UgeNr">
-                           <font>
-                              <Font size="10.0" />
-                           </font>
-                        </TextField>
-                        <Text layoutX="16.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Slut" />
-                        <Text layoutX="70.0" layoutY="13.0" strokeType="OUTSIDE" strokeWidth="0.0" text="År" />
-                        <Text layoutX="137.0" layoutY="15.0" strokeType="OUTSIDE" strokeWidth="0.0" text="UgeNr" />
-                        <TextField fx:id="årstalAktivitetStart" layoutX="51.0" layoutY="24.0" prefHeight="25.0" prefWidth="62.0" promptText="Årstal">
-                           <font>
-                              <Font size="10.0" />
-                           </font>
-                        </TextField>
-                        <TextField fx:id="årstalAktivitetSlut" layoutX="51.0" layoutY="57.0" prefHeight="25.0" prefWidth="62.0" promptText="Årstal">
-                           <font>
-                              <Font size="10.0" />
-                           </font>
-                        </TextField>
-                     </children>
-                  </AnchorPane>
-               </children>
-            </VBox>
-         </children>
-      </HBox>
+              </content>
+            </Tab>
+        </tabs>
+      </TabPane>
    </children>
 </AnchorPane>
