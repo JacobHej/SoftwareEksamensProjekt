@@ -21,11 +21,6 @@ public class projektSteps {
 	IMedarbejderManager medarbejderManager= Managers.FaaMedarbejderManager();
 	IProjektManager projektManager= Managers.FaaProjektManager();
 	
-	@Given("der er en medarbejder med ID'et {string}")
-	public void derErEnMedarbejderMedIDEt(String MedarbejderID) {
-		medarbejder=new Medarbejder(MedarbejderID);					//opret ny medarbjder
-	}
-
 	@When("Medarbejderen opretter et projekt med navnet {string}")
 	public void medarbejderenOpretterEtProjektMedNavnet(String projektNavn) {
 	    projekt = new Projekt(projektNavn);
@@ -37,6 +32,11 @@ public class projektSteps {
 		assertTrue(projekt.getNavn().equals(projektNavn));
 	    assertTrue(projektManager.eksisterer(projekt));
 
+	}
+	
+	@Then("projektet {string} har et loebenummer som er tildelt af systemet")
+	public void projektetHarEtLoebenummerSomErTildeltAfSystemet(String ProjektNavn) {
+	    assertTrue(new String("" + projekt.getProjektnummer()).substring(0,2).equals("20"));
 	}
 
 

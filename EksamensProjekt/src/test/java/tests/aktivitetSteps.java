@@ -93,7 +93,9 @@ public class aktivitetSteps {
 	
 	@When("Medarbejderen {string} tilfoejer {int} timer til aktiviteten {string}")
 	public void medarbejderenTilfoejerTimerTilAktiviteten(String MedarbejderID, Integer int1, String AktivitetID) {
+		
 		System.out.println(this.aktivitet.TilfoejTid(int1));
+		System.out.println(this.aktivitet.TilfoejTid(int1,this.medarbejder));
 		assertTrue(this.aktivitet.TilfoejTid(int1, this.medarbejder));
 	}
 
