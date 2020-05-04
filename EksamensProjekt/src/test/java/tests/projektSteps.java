@@ -50,9 +50,7 @@ public class projektSteps {
 	
 	@When("Projektets navn aendres fra {string} til {string}")
 	public void projektetsNavnAendresFraTil(String GammeltNavn, String NytNavn) {
-		System.out.println(projektManager.projektUdFraNavn(GammeltNavn).getClass());
 		Currentprojekt = (projektManager.projektUdFraNavn(GammeltNavn));
-		System.out.println(projektManager.projektUdFraNavn(NytNavn).getNavn());
 		Currentprojekt.setNavn(NytNavn);
 	}
 
