@@ -53,8 +53,7 @@ public class Aktivitet {
 	
 	public Boolean SaetMedarbejder(Medarbejder nyMedarbejder)
 	{
-		if (medarbejderManager.AktiviteterIDenneUge(Dates.getCurrentWeek(), nyMedarbejder) 
-				< GlobaleVariable.MaksimaleVagter()
+		if (medarbejderManager.MedarbejderLedig(this.startUge, this.slutUge, this.startaar, this.slutaar, nyMedarbejder)
 				&& MedarbejderData.Bibliotek.entrySet().stream()
 				.anyMatch(e -> e.getValue().getNavn() == nyMedarbejder.getNavn()))
 		{

@@ -75,4 +75,19 @@ public class MedarbejderManager implements IMedarbejderManager {
 		return result;
 	}
 
+	@Override
+	public Boolean MedarbejderLedig(int weekStart, int weekSlut, int yearStart, int yearSlut, Medarbejder medarbejder) {
+		for(int i = yearStart; i <= yearSlut; i ++)
+		{
+			for(int j = (i == yearStart ? weekStart : 0); j < (i == yearSlut ? weekSlut : 0); j++)
+			{
+				if(AktiviteterIDenneUge(j, i, medarbejder) > GlobaleVariable.MaksimaleVagter())
+				{
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+
 }
