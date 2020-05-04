@@ -88,13 +88,12 @@ public class projektSteps {
 	@When("Projektlederen sletter aktiviteten {string} fra projektet {string}")
 	public void projektlederenSletterAktivitetenFraProjektet(String aktivitetsNavn, String projektNavn) {
 		Currentprojekt = (projektManager.projektUdFraNavn(projektNavn));
-		// Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+		Currentaktivitet = aktivitetManager.AktivitetEfterProjektOgNavn(Currentprojekt, aktivitetsNavn);
+		assertTrue(aktivitetManager.fjern(Currentaktivitet));
 	}
 
 	@Then("Projektet har ikke laengere aktiviteten {string}")
 	public void projektetHarIkkeLaengereAktiviteten(String string) {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	    assertFalse(aktivitetManager.eksisterer(Currentaktivitet));
 	}
 }

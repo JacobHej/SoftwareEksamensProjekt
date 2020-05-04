@@ -72,9 +72,9 @@ public class aktivitetSteps {
 	@Given("der er en medarbejder med ID'et {string} og et projekt med navnet {string}")
 	public void derErEnMedarbejderMedIDEtOgEtProjektMedNavnet(String MedarbejderID, String ProjektNavn) {
 	    this.medarbejder = new Medarbejder (MedarbejderID);
-	    this.medarbejder.Gem();
+	    assertTrue(this.medarbejder.Gem());
 	    this.projekt = new Projekt (ProjektNavn);
-	    this.projekt.Gem();
+	    assertTrue(this.projekt.Gem());
 	}
 
 	@Given("Projektet {string} har en aktivitet {string}")
@@ -85,7 +85,7 @@ public class aktivitetSteps {
 	
 	@Given("Medarbejderen {string} arbejder paa aktiviteten {string}")
 	public void medarbejderenArbejderPaaAktiviteten(String MedarbejderID, String AktivitetID) {
-	    this.aktivitet.SaetMedarbejder(this.medarbejder);
+	    assertTrue(this.aktivitet.SaetMedarbejder(this.medarbejder));
 	    assertTrue((this.aktivitet.Medarbejder()==this.medarbejder));
 	    
 	} 

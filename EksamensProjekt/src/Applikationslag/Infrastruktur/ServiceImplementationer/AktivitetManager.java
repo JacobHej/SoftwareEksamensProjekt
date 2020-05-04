@@ -33,6 +33,17 @@ public class AktivitetManager implements IAktivitetManager{
 			.collect(Collectors.toList());
 	}
 	
+	public Aktivitet AktivitetEfterProjektOgNavn (Projekt p, String navn) {
+		Aktivitet a;
+		a= (AktivitetData.Bibliotek.entrySet().stream()
+				.filter(e -> e.getValue().getNavn().equals(navn))
+				.collect(Collectors.toList()).get(0).getValue());
+		if (a.getProjekt()==p) {
+			return a;
+		}
+		return null;
+	}
+	
 	public Boolean eksisterer(Aktivitet aktivitet)
 	{
 		return AktivitetData.Bibliotek.containsValue(aktivitet);

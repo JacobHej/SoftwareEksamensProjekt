@@ -11,6 +11,8 @@ public interface IAktivitetManager {
 	
 	public List<Entry<UUID, Aktivitet>> AlleAktiviteterEfterProjekt(Projekt projekt);
 	
+	public Aktivitet AktivitetEfterProjektOgNavn (Projekt p, String navn);
+	
 	public Boolean eksisterer(Aktivitet aktivitet);
 	
 	public Boolean fjern(Aktivitet aktivitet);

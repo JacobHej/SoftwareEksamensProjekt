@@ -56,7 +56,7 @@ public class Aktivitet {
 		if (medarbejderManager.AktiviteterIDenneUge(Dates.getCurrentWeek(), nyMedarbejder) 
 				< GlobaleVariable.MaksimaleVagter()
 				&& MedarbejderData.Bibliotek.entrySet().stream()
-				.anyMatch(e -> e.getValue().getNavn() == medarbejder.getNavn()))
+				.anyMatch(e -> e.getValue().getNavn() == nyMedarbejder.getNavn()))
 		{
 			this.medarbejder = nyMedarbejder;
 			return true;
