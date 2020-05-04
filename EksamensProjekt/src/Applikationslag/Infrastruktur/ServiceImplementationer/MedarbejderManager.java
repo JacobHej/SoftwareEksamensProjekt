@@ -81,7 +81,7 @@ public class MedarbejderManager implements IMedarbejderManager {
 		{
 			for(int j = (i == yearStart ? weekStart : 0); j < (i == yearSlut ? weekSlut : 0); j++)
 			{
-				if(AktiviteterIDenneUge(j, i, medarbejder) > GlobaleVariable.MaksimaleVagter())
+				if(AktiviteterIDenneUge(j, i, medarbejder) >= GlobaleVariable.MaksimaleVagter())
 				{
 					return false;
 				}

@@ -127,14 +127,14 @@ public class projektSteps {
 	    Currentmedarbejder.Gem();
 	    Projekt Filler = new Projekt("Filler");
 	    Filler.Gem();
-	    for (int i = 0; i < 20; i++){
+	    for (int i = 0; i < AktiviteterUge2; i++){
 	    	Aktivitet Fill = new Aktivitet("FillerAktivitet"  + i);
 	    	Filler.tilfoejAktivitet(Fill);
 	    	Fill.SaetMedarbejder(Currentmedarbejder);
 	    	Fill.setStartaar(2020);Fill.setSlutaar(2020);
 	    	Fill.setStartUge(Uge2);Fill.setSlutUge(Uge2);
 	    }
-	    assertTrue((medarbejderManager.AktiviteterIDenneUge(Uge2, 2020, Currentmedarbejder))==20);
+	    assertTrue((medarbejderManager.AktiviteterIDenneUge(Uge2, 2020, Currentmedarbejder))==AktiviteterUge2);
 
 	}
 
@@ -147,6 +147,7 @@ public class projektSteps {
 	    AktivitetUge1.setStartaar(2020);AktivitetUge1.setSlutaar(2020);
 	    AktivitetUge1.setStartUge(Uge1);AktivitetUge1.setSlutUge(Uge1);
 	    assertTrue(AktivitetUge1.SaetMedarbejder(Currentmedarbejder));
+	    
 	    assertTrue((medarbejderManager.AktiviteterIDenneUge(Uge1, 2020, Currentmedarbejder))==1);
 	}
 
@@ -154,6 +155,7 @@ public class projektSteps {
 	public void derForsoegesAtAktivitetenIProjektFaarSinSlutUgeAendretTilUge(String AktivitetNavn, String ProjektNavn, Integer Uge2) {
 		Currentaktivitet = aktivitetManager.AktivitetEfterProjektOgNavn(projektManager.projektUdFraNavn(ProjektNavn), AktivitetNavn);
 		Currentaktivitet.setSlutUge(2);
+		System.out.println("HER -->" + medarbejderManager.AktiviteterIDenneUge(Uge2, 2020, Currentmedarbejder ));
 		assertTrue(medarbejderManager.AktiviteterIDenneUge(Uge2, 2020, Currentmedarbejder )==20);
 		System.out.println(medarbejderManager.AktiviteterIDenneUge(Uge2, 2020, Currentmedarbejder )+ "<--------HER!!!!!");
 	}

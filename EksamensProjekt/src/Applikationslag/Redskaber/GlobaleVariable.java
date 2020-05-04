@@ -1,7 +1,7 @@
 package Applikationslag.Redskaber;
 
 public final class GlobaleVariable {
-	private static int maksimaleVagter = 21;
+	private static int maksimaleVagter = 20;
 	
 	public static int MaksimaleVagter()
 	{
