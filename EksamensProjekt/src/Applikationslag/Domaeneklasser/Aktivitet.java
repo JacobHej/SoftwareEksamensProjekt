@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.UUID;
 
 import Applikationslag.Data.Datavedholdelsesklasser.MedarbejderData;
+import Applikationslag.Data.Datavedholdelsesklasser.ProjektData;
 import Applikationslag.Infrastruktur.ServiceInterfaces.IAktivitetManager;
 import Applikationslag.Infrastruktur.ServiceInterfaces.IBrugttidManager;
 import Applikationslag.Infrastruktur.ServiceInterfaces.IMedarbejderManager;
@@ -55,7 +56,7 @@ public class Aktivitet {
 		if (medarbejderManager.AktiviteterIDenneUge(Dates.getCurrentWeek(), nyMedarbejder) 
 				< GlobaleVariable.MaksimaleVagter()
 				&& MedarbejderData.Bibliotek.entrySet().stream()
-				.anyMatch(e -> e.getValue().getNavn() == medarbejder.getNavn()))
+				.anyMatch(e -> e.getValue().getNavn() == nyMedarbejder.getNavn()))
 		{
 			this.medarbejder = nyMedarbejder;
 			return true;
@@ -136,8 +137,8 @@ public class Aktivitet {
 	}
 	
 	public void setProjekt(Projekt p) {
-		if(MedarbejderData.Bibliotek.entrySet().stream()
-		.anyMatch(e -> e.getValue().getNavn() == medarbejder.getNavn()))
+		if(ProjektData.Bibliotek.entrySet().stream()
+		.anyMatch(e -> e.getValue().getNavn() == p.getNavn()))
 			this.projekt = p;
 	}
 	

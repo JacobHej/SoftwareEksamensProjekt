@@ -14,4 +14,6 @@ public interface IProjektManager {
 	public Boolean eksisterer(Projekt projekt);
 	
 	public Boolean fjern(Projekt projekt);
+	
+	
 }

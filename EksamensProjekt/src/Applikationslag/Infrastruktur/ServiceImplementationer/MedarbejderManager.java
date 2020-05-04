@@ -1,7 +1,11 @@
 package Applikationslag.Infrastruktur.ServiceImplementationer;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.UUID;
 
@@ -26,21 +30,25 @@ public class MedarbejderManager implements IMedarbejderManager {
 	}
 
 	@Override
-	public List<Entry<UUID, Medarbejder>> AlleLedigeMedarbejdere() {
-		return MedarbejderData.Bibliotek.entrySet().stream()
-			.filter(e -> AktiviteterIDenneUge(Dates.getCurrentWeek(), e.getValue()) 
-					< GlobaleVariable.MaksimaleVagter())
-			.collect(Collectors.toList());
-	}
-
-	@Override
-	public long AktiviteterIDenneUge(int week, Medarbejder medarbejder) {
+	public long AktiviteterIDenneUge(int week, int year, Medarbejder medarbejder) {
 		return AktivitetData.Bibliotek.entrySet().stream()
 			.filter(e -> e.getValue().Medarbejder() != null)
 			.filter(e -> e.getValue().Medarbejder().ID() == medarbejder.ID())
-			.filter(e -> e.getValue().getStartUge() <= week
-					&& e.getValue().getSlutUge() >= week)
-			.count();
+			.filter(e -> 
+					((
+							((e.getValue().getStartaar() < year) 
+								|| 
+								(e.getValue().getStartaar() == year 
+									&&
+								(e.getValue().getStartUge() <= week)))
+						&&
+							((e.getValue().getSlutaar() > year) 
+								|| 
+								(e.getValue().getSlutaar() == year 
+									&& 
+								(e.getValue().getSlutUge() >= week)))	
+					))
+					).count();
 	}
 	
 	@Override
@@ -48,10 +56,23 @@ public class MedarbejderManager implements IMedarbejderManager {
 		return MedarbejderData.Bibliotek.entrySet().stream().collect(Collectors.toList());
 	}
 	
-	public List<Entry<UUID, Medarbejder>> AlleLedigeMedarbejdere(int week) {
-		return MedarbejderData.Bibliotek.entrySet().stream()
-			.filter(e -> AktiviteterIDenneUge(week, e.getValue()) 
-					< GlobaleVariable.MaksimaleVagter())
-			.collect(Collectors.toList());
+	public HashMap<UUID,Medarbejder> AlleLedigeMedarbejdere(int weekStart, int weekSlut, int yearStart, int yearSlut) {
+		HashMap<UUID, Medarbejder> result = (HashMap<UUID, Medarbejder>) MedarbejderData.Bibliotek.clone();
+		
+		for(int i = yearStart; i <= yearSlut; i ++)
+		{
+			for(int j = (i == yearStart ? weekStart : 0); j < (i == yearSlut ? weekSlut : 0); j++)
+			{
+				for(Entry<UUID, Medarbejder> m : result.entrySet())
+				{
+					if(AktiviteterIDenneUge(j, i, m.getValue()) > GlobaleVariable.MaksimaleVagter())
+					{
+						result.remove(m.getValue().ID());
+					}
+				}
+			}
+		}
+		return result;
 	}
+
 }

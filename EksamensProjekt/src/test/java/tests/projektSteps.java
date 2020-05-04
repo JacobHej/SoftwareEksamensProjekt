@@ -50,9 +50,9 @@ public class projektSteps {
 	
 	@When("Projektets navn aendres fra {string} til {string}")
 	public void projektetsNavnAendresFraTil(String GammeltNavn, String NytNavn) {
-		System.out.println(projektManager.projektUdFraNavn(GammeltNavn).getClass());
+		System.out.println(projektManager.projektUdFraNavn(GammeltNavn));
 		Currentprojekt = (projektManager.projektUdFraNavn(GammeltNavn));
-		System.out.println(projektManager.projektUdFraNavn(NytNavn).getNavn());
+		System.out.println(Currentprojekt.getNavn());
 		Currentprojekt.setNavn(NytNavn);
 	}
 
@@ -88,13 +88,12 @@ public class projektSteps {
 	@When("Projektlederen sletter aktiviteten {string} fra projektet {string}")
 	public void projektlederenSletterAktivitetenFraProjektet(String aktivitetsNavn, String projektNavn) {
 		Currentprojekt = (projektManager.projektUdFraNavn(projektNavn));
-		// Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+		Currentaktivitet = aktivitetManager.AktivitetEfterProjektOgNavn(Currentprojekt, aktivitetsNavn);
+		assertTrue(aktivitetManager.fjern(Currentaktivitet));
 	}
 
 	@Then("Projektet har ikke laengere aktiviteten {string}")
 	public void projektetHarIkkeLaengereAktiviteten(String string) {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	    assertFalse(aktivitetManager.eksisterer(Currentaktivitet));
 	}
 }

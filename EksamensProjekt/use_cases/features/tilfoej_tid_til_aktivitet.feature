@@ -3,11 +3,11 @@ Feature: tilfoej tid til aktivitet
 	Actor: Medarbejder
 
 Scenario: Medarbejder tilfoejer arbejdstimer til aktivitet som har nok budgetteret tid
-    Given der er en medarbejder med ID'et "MedarbejderID" og et projekt med navnet "ProjektNavn"
-    And Projektet "ProjektNavn" har en aktivitet "AktivitetID"
-    And Medarbejderen "MedarbejderID" arbejder paa aktiviteten "AktivitetID"
-    And Aktiviteten "AktivitetID" har mere end 2 ubrugte budgetterede timer
-    When Medarbejderen "MedarbejderID" tilfoejer 2 timer til aktiviteten "AktivitetID"
+    Given der er en medarbejder med ID'et "MADS" og et projekt med navnet "KasseSystem"
+    And Projektet "KasseSystem" har en aktivitet "SystemDesign"
+    And Medarbejderen "MADS" arbejder paa aktiviteten "SystemDesign"
+    And Aktiviteten "SystemDesign" har mere end 2 ubrugte budgetterede timer
+    When Medarbejderen "MADS" tilfoejer 2 timer til aktiviteten "SystemDesign"
     Then Medarbejderens timer 2 er blevet noteret
     
 

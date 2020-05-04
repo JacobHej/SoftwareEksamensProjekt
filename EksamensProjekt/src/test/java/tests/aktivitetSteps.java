@@ -28,8 +28,9 @@ public class aktivitetSteps {
 	@Given("der er et projekt {string} med lederen {string}")
 	public void derErEtProjektMedLederen(String projektNavn, String lederID) {
 		this.leder = new Medarbejder(lederID);
+		this.leder.Gem();
 		this.projekt = new Projekt(projektNavn);
-		this.projekt.Gem();
+		assertTrue(this.projekt.Gem());
 		//¯\_(ツ)_/¯
 	}
 
@@ -50,7 +51,7 @@ public class aktivitetSteps {
 	@Given("Projektet {string} har aktiviteten {string}")
 	public void projektetHarAktiviteten(String projektNavn, String aktivitetID) {									//opret projekt
 	    this.aktivitet = new Aktivitet(aktivitetID);				//opret aktivitet
-	    this.projekt.tilfoejAktivitet(this.aktivitet);				//tilfoej aktivitet til projekt
+	    assertTrue(this.projekt.tilfoejAktivitet(this.aktivitet));				//tilfoej aktivitet til projekt
 		assertTrue(aktivitetManager.eksisterer(this.aktivitet));	//tjek at aktiviteten findes
 		assertTrue(this.aktivitet.getProjekt() == this.projekt);		//tjek at aktivitet er i projekt
 	}
@@ -71,9 +72,9 @@ public class aktivitetSteps {
 	@Given("der er en medarbejder med ID'et {string} og et projekt med navnet {string}")
 	public void derErEnMedarbejderMedIDEtOgEtProjektMedNavnet(String MedarbejderID, String ProjektNavn) {
 	    this.medarbejder = new Medarbejder (MedarbejderID);
-	    this.medarbejder.Gem();
+	    assertTrue(this.medarbejder.Gem());
 	    this.projekt = new Projekt (ProjektNavn);
-	    this.projekt.Gem();
+	    assertTrue(this.projekt.Gem());
 	}
 
 	@Given("Projektet {string} har en aktivitet {string}")
@@ -84,7 +85,7 @@ public class aktivitetSteps {
 	
 	@Given("Medarbejderen {string} arbejder paa aktiviteten {string}")
 	public void medarbejderenArbejderPaaAktiviteten(String MedarbejderID, String AktivitetID) {
-	    this.aktivitet.SaetMedarbejder(this.medarbejder);
+	    assertTrue(this.aktivitet.SaetMedarbejder(this.medarbejder));
 	    assertTrue((this.aktivitet.Medarbejder()==this.medarbejder));
 	    
 	} 
