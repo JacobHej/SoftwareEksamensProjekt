@@ -96,4 +96,27 @@ public class projektSteps {
 	public void projektetHarIkkeLaengereAktiviteten(String string) {
 	    assertFalse(aktivitetManager.eksisterer(Currentaktivitet));
 	}
+	
+	@Given("aktiviteten {string} i projektet {string} har {int} timer registreret")
+	public void aktivitetenIProjektetHarTimerRegistreret(String AktivitetNavn, String ProjektNavn, Integer int1) {
+	    Currentprojekt=projektManager.projektUdFraNavn(ProjektNavn);
+	    Currentaktivitet=aktivitetManager.AktivitetEfterProjektOgNavn(Currentprojekt, AktivitetNavn);
+	    assertTrue(Currentaktivitet.TilfoejTid(int1));
+	}
+
+	@When("Projektlederen sletter aktiviteten {string}")
+	public void projektlederenSletterAktiviteten(String string) {
+	    assertFalse(aktivitetManager.fjern(Currentaktivitet));
+	}
+
+	@Then("aktiviteten {string} er ikke slettet")
+	public void aktivitetenErIkkeSlettet(String string) {
+	    assertFalse(aktivitetManager.eksisterer(Currentaktivitet));
+	}
+
+	@Then("Kast exception {string}")
+	public void kastException(String string) {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new io.cucumber.java.PendingException();
+	}
 }

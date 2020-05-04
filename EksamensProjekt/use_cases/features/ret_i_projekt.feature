@@ -19,10 +19,10 @@ Scenario: Projektleder oensker at slette en aktivitet som ikke har timer registr
     Then Projektet har ikke laengere aktiviteten "Udvikling af brugergraenseflade"
 
 
-#Scenario: Projektleder proever at slette en aktivitet som har timer registreret
-#	Given der er et projekt "ProjektNavn" med lederen "leder"
-#    And Projektet "ProjektNavn" har aktiviteten "aktivitetID"
-#    And aktiviteten "aktivitetID" har 5 timer registreret
-#    When Projektlederen sletter aktiviteten "aktivitetID"
-#    Then aktiviteten "aktivitetID" er ikke slettet
-#    And Kast exception "exception"
+Scenario: Projektleder proever at slette en aktivitet som har timer registreret
+	Given der er et projekt "Skoleovervaagning" med lederen "EAL"
+    And Projektet "Skoleovervaagning" har aktiviteten "Planlaegning"
+    And aktiviteten "Planlaegning" i projektet "Skoleovervaagning" har 5 timer registreret
+    When Projektlederen sletter aktiviteten "Planlaegning"
+    Then aktiviteten "Planlaegning" er ikke slettet
+    And Kast exception "exception"
