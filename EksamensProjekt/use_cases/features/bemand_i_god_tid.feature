@@ -1,5 +1,6 @@
 Feature: Opret projekt med aktiviteter og bemand i god tid
-  Description: Opret et projekt som foerst starter om lang tid, og se, at personer som skal arbjede paa aktiviteterne i optaget i fjern fremtid
+  Description: Opret et projekt som foerst starter om lang tid, og se, 
+  				at personer som skal arbjede paa aktiviteterne i optaget i fjern fremtid
 	Actor: Medarbejder
 	
 Scenario: Et projekt med aktiviteter oprettes og bemandes laenge foer arbejdet paa det skal startes

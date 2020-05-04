@@ -176,19 +176,27 @@ public class projektSteps {
 	@Given("projektet har en aktivitet {string}")
 	public void projektetHarEnAktivitet(String AktivitetNavn) {
 	    Currentaktivitet = new Aktivitet(AktivitetNavn);
-	    Currentprojekt.tilfoejAktivitet(Currentaktivitet);
+	    
+	    Currentaktivitet.setStartaar(Currentprojekt.getStartaar());
+	    Currentaktivitet.setSlutaar(Currentprojekt.getStartaar());
+	    Currentaktivitet.setStartUge(Currentprojekt.getStartUge());
+	    Currentaktivitet.setSlutUge(Currentprojekt.getStartUge());
+	    
+	    Currentprojekt.tilfoejAktivitet(Currentaktivitet); 
 	    assertTrue(Currentaktivitet.getProjekt()==Currentprojekt);
 	}
 
 	@When("{string} er tildelt aktiviteten")
 	public void erTildeltAktiviteten(String MedarbejderNavn) {
 		Currentmedarbejder=medarbejderManager.MedarbejderUdFraNavn(MedarbejderNavn);
+		Currentaktivitet.SaetMedarbejder(Currentmedarbejder);
+
 	    assertTrue(Currentaktivitet.Medarbejder()==Currentmedarbejder);
 	}
 
-//	@Then("{string} kan se, at han\\/hun har et projekt i uge {int} aar {int}")
-//	public void kanSeAtHanHunHarEtProjektIUgeAar(String string, Integer int1, Integer int2) {
-//	    // Write code here that turns the phrase above into concrete actions
-//	    throw new io.cucumber.java.PendingException();
-//	}
+	@Then("{string} kan se, at han\\/hun har et projekt i uge {int} aar {int}")
+	public void kanSeAtHanHunHarEtProjektIUgeAar(String medarbejderNavn, Integer Ugenr, Integer aar) {
+		assertTrue(medarbejderManager.AktiviteterIDenneUge(Ugenr, aar, Currentmedarbejder)==1);
+
+	}
 }

@@ -88,9 +88,9 @@ public class medarbejderSteps {
 	
 	//Scenario: medarbejder melder ferie i uge hvor han har 0 aktiviteter
 	@Given("der er en medarbejder {string}")
-	public void derErEnMedarbejder(String string) {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	public void derErEnMedarbejder(String medarbejderNavn) {
+	    Currentmedarbejder = new Medarbejder(medarbejderNavn);
+	    Currentmedarbejder.Gem();
 	}
 
 	@Given("{string} har {int} aktiviteter i uge {int}")
