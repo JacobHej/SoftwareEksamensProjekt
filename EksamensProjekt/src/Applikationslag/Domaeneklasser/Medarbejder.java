@@ -18,7 +18,7 @@ public class Medarbejder
     //metoder
     public Medarbejder(String navn)
     {
-    	this.navn = navn;
+    	setNavn(navn);
     }
     //Funtioner for returnering af klassevariable
     public UUID ID()
@@ -31,22 +31,17 @@ public class Medarbejder
     	return this.navn;
     }
     
-    public String getInitialer() {
-    	String[] navnOrd = navn.split(" ");
-    	String initialer = "";
-    	for(int i = 0; i<Math.min(4,navnOrd.length);i++) {
-    		initialer += navnOrd[i].charAt(0);
+    public boolean setNavn(String navn) {
+    	if(navn.length()>4) {
+    		return false;
+    	}else {
+    		this.navn=navn;
+    		return true;
     	}
-    	return initialer;
-    	
     }
    
     public Boolean Gem()
     {
     	return medarbejderManager.GemMedarbejder(this);
-    }
-    
-    public List<Entry<UUID, Medarbejder>> hentAlle() {
-    	return medarbejderManager.hentAlleMedarbejdere();
     }
 }

@@ -12,6 +12,8 @@ import java.util.Map.Entry;
 import Applikationslag.Domaeneklasser.Aktivitet;
 import Applikationslag.Domaeneklasser.Medarbejder;
 import Applikationslag.Domaeneklasser.Projekt;
+import Applikationslag.Infrastruktur.ServiceInterfaces.IMedarbejderManager;
+import Applikationslag.Redskaber.Managers;
 import Praesentationslag.UIOmraade.Views.App;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -36,6 +38,9 @@ import javafx.util.StringConverter;
 import javafx.event.ActionEvent;
 
 public class MainController implements Initializable {
+	
+	//Managers
+	IMedarbejderManager medarbejderManager = Managers.FaaMedarbejderManager();
 	
 	//FXML Variables
 	//The Project Table
@@ -153,20 +158,20 @@ public class MainController implements Initializable {
 	
 	public void tilfoejMedarbejdere() {
 		Medarbejder m;
-		m = new Medarbejder("Søren Sven Svensen");
+		m = new Medarbejder("AAAA");
 		m.Gem();
-		m = new Medarbejder("Erik Aske Laforce");
+		m = new Medarbejder("AAB");
 		m.Gem();
 		//nepotisme
-		m = new Medarbejder("Milo Karsten Sørensøn Kadaver");
+		m = new Medarbejder("AAC");
 		m.Gem();
-		m = new Medarbejder("Dette er et navn");
+		m = new Medarbejder("ADAC");
 		m.Gem();
-		m = new Medarbejder("Henning Hansen");
+		m = new Medarbejder("WWII");
 		m.Gem();
-		m = new Medarbejder("Tommy Jonas Rath");
+		m = new Medarbejder("TJR");
 		m.Gem();
-		m = new Medarbejder("JESUS DETTE ER ET VIRKELIGT LANGT NAVN");
+		m = new Medarbejder("EAL");
 		m.Gem();
 		
 	}
@@ -178,7 +183,7 @@ public class MainController implements Initializable {
               if (medarbejder== null){
                 return null;
               } else {
-                return medarbejder.getInitialer();
+                return medarbejder.Navn();
               }
             }
 
@@ -268,7 +273,7 @@ public class MainController implements Initializable {
     	//Indsæt mulige ledere
     	ObservableList<Medarbejder> medarbejdere =  FXCollections.observableArrayList();
     	lederDropDown.setItems(medarbejdere);
-    	for(Entry<UUID, Medarbejder> e : new Medarbejder("funktionsHenter").hentAlle()) {
+    	for(Entry<UUID, Medarbejder> e : medarbejderManager.hentAlleMedarbejdere()) {
     		medarbejdere.add(e.getValue());
     		if(e.getValue().equals(p.getLeder())) {
     		}
@@ -491,6 +496,11 @@ public class MainController implements Initializable {
     	aktivitetInfoNavn.setText(a.getNavn());
     	
     }
+	
+	@FXML
+	private void gemAktivitetMedarbejder(ActionEvent event) {
+		
+	}
 
 //Medarbejder metoder -------------------------------------------------------------------------------------------------------------------
 	
@@ -500,7 +510,7 @@ public class MainController implements Initializable {
     	ObservableList<Medarbejder> medarbejdere = FXCollections.observableArrayList();
         medarbejderTabel.setItems(medarbejdere);
         
-        for(Entry<UUID, Medarbejder> e : new Medarbejder("funktionsHenter").hentAlle()) {
+        for(Entry<UUID, Medarbejder> e : medarbejderManager.hentAlleMedarbejdere()) {
         	medarbejderTabel.getItems().add(e.getValue());
         }
     }

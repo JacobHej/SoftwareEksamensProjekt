@@ -155,7 +155,7 @@
                                           <Font size="18.0" />
                                        </font>
                                     </Text>
-                                    <AnchorPane prefHeight="143.0" prefWidth="200.0">
+                                    <AnchorPane prefHeight="125.0" prefWidth="200.0">
                                        <children>
                                           <TextField fx:id="ugeNrAktivitetStart" layoutX="124.0" layoutY="24.0" prefHeight="25.0" prefWidth="62.0" promptText="UgeNr">
                                              <font>
@@ -184,6 +184,13 @@
                                           </TextField>
                                        </children>
                                     </AnchorPane>
+                                    <HBox alignment="CENTER_LEFT" prefHeight="0.0" prefWidth="200.0" spacing="5.0">
+                                       <children>
+                                          <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Medarbejder" />
+                                          <ComboBox fx:id="aktivitetMedarbejderDropDown" prefWidth="150.0" promptText="Medarbejder" />
+                                       </children>
+                                    </HBox>
+                                    <Button mnemonicParsing="false" onAction="#gemAktivitetMedarbejder" text="Gem Medarbejder" />
                                  </children>
                               </VBox>
                            </children>
