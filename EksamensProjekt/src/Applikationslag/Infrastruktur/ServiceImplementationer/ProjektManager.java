@@ -32,8 +32,6 @@ public class ProjektManager implements IProjektManager{
 		return null;
 	}
 
-	
-	
 	public Boolean eksisterer(Projekt projekt)
 	{
 		return ProjektData.Bibliotek.containsValue(projekt);
