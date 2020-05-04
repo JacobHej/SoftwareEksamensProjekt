@@ -3,8 +3,8 @@ Feature: Ret i aktivitet
 	Actor: Projekt-Leder
 	
 Scenario: Projektleder oensker at rette i data for eksisterende aktivitet
-	Given der er et projekt "ProjektNavn" med lederen "leder"
-    And Projektet "ProjektNavn" har aktiviteten "aktivitetID"
+	Given der er et projekt "Projekt1" med lederen "ledr"
+    And Projektet "Projekt1" har aktiviteten "aktivitet1"
     When aktivitetens navn aendres til "Refactor kode"
     Then aktivitetens navn er nu "Refactor kode"
     When aktivitetens budgetterede tid aendres til 10
