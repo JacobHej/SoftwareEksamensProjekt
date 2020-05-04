@@ -101,7 +101,10 @@ public class projektSteps {
 	public void aktivitetenIProjektetHarTimerRegistreret(String AktivitetNavn, String ProjektNavn, Integer int1) {
 	    Currentprojekt=projektManager.projektUdFraNavn(ProjektNavn);
 	    Currentaktivitet=aktivitetManager.AktivitetEfterProjektOgNavn(Currentprojekt, AktivitetNavn);
-	    assertTrue(Currentaktivitet.TilfoejTid(int1));
+	    this.medarbejder=new Medarbejder("Hans");
+	    assertTrue(this.medarbejder.Gem());
+	    assertTrue(Currentaktivitet.SaetMedarbejder(this.medarbejder));
+		assertTrue(Currentaktivitet.TilfoejTid(int1));
 	}
 
 	@When("Projektlederen sletter aktiviteten {string}")
@@ -110,13 +113,10 @@ public class projektSteps {
 	}
 
 	@Then("aktiviteten {string} er ikke slettet")
-	public void aktivitetenErIkkeSlettet(String string) {
-	    assertFalse(aktivitetManager.eksisterer(Currentaktivitet));
+	public void aktivitetenErIkkeSlettet(String aktivitetNavn) {
+	    assertTrue(aktivitetManager.eksisterer(Currentaktivitet));
+	    assertTrue(aktivitetManager.AktivitetEfterProjektOgNavn(Currentprojekt, aktivitetNavn)
+	    		==Currentaktivitet);
 	}
 
-	@Then("Kast exception {string}")
-	public void kastException(String string) {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
-	}
 }
