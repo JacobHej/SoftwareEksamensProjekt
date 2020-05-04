@@ -25,4 +25,3 @@ Scenario: Projektleder proever at slette en aktivitet som har timer registreret
     And aktiviteten "Planlaegning" i projektet "Skoleovervaagning" har 5 timer registreret
     When Projektlederen sletter aktiviteten "Planlaegning"
     Then aktiviteten "Planlaegning" er ikke slettet
-    And Kast exception "exception"
