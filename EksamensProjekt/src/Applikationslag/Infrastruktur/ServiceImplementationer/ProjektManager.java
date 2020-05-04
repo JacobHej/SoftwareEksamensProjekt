@@ -22,13 +22,17 @@ public class ProjektManager implements IProjektManager{
 	}
 	
 	public Projekt projektUdFraNavn(String navn) {
-		try {
-		return ProjektData.Bibliotek.entrySet().stream()
-			.filter(e -> e.getValue().getNavn() == navn)
-			.collect(Collectors.toList()).get(0).getValue();
+		for(Entry<UUID, Projekt> e : ProjektData.Bibliotek.entrySet()) {
+			if (e.getValue().getNavn() == navn) {
+			if (e.getValue().getNavn().equals(navn)) {
+				return e.getValue();
+			}
+			}
 		}
-		catch (Exception e) {return null;}
+		return null;
 	}
+
+	
 	
 	public Boolean eksisterer(Projekt projekt)
 	{
