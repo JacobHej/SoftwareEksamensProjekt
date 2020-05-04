@@ -84,7 +84,7 @@ public class medarbejderSteps {
 	@Then("{string} har ikke faaet denne aktivitet")
 	public void harIkkeFaaetDenneAktivitet(String string) {
 		System.out.println(Currentaktivitet.getProjekt());
-		System.out.println(medarbejderManager.AktiviteterIDenneUge(2, 2020, Currentmedarbejder) + "HERHERHER");
+		System.out.println(medarbejderManager.AktiviteterIDenneUge(2, 2020, Currentmedarbejder) + "  HERHERHER");
 	    assertFalse(Currentmedarbejder == Currentaktivitet.Medarbejder());
 	    
 	    
