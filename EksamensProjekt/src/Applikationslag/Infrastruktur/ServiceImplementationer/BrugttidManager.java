@@ -71,4 +71,10 @@ public class BrugttidManager implements IBrugttidManager {
 				.collect(Collectors.toList());
 	}
 
+	@Override
+	public Boolean fjern(Brugttid brugttid) {
+		BrugttidData.Bibliotek.remove(brugttid.ID());
+		return true;
+	}
+
 }

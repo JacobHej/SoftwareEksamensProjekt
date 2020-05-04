@@ -12,4 +12,6 @@ public interface IAktivitetManager {
 	public List<Entry<UUID, Aktivitet>> AlleAktiviteterEfterProjekt(Projekt projekt);
 	
 	public Boolean eksisterer(Aktivitet aktivitet);
+	
+	public Boolean fjern(Aktivitet aktivitet);
 }

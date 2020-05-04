@@ -14,35 +14,36 @@ public class ProjektManager implements IProjektManager{
 
 	//@Override
 	public Boolean GemProjekt(Projekt projekt) {
-		if (!ProjektData.Bibliotek.entrySet().stream().anyMatch(e -> e.getValue().getNavn() == projekt.getNavn()) )
+		if (!ProjektData.Bibliotek.entrySet().stream()
+				.anyMatch(e -> e.getValue().getNavn() == projekt.getNavn()) )
 			return (ProjektData.Bibliotek.put(projekt.ID(), projekt) == null);
 		else 
 			return false;
 	}
 	
-	public List<Entry<UUID, Projekt>> AlleProjekter() {
-		return ProjektData.Bibliotek.entrySet().stream()
-			.collect(Collectors.toList());
-	}
-	
 	public Projekt projektUdFraNavn(String navn) {
-		for(Entry<UUID, Projekt> e : AlleProjekter()) {
-			if (e.getValue().getNavn().equals(navn)) {
-				return e.getValue();
-			}
+		try {
+		return ProjektData.Bibliotek.entrySet().stream()
+			.filter(e -> e.getValue().getNavn() == navn)
+			.findFirst().get().getValue();
 		}
-		return null;
-	}
-	
-	public void PrintAlleProjekter() {
-		for(Entry<UUID, Projekt> p : AlleProjekter()) {
-			System.out.println(p.getValue());
-		}
+		catch (Exception e) {return null;}
 	}
 	
 	public Boolean eksisterer(Projekt projekt)
 	{
 		return ProjektData.Bibliotek.containsValue(projekt);
 	}
+
+	@Override
+	public Boolean fjern(Projekt projekt) {
+		if (AktivitetData.Bibliotek.entrySet().stream()
+				.anyMatch(e -> e.getValue().getProjekt() ==  projekt))
+			return false;
+	else
+		ProjektData.Bibliotek.remove(projekt.ID());
+	return true;
+	}
+
 
 }
