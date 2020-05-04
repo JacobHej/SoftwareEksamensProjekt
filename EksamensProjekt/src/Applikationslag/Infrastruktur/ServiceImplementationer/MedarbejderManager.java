@@ -18,7 +18,8 @@ public class MedarbejderManager implements IMedarbejderManager {
 
 	@Override
 	public Boolean GemMedarbejder(Medarbejder medarbejder) {
-		if(!MedarbejderData.Bibliotek.entrySet().stream().anyMatch(e -> e.getValue().getNavn() == medarbejder.getNavn()))
+		if(!MedarbejderData.Bibliotek.entrySet().stream()
+				.anyMatch(e -> e.getValue().getNavn() == medarbejder.getNavn()))
 			return (MedarbejderData.Bibliotek.put(medarbejder.ID(), medarbejder) == null);
 		else
 			return false;
@@ -47,4 +48,10 @@ public class MedarbejderManager implements IMedarbejderManager {
 		return MedarbejderData.Bibliotek.entrySet().stream().collect(Collectors.toList());
 	}
 	
+	public List<Entry<UUID, Medarbejder>> AlleLedigeMedarbejdere(int week) {
+		return MedarbejderData.Bibliotek.entrySet().stream()
+			.filter(e -> AktiviteterIDenneUge(week, e.getValue()) 
+					< GlobaleVariable.MaksimaleVagter())
+			.collect(Collectors.toList());
+	}
 }

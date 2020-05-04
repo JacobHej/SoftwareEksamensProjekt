@@ -25,7 +25,7 @@ public class ProjektManager implements IProjektManager{
 		try {
 		return ProjektData.Bibliotek.entrySet().stream()
 			.filter(e -> e.getValue().getNavn() == navn)
-			.findFirst().get().getValue();
+			.collect(Collectors.toList()).get(0).getValue();
 		}
 		catch (Exception e) {return null;}
 	}

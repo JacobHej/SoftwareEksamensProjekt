@@ -3,6 +3,7 @@ package Applikationslag.Domaeneklasser;
 import java.util.Date;
 import java.util.UUID;
 
+import Applikationslag.Data.Datavedholdelsesklasser.MedarbejderData;
 import Applikationslag.Infrastruktur.ServiceInterfaces.IAktivitetManager;
 import Applikationslag.Infrastruktur.ServiceInterfaces.IBrugttidManager;
 import Applikationslag.Infrastruktur.ServiceInterfaces.IMedarbejderManager;
@@ -52,7 +53,9 @@ public class Aktivitet {
 	public Boolean SaetMedarbejder(Medarbejder nyMedarbejder)
 	{
 		if (medarbejderManager.AktiviteterIDenneUge(Dates.getCurrentWeek(), nyMedarbejder) 
-				< GlobaleVariable.MaksimaleVagter())
+				< GlobaleVariable.MaksimaleVagter()
+				&& MedarbejderData.Bibliotek.entrySet().stream()
+				.anyMatch(e -> e.getValue().getNavn() == medarbejder.getNavn()))
 		{
 			this.medarbejder = nyMedarbejder;
 			return true;
@@ -133,8 +136,9 @@ public class Aktivitet {
 	}
 	
 	public void setProjekt(Projekt p) {
-		// eksisterer projekt
-		this.projekt = p;
+		if(MedarbejderData.Bibliotek.entrySet().stream()
+		.anyMatch(e -> e.getValue().getNavn() == medarbejder.getNavn()))
+			this.projekt = p;
 	}
 	
 	public Medarbejder Medarbejder()
