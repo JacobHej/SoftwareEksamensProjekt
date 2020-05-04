@@ -14,6 +14,7 @@ import Applikationslag.Domaeneklasser.Aktivitet;
 import Applikationslag.Domaeneklasser.Medarbejder;
 import Applikationslag.Domaeneklasser.Projekt;
 import Applikationslag.Infrastruktur.ServiceInterfaces.IMedarbejderManager;
+import Applikationslag.Infrastruktur.ServiceInterfaces.IProjektManager;
 import Applikationslag.Redskaber.Managers;
 import Praesentationslag.UIOmraade.Views.App;
 import javafx.collections.FXCollections;
@@ -42,6 +43,7 @@ public class MainController implements Initializable {
 	
 	//Managers
 	IMedarbejderManager medarbejderManager = Managers.FaaMedarbejderManager();
+	IProjektManager projektManager = Managers.FaaProjektManager();
 	
 	//FXML Variables
 	//The Project Table
@@ -95,6 +97,7 @@ public class MainController implements Initializable {
 		
 		System.out.println("Initializing main Controller");
 		
+		lavTommy();
 		initializeProjectsTable();
 		initializeActivitiesTable();
 		initializeMedlemmerTabel();
@@ -110,7 +113,9 @@ public class MainController implements Initializable {
 		projektNummerKolonne.setCellValueFactory(new PropertyValueFactory<Projekt, Integer>("projektnummer"));
 		
         //load dummy data
-		projektTabel.setItems(getTestProjekter());
+		tilfoejProjekter();
+		visProjekter();
+		
 		
 		//adds a listener for when selecting on the table
 		projektTabel.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
@@ -120,18 +125,13 @@ public class MainController implements Initializable {
 		});
 	}
 	
-
-	
-	public ObservableList<Projekt>  getTestProjekter()
+	public void  tilfoejProjekter()
     {
-        ObservableList<Projekt> projects = FXCollections.observableArrayList();
         for(int i = 0;i<10; i++) {
         	Projekt p = new Projekt("Project nr: "+i);
         	p.Gem();
-        	projects.add(p);
         	tilfoejAktiviteter(p);
         }
-        return projects;
     }
 	
 	//Dummy date aktiviteter
@@ -187,8 +187,6 @@ public class MainController implements Initializable {
 		m.Gem();
 		m = new Medarbejder("WWII");
 		m.Gem();
-		m = new Medarbejder("TJR");
-		m.Gem();
 		m = new Medarbejder("EAL");
 		m.Gem();
 		
@@ -230,7 +228,32 @@ public class MainController implements Initializable {
       });
 	}
 	
+	private void lavTommy() {
+		Medarbejder m;
+		m = new Medarbejder("TJR");
+		m.Gem();
+		Projekt p = new Projekt("Tommys projekt");
+    	p.Gem();
+		for(int i = 0; i<19; i++) {
+			Aktivitet a = new Aktivitet("Tommys "+i+". aktivitet");
+        	if(p.tilfoejAktivitet(a)) {
+        		//System.out.println("Aktivitet tilføjet");
+        	}
+        	a.SaetMedarbejder(m);
+		}
+	}
+	
 //Projekt metoder ----------------------------------------------------------------------------------------------------------
+	
+	private void visProjekter() {
+    	ObservableList<Projekt> projekter = FXCollections.observableArrayList();
+        projektTabel.setItems(projekter);
+        
+        for(Entry<UUID, Projekt> e : projektManager.hentAlleProjekter()) {
+        	projektTabel.getItems().add(e.getValue());
+        }
+	}
+	
 	@FXML
     private void tilfoejProjekt(ActionEvent event)
     {
@@ -424,60 +447,99 @@ public class MainController implements Initializable {
     		String aarStartText = aarstalAktivitetStart.getText();
     		String ugeSlutText = ugeNrAktivitetSlut.getText();
     		String aarSlutText = aarstalAktivitetSlut.getText();
+    		int ugeStart = a.getStartUge();
+    		int aarStart = a.getStartaar();
+    		int ugeSlut = a.getSlutUge();
+    		int aarSlut = a.getSlutaar();
     		//StartTid...............
     		if(ugeStartText.length()>0) {
     			try{
-        			int i = Integer.parseInt(ugeStartText);
-        			if(i<=53&&i>0) {
-        				a.setStartUge(i);
-        			}else {
-        				popup("Aktivitetens start-ugeNr skal være mellem 1 og 53");
-        			}
+        			ugeStart = Integer.parseInt(ugeStartText);
         		}catch(Exception e) {
         			popup("Aktivitetens start-ugeNr skal være et nummer");
+        			return;
         		}
     		}
     		
     		if(aarStartText.length()>0) {
     			try{
-        			
-        			int i = Integer.parseInt(aarStartText);
-        			if(i>=1900) {
-        				a.setStartaar(i);
-        			}else {
-        				popup("Aktivitetens start-aarstal maa lavest være 1900");
-        			}
+    				aarStart = Integer.parseInt(aarStartText);
         		}catch(Exception e) {
         			popup("Aktivitetens start-aarstal skal være et nummer");
+        			return;
         		}
     		}
     		//SlutTid ...............
     		if(ugeSlutText.length()>0) {
     			try{
-        			int i = Integer.parseInt(ugeSlutText);
-        			if(i<=53&&i>0) {
-        				a.setSlutUge(i);
-        			}else {
-        				popup("Aktivitetens slut-ugeNr skal være mellem 1 og 53");
-        			}
+        			ugeSlut = Integer.parseInt(ugeSlutText);
         		}catch(Exception e) {
         			popup("Aktivitetens slut-ugeNr skal være et nummer");
+        			return;
         		}
     		}
     		
     		if(aarSlutText.length()>0) {
     			try{
         			
-        			int i = Integer.parseInt(aarSlutText);
-        			if(i>=1900) {
-        				a.setSlutaar(i);
-        			}else {
-        				popup("Aktivitetens slut-aarstal maa lavest være 1900");
-        			}
+    				aarSlut = Integer.parseInt(aarSlutText);
         		}catch(Exception e) {
         			popup("Aktivitetens slut-aarstal skal være et nummer");
+        			return;
         		}
     		}
+    		
+    		if(ugeStart<=53&&ugeStart>0) {
+				if(ugeStart>ugeSlut) {
+					popup("start uge burde være før slut uge");
+					return;
+				}else if(!a.setStartUge(ugeStart)) {
+					popup("Medarbejderen er ikke ledig her");
+					return;
+				}
+			}else {
+				popup("Aktivitetens start-ugeNr skal være mellem 1 og 53");
+				return;
+			}
+    		
+    		if(aarStart>=1900) {
+				if(aarStart<aarSlut) {
+					popup("Slut aar burde være efter start");
+					return;
+				}else if(!a.setSlutaar(aarStart)) {
+					popup("Medarbejderen er ikke ledig her");
+					return;
+				}
+			}else {
+				popup("Aktivitetens slut-aarstal maa lavest være 1900");
+				return;
+			}
+    		
+    		if(ugeSlut<=53&&ugeSlut>0) {
+				if(ugeSlut<ugeStart) {
+					popup("Slut uge burde være efter start");
+					return;
+				}else if(!a.setSlutUge(ugeSlut)) {
+					popup("Medarbejderen er ikke ledig her");
+					return;
+				}
+			}else {
+				popup("Aktivitetens slut-ugeNr skal være mellem 1 og 53");
+				return;
+			}
+    		
+    		if(aarSlut>=1900) {
+				if(aarSlut<aarStart) {
+					popup("Slut aar burde være efter start");
+					return;
+				}else if(!a.setSlutaar(aarSlut)) {
+					popup("Medarbejderen er ikke ledig her");
+					return;
+				}
+			}else {
+				popup("Aktivitetens slut-aarstal maa lavest være 1900");
+				return;
+			}
     	}
     }
 	
@@ -531,7 +593,7 @@ public class MainController implements Initializable {
     	ObservableList<Medarbejder> medarbejdere =  FXCollections.observableArrayList();
     	aktivitetMedarbejderDropDown.setItems(medarbejdere);
     	for(Entry<UUID, Medarbejder> e : medarbejderManager.AlleLedigeMedarbejdere(
-    				a.getStartUge(), a.getSlutUge(), a.getStartaar(), a.getSlutaar()).entrySet()) {
+    				a.getStartUge(), a.getSlutUge(), a.getStartaar(), a.getSlutaar())) {
     		medarbejdere.add(e.getValue());
     	}
     	
@@ -548,7 +610,10 @@ public class MainController implements Initializable {
     		popup("Du burde vaelge en aktivitet foerst");
     		return;
     	}
-    	a.SaetMedarbejder(aktivitetMedarbejderDropDown.getValue());
+    	if(!a.SaetMedarbejder(aktivitetMedarbejderDropDown.getValue())) {
+    		popup("Medarbejderen er ikke ledig her");
+    	}
+    	
 	}
 
 //Medarbejder metoder -------------------------------------------------------------------------------------------------------------------
