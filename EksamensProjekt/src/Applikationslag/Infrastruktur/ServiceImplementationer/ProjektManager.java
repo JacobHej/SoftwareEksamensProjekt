@@ -23,10 +23,8 @@ public class ProjektManager implements IProjektManager{
 	
 	public Projekt projektUdFraNavn(String navn) {
 		for(Entry<UUID, Projekt> e : ProjektData.Bibliotek.entrySet()) {
-			if (e.getValue().getNavn() == navn) {
 			if (e.getValue().getNavn().equals(navn)) {
 				return e.getValue();
-			}
 			}
 		}
 		return null;
