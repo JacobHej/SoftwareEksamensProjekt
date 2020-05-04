@@ -1,17 +1,10 @@
 package Applikationslag.Domaeneklasser;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.Map.Entry;
-import java.util.Random;
 
-import Applikationslag.Infrastruktur.ServiceImplementationer.*;
 import Applikationslag.Infrastruktur.ServiceInterfaces.*;
-import Applikationslag.Redskaber.*;
 import Applikationslag.Redskaber.LoebeNummer;
 import Applikationslag.Redskaber.Dates;
 import Applikationslag.Redskaber.Managers;
