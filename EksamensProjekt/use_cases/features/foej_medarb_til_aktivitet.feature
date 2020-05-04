@@ -12,14 +12,14 @@ Scenario: medarbejder som har 20 vagter i en uge bliver tildelt endnu en
 	When "AAOE" faar endnu en aktivitet i uge 2
 	Then "AAOE" har ikke faaet denne aktivitet
 
-#Scenario: medarbejder melder ferie i uge hvor han har 0 aktiviteter
-#	Given der er en medarbejder "AASD"
-#	And "AASD" har 0 aktiviteter i uge 22
-#	When "AASD" melder ferie i uge 22
-#	Then "AASD" er optaget af ferie i uge 22
-#
-#Scenario: medarbejder  melder ferie i uge hvor han har aktiviteter
-#	Given der er en medarbejder "CKOE"
-#	And "CKOE" har 3 aktiviteter i uge 25
-#	When "CKOE" melder ferie i uge 25
-#	Then "CKOE" har ikke faaet ferie u uge 25
+Scenario: medarbejder melder ferie i uge hvor han har 0 aktiviteter
+	Given der er en medarbejder "AASD"
+	And "AASD" har 0 aktiviteter i uge 22
+	When "AASD" melder ferie i uge 22
+	Then "AASD" er optaget af ferie i uge 22
+
+Scenario: medarbejder  melder ferie i uge hvor han har aktiviteter
+	Given der er en medarbejder "CKOE"
+	And "CKOE" har 3 aktiviteter i uge 25
+	When "CKOE" melder ferie i uge 25
+	Then "CKOE" har ikke faaet ferie u uge 25
