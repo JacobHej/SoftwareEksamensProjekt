@@ -118,5 +118,51 @@ public class projektSteps {
 	    assertTrue(aktivitetManager.AktivitetEfterProjektOgNavn(Currentprojekt, aktivitetNavn)
 	    		==Currentaktivitet);
 	}
+	
+	//**********************************************************************
+	Medarbejder Currentmedarbejder;
+	@Given("der er en medarbjeder {string} som har {int} aktiviteter i uge {int}")
+	public void derErEnMedarbjederSomHarAktiviteterIUge(String medarbejederNavn, Integer AktiviteterUge2, Integer Uge2) {
+	    Currentmedarbejder = new Medarbejder(medarbejederNavn);
+	    Currentmedarbejder.Gem();
+	    Projekt Filler = new Projekt("Filler");
+	    Filler.Gem();
+	    for (int i = 0; i < 20; i++){
+	    	Aktivitet Fill = new Aktivitet("FillerAktivitet"  + i);
+	    	Filler.tilfoejAktivitet(Fill);
+	    	Fill.SaetMedarbejder(Currentmedarbejder);
+	    	Fill.setStartaar(2020);Fill.setSlutaar(2020);
+	    	Fill.setStartUge(Uge2);Fill.setSlutUge(Uge2);
+	    }
+	    assertTrue((medarbejderManager.AktiviteterIDenneUge(Uge2, 2020, Currentmedarbejder))==20);
+
+	}
+
+	@Given("medarbejderen {string} har {int} aktivitet {string} uge {int} i projektet {string}")
+	public void medarbejderenHarAktivitetUgeIProjektet(String medarbjederNavn, Integer AktiviteterUge1, String AktivitetNavn, Integer Uge1, String ProjektnavnUge1) {
+	    Projekt Uge1Projekt = new Projekt (ProjektnavnUge1);
+	    Uge1Projekt.Gem();
+	    Aktivitet AktivitetUge1 = new Aktivitet(AktivitetNavn);
+	    Uge1Projekt.tilfoejAktivitet(AktivitetUge1);
+	    AktivitetUge1.setStartaar(2020);AktivitetUge1.setSlutaar(2020);
+	    AktivitetUge1.setStartUge(Uge1);AktivitetUge1.setSlutUge(Uge1);
+	    assertTrue(AktivitetUge1.SaetMedarbejder(Currentmedarbejder));
+	    assertTrue((medarbejderManager.AktiviteterIDenneUge(Uge1, 2020, Currentmedarbejder))==1);
+	}
+
+	@When("Der forsoeges at Aktiviteten {string} i projekt {string} faar sin slut-uge aendret til uge {int}")
+	public void derForsoegesAtAktivitetenIProjektFaarSinSlutUgeAendretTilUge(String AktivitetNavn, String ProjektNavn, Integer Uge2) {
+		Currentaktivitet = aktivitetManager.AktivitetEfterProjektOgNavn(projektManager.projektUdFraNavn(ProjektNavn), AktivitetNavn);
+		Currentaktivitet.setSlutUge(2);
+		assertTrue(medarbejderManager.AktiviteterIDenneUge(Uge2, 2020, Currentmedarbejder )==20);
+		System.out.println(medarbejderManager.AktiviteterIDenneUge(Uge2, 2020, Currentmedarbejder )+ "<--------HER!!!!!");
+	}
+
+	@Then("Aktiviteten er ikke flyttet.")
+	public void aktivitetenErIkkeFlyttet() {
+	    assertTrue(Currentaktivitet.getSlutUge()==1);
+	    
+	}
+	//**********************************************************************
 
 }
