@@ -23,7 +23,7 @@ public class MedarbejderManager implements IMedarbejderManager {
 	@Override
 	public Boolean GemMedarbejder(Medarbejder medarbejder) {
 		if(!MedarbejderData.Bibliotek.entrySet().stream()
-				.anyMatch(e -> e.getValue().getNavn() == medarbejder.getNavn()))
+				.anyMatch(e -> e.getValue().getNavn().equals(medarbejder.getNavn())))
 			return (MedarbejderData.Bibliotek.put(medarbejder.ID(), medarbejder) == null);
 		else
 			return false;
@@ -61,7 +61,7 @@ public class MedarbejderManager implements IMedarbejderManager {
 		
 		for(int i = yearStart; i <= yearSlut; i ++)
 		{
-			for(int j = (i == yearStart ? weekStart : 0); j < (i == yearSlut ? weekSlut : 0); j++)
+			for(int j = (i == yearStart ? weekStart : 0); j <= (i == yearSlut ? weekSlut : 53); j++)
 			{
 				for(Entry<UUID, Medarbejder> m : result.entrySet())
 				{
