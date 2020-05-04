@@ -68,6 +68,7 @@ public class MainController implements Initializable {
 	@FXML private TextField aarstalAktivitetStart;
 	@FXML private TextField aarstalAktivitetSlut;
 	@FXML private Text aktivitetInfoNavn;
+	@FXML private ComboBox<Medarbejder> aktivitetMedarbejderDropDown;
 	
 	//The add and remove project 
 	@FXML private TextField tilfoejProjektNavn;
@@ -93,6 +94,7 @@ public class MainController implements Initializable {
 		initializeActivitiesTable();
 		initializeMedlemmerTabel();
 		initializeProjektLederDropDown();
+		initializeAktivitetMedarbejderDropDown();
 	}
 	
 	public void initializeProjectsTable() {
@@ -177,6 +179,24 @@ public class MainController implements Initializable {
 	}
 	
 	private void initializeProjektLederDropDown() {
+    	lederDropDown.setConverter(new StringConverter<Medarbejder>() {
+            @Override
+            public String toString(Medarbejder medarbejder) {
+              if (medarbejder== null){
+                return null;
+              } else {
+                return medarbejder.getNavn();
+              }
+            }
+
+          @Override
+          public Medarbejder fromString(String id) {
+              return null;
+          }
+      });
+	}
+	
+	private void initializeAktivitetMedarbejderDropDown() {
     	lederDropDown.setConverter(new StringConverter<Medarbejder>() {
             @Override
             public String toString(Medarbejder medarbejder) {
