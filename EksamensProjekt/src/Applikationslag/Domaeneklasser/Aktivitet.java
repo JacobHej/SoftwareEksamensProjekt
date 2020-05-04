@@ -65,7 +65,7 @@ public class Aktivitet {
 				&& MedarbejderData.Bibliotek.entrySet().stream()
 				.anyMatch(e -> e.getValue().getNavn().equals(nyMedarbejder.getNavn())))
 		{
-			if(medarbejder.ledig(startUge, slutUge, startaar, slutaar)) {
+			if(nyMedarbejder.ledig(startUge, slutUge, startaar, slutaar)) {
 				this.medarbejder = nyMedarbejder;
 				return true;
 			}else {
