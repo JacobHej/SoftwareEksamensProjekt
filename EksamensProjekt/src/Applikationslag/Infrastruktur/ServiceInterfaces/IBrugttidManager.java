@@ -19,4 +19,6 @@ public interface IBrugttidManager {
 	public List<Entry<UUID, Brugttid>> AlleBrugttidEfterAktivitetOgMedarbejder(Aktivitet aktivitet, Medarbejder medarbejder);
 	public List<Entry<UUID, Brugttid>> AlleBrugttidEfterDag(Date dato);
 	public List<Entry<UUID, Brugttid>> AlleBrugttidEfterDagOgMedarbejder(Date dato, Medarbejder medarbejder);
+	
+	public Boolean fjern(Brugttid brugttid);
 }

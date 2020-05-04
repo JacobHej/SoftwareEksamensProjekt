@@ -9,11 +9,9 @@ import Applikationslag.Domaeneklasser.*;
 public interface IProjektManager {
 	public Boolean GemProjekt(Projekt projekt);
 	
-	public List<Entry<UUID, Projekt>> AlleProjekter();
-	
 	public Projekt projektUdFraNavn(String navn);
 	
 	public Boolean eksisterer(Projekt projekt);
 	
-	public void PrintAlleProjekter();
+	public Boolean fjern(Projekt projekt);
 }
