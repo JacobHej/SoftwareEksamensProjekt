@@ -5,11 +5,15 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.UUID;
+
+
 import java.util.Map.Entry;
 
 import Applikationslag.Domaeneklasser.Aktivitet;
 import Applikationslag.Domaeneklasser.Medarbejder;
 import Applikationslag.Domaeneklasser.Projekt;
+import Applikationslag.Infrastruktur.ServiceInterfaces.IMedarbejderManager;
+import Applikationslag.Redskaber.Managers;
 import Praesentationslag.UIOmraade.Views.App;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,6 +25,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -28,9 +33,14 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Callback;
+import javafx.util.StringConverter;
 import javafx.event.ActionEvent;
 
 public class MainController implements Initializable {
+	
+	//Managers
+	IMedarbejderManager medarbejderManager = Managers.FaaMedarbejderManager();
 	
 	//FXML Variables
 	//The Project Table
@@ -50,6 +60,7 @@ public class MainController implements Initializable {
 	@FXML private TextField ugeNrProjektStart;
 	@FXML private TextField aarstalProjektStart;
 	@FXML private TextField projektInfoNavn;
+	@FXML private ComboBox<Medarbejder> lederDropDown;
 	
 	//Aktivitet info
 	@FXML private TextField ugeNrAktivitetStart;
@@ -60,10 +71,12 @@ public class MainController implements Initializable {
 	
 	//The add and remove project 
 	@FXML private TextField tilfoejProjektNavn;
-	@FXML private DatePicker tilfoejProjektDato;
 	
 	//The add and remove activity features
 	@FXML private TextField tilfoejAktivitetNavn;
+	
+	//Tilfoej og fjern medarbejder
+	@FXML private TextField tilfoejMedarbejderNavn;
 	
 	//Variables used in initialize and smaller tests
 	//empty for now
@@ -79,6 +92,7 @@ public class MainController implements Initializable {
 		initializeProjectsTable();
 		initializeActivitiesTable();
 		initializeMedlemmerTabel();
+		initializeProjektLederDropDown();
 	}
 	
 	public void initializeProjectsTable() {
@@ -137,29 +151,47 @@ public class MainController implements Initializable {
 	
 	public void initializeMedlemmerTabel() {
 		//set up the columns in the table
-		medarbejderInitialKolonne.setCellValueFactory(new PropertyValueFactory<Medarbejder, String>("initialer"));
+		medarbejderInitialKolonne.setCellValueFactory(new PropertyValueFactory<Medarbejder, String>("navn"));
 		tilfoejMedarbejdere();
 		visMedarbejdere();
 	}
 	
 	public void tilfoejMedarbejdere() {
 		Medarbejder m;
-		m = new Medarbejder("Søren Sven Svensen");
+		m = new Medarbejder("AAAA");
 		m.Gem();
-		m = new Medarbejder("Erik Aske Laforce");
+		m = new Medarbejder("AAB");
 		m.Gem();
 		//nepotisme
-		m = new Medarbejder("Milo Karsten Sørensøn Kadaver");
+		m = new Medarbejder("AAC");
 		m.Gem();
-		m = new Medarbejder("Dette er et navn");
+		m = new Medarbejder("ADAC");
 		m.Gem();
-		m = new Medarbejder("Henning Hansen");
+		m = new Medarbejder("WWII");
 		m.Gem();
-		m = new Medarbejder("Tommy Jonas Rath");
+		m = new Medarbejder("TJR");
 		m.Gem();
-		m = new Medarbejder("JESUS DETTE ER ET VIRKELIGT LANGT NAVN");
+		m = new Medarbejder("EAL");
 		m.Gem();
 		
+	}
+	
+	private void initializeProjektLederDropDown() {
+    	lederDropDown.setConverter(new StringConverter<Medarbejder>() {
+            @Override
+            public String toString(Medarbejder medarbejder) {
+              if (medarbejder== null){
+                return null;
+              } else {
+                return medarbejder.getNavn();
+              }
+            }
+
+          @Override
+          public Medarbejder fromString(String id) {
+              return null;
+          }
+      });
 	}
 	
 //Projekt metoder ----------------------------------------------------------------------------------------------------------
@@ -236,6 +268,20 @@ public class MainController implements Initializable {
     	
     	projektInfoNavn.setText(p.getNavn());
     	
+    	
+    	
+    	//Indsæt mulige ledere
+    	ObservableList<Medarbejder> medarbejdere =  FXCollections.observableArrayList();
+    	lederDropDown.setItems(medarbejdere);
+    	for(Entry<UUID, Medarbejder> e : medarbejderManager.hentAlleMedarbejdere()) {
+    		medarbejdere.add(e.getValue());
+    		if(e.getValue().equals(p.getLeder())) {
+    		}
+    	}
+    	
+    	//Viser den allerede valgte leder
+    	lederDropDown.setValue(p.getLeder());
+    	
     }
     
     @FXML
@@ -288,6 +334,16 @@ public class MainController implements Initializable {
         		}
     		}
     	}
+    }
+    
+    @FXML
+    private void gemLederValg(ActionEvent event) {
+    	Projekt p = projektTabel.getSelectionModel().getSelectedItems().get(0);
+    	if(p==null) {
+    		popup("Du burde vaelge et projekt foerst");
+    		return;
+    	}
+    	p.setLeder(lederDropDown.getValue());
     }
     
 //Aktivitet metoder -------------------------------------------------------------------------------------------------------------------
@@ -440,6 +496,11 @@ public class MainController implements Initializable {
     	aktivitetInfoNavn.setText(a.getNavn());
     	
     }
+	
+	@FXML
+	private void gemAktivitetMedarbejder(ActionEvent event) {
+		
+	}
 
 //Medarbejder metoder -------------------------------------------------------------------------------------------------------------------
 	
@@ -449,9 +510,21 @@ public class MainController implements Initializable {
     	ObservableList<Medarbejder> medarbejdere = FXCollections.observableArrayList();
         medarbejderTabel.setItems(medarbejdere);
         
-        for(Entry<UUID, Medarbejder> e : new Medarbejder("funktionsHenter").hentAlle()) {
+        for(Entry<UUID, Medarbejder> e : medarbejderManager.hentAlleMedarbejdere()) {
         	medarbejderTabel.getItems().add(e.getValue());
         }
+    }
+    
+    @FXML
+    private void tilfoejMedarbejder(ActionEvent event){
+    	String navn = tilfoejMedarbejderNavn.getText();
+    	if(navn.length()<1) {
+    		popup("Vær sød at indtaste et navn");
+    	}else {
+    		Medarbejder m = new Medarbejder(navn);
+    		m.Gem();
+    		medarbejderTabel.getItems().add(m);
+    	}
     }
 	
 	

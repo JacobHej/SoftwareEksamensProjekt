@@ -13,6 +13,6 @@ public final class Dates {
 	
 	public static int getYear()
 	{
-		return 5;
+		return (LocalDate.now().getYear());
 	}
 }

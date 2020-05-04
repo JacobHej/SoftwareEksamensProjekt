@@ -18,8 +18,12 @@ public class MedarbejderManager implements IMedarbejderManager {
 
 	@Override
 	public Boolean GemMedarbejder(Medarbejder medarbejder) {
+<<<<<<< HEAD
 		if(!MedarbejderData.Bibliotek.entrySet().stream()
 				.anyMatch(e -> e.getValue().Navn() == medarbejder.Navn()))
+=======
+		if(!MedarbejderData.Bibliotek.entrySet().stream().anyMatch(e -> e.getValue().getNavn() == medarbejder.getNavn()))
+>>>>>>> 4e516c0e6977b31fd454bc8507784d05fc8cc4d7
 			return (MedarbejderData.Bibliotek.put(medarbejder.ID(), medarbejder) == null);
 		else
 			return false;

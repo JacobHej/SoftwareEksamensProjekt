@@ -68,7 +68,7 @@ public class projektSteps {
 
 	@Then("Projektets projektleder har navnet {string}")
 	public void projektetsProjektlederHarNavnet(String nylederNavn) {
-	    assertTrue(Currentprojekt.getLeder().Navn().equals(nylederNavn));
+	    assertTrue(Currentprojekt.getLeder().getNavn().equals(nylederNavn));
 	}
 
 	@When("Projektet faar sat sin starttid til uge {int} aar {int}")

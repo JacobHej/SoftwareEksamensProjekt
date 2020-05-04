@@ -29,7 +29,7 @@ public class BrugttidManager implements IBrugttidManager {
 	//@Override
 	public List<Entry<UUID, Brugttid>> AlleBrugttidEfterMedarbejder(Medarbejder medarbejder) {
 		return BrugttidData.Bibliotek.entrySet().stream()
-			.filter(e -> e.getValue().Medarbejder().Navn() == medarbejder.Navn())
+			.filter(e -> e.getValue().Medarbejder().getNavn() == medarbejder.getNavn())
 			.collect(Collectors.toList());
 	}
 
@@ -58,7 +58,7 @@ public class BrugttidManager implements IBrugttidManager {
 	public List<Entry<UUID, Brugttid>> AlleBrugttidEfterDagOgMedarbejder(Date dato, Medarbejder medarbejder) {
 		return BrugttidData.Bibliotek.entrySet().stream()
 				.filter(e -> e.getValue().Dato().getDay() == dato.getDay())
-				.filter(e -> e.getValue().Medarbejder().Navn() == medarbejder.Navn())
+				.filter(e -> e.getValue().Medarbejder().getNavn() == medarbejder.getNavn())
 				.collect(Collectors.toList());
 	}
 	
@@ -67,7 +67,7 @@ public class BrugttidManager implements IBrugttidManager {
 			Medarbejder medarbejder) {
 		return BrugttidData.Bibliotek.entrySet().stream()
 				.filter(e -> e.getValue().Aktivitet().ID() == aktivitet.ID())
-				.filter(e -> e.getValue().Medarbejder().Navn() == medarbejder.Navn())
+				.filter(e -> e.getValue().Medarbejder().getNavn() == medarbejder.getNavn())
 				.collect(Collectors.toList());
 	}
 

@@ -99,15 +99,15 @@ public class Projekt {
 		return new Rapport();
 	}
 	
+	public UUID ID()
+	{
+		return this.id;
+	}
+	
 	public void setLeder(Medarbejder leder)
 	{
 		// eksisterer han
 		this.leder = leder;
-	}
-	
-	public UUID ID()
-	{
-		return this.id;
 	}
 	
 	public Medarbejder getLeder()
