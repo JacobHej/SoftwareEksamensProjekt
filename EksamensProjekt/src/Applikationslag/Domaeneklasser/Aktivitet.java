@@ -100,7 +100,7 @@ public class Aktivitet {
 	
 	public boolean setStartUge(int startUge)
 	{
-		if(medarbejder.ledig(startUge, slutUge, startaar, slutaar)) {
+		if(medarbejder == null || medarbejder.ledig(startUge, slutUge, startaar, slutaar)) {
 			this.startUge = startUge;
 			return true;
 		}else {
@@ -116,7 +116,7 @@ public class Aktivitet {
 	
 	public boolean setSlutUge(int slutUge)
 	{
-		if(medarbejder.ledig(startUge, slutUge, startaar, slutaar)) {
+		if(medarbejder == null || medarbejder.ledig(startUge, slutUge, startaar, slutaar)) {
 			this.slutUge = slutUge;
 			return true;
 		}else {
@@ -131,7 +131,7 @@ public class Aktivitet {
 	
 	public boolean setStartaar(int startaar)
 	{
-		if(medarbejder.ledig(startUge, slutUge, startaar, slutaar)) {
+		if(medarbejder == null || medarbejder.ledig(startUge, slutUge, startaar, slutaar)) {
 			this.startaar = startaar;
 			return true;
 		}else {
@@ -146,7 +146,7 @@ public class Aktivitet {
 	
 	public boolean setSlutaar(int slutaar)
 	{
-		if(medarbejder.ledig(startUge, slutUge, startaar, slutaar)) {
+		if(medarbejder == null || medarbejder.ledig(startUge, slutUge, startaar, slutaar)) {
 			this.slutaar = slutaar;
 			return true;
 		}else {
