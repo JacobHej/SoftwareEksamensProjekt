@@ -515,14 +515,14 @@ public class MainController implements Initializable {
 		//AktivitetNavn
     	aktivitetInfoNavn.setText(a.getNavn());
     	
-    	//Indsæt mulige medarbejdere
-    	ObservableList<Medarbejder> medarbejdere =  FXCollections.observableArrayList();
-    	lederDropDown.setItems(medarbejdere);
-    	for(Entry<UUID, Medarbejder> e : medarbejderManager.AlleLedigeMedarbejdere()) {
-    		medarbejdere.add(e.getValue());
-    		if(e.getValue().equals(p.getLeder())) {
-    		}
-    	}
+//    	//Indsæt mulige medarbejdere
+//    	ObservableList<Medarbejder> medarbejdere =  FXCollections.observableArrayList();
+//    	lederDropDown.setItems(medarbejdere);
+//    	for(Entry<UUID, Medarbejder> e : ) {
+//    		medarbejdere.add(e.getValue());
+//    		if(e.getValue().equals(p.getLeder())) {
+//    		}
+//    	}
     	
     	
     }
