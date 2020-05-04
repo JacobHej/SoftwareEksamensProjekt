@@ -154,7 +154,7 @@ public class projektSteps {
 	@When("Der forsoeges at Aktiviteten {string} i projekt {string} faar sin slut-uge aendret til uge {int}")
 	public void derForsoegesAtAktivitetenIProjektFaarSinSlutUgeAendretTilUge(String AktivitetNavn, String ProjektNavn, Integer Uge2) {
 		Currentaktivitet = aktivitetManager.AktivitetEfterProjektOgNavn(projektManager.projektUdFraNavn(ProjektNavn), AktivitetNavn);
-		Currentaktivitet.setSlutUge(2);
+		Currentaktivitet.setSlutUge(Uge2);
 		System.out.println("HER -->" + medarbejderManager.AktiviteterIDenneUge(Uge2, 2020, Currentmedarbejder ));
 		assertTrue(medarbejderManager.AktiviteterIDenneUge(Uge2, 2020, Currentmedarbejder )==20);
 		System.out.println(medarbejderManager.AktiviteterIDenneUge(Uge2, 2020, Currentmedarbejder )+ "<--------HER!!!!!");
