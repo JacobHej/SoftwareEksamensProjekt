@@ -132,7 +132,7 @@ public class MainController implements Initializable {
 	public void  tilfoejAktiviteter(Projekt p)
     {
         for(int i = 0; i<10; i++) {
-        	Aktivitet a = new Aktivitet(0, 0, "Aktivitet "+i+" for "+p.getNavn());
+        	Aktivitet a = new Aktivitet("Aktivitet "+i+" for "+p.getNavn());
         	if(p.tilfoejAktivitet(a)) {
         		//System.out.println("Aktivitet tilføjet");
         	}
@@ -197,7 +197,7 @@ public class MainController implements Initializable {
 	}
 	
 	private void initializeAktivitetMedarbejderDropDown() {
-    	lederDropDown.setConverter(new StringConverter<Medarbejder>() {
+		aktivitetMedarbejderDropDown.setConverter(new StringConverter<Medarbejder>() {
             @Override
             public String toString(Medarbejder medarbejder) {
               if (medarbejder== null){
@@ -295,8 +295,6 @@ public class MainController implements Initializable {
     	lederDropDown.setItems(medarbejdere);
     	for(Entry<UUID, Medarbejder> e : medarbejderManager.hentAlleMedarbejdere()) {
     		medarbejdere.add(e.getValue());
-    		if(e.getValue().equals(p.getLeder())) {
-    		}
     	}
     	
     	//Viser den allerede valgte leder
@@ -506,7 +504,7 @@ public class MainController implements Initializable {
     	}
 		
 		//Slutaar
-		if(a.getSlutUge() != 0) {
+		if(a.getSlutaar() != 0) {
     		aarstalAktivitetSlut.setText(a.getSlutaar()+"");
     	}else {
     		aarstalAktivitetSlut.setText("");
@@ -515,21 +513,28 @@ public class MainController implements Initializable {
 		//AktivitetNavn
     	aktivitetInfoNavn.setText(a.getNavn());
     	
-//    	//Indsæt mulige medarbejdere
-//    	ObservableList<Medarbejder> medarbejdere =  FXCollections.observableArrayList();
-//    	lederDropDown.setItems(medarbejdere);
-//    	for(Entry<UUID, Medarbejder> e : ) {
-//    		medarbejdere.add(e.getValue());
-//    		if(e.getValue().equals(p.getLeder())) {
-//    		}
-//    	}
+    	//Indsæt mulige medarbejdere
+    	ObservableList<Medarbejder> medarbejdere =  FXCollections.observableArrayList();
+    	aktivitetMedarbejderDropDown.setItems(medarbejdere);
+    	for(Entry<UUID, Medarbejder> e : medarbejderManager.AlleLedigeMedarbejdere(
+    				a.getStartUge(), a.getSlutUge(), a.getStartaar(), a.getSlutaar()).entrySet()) {
+    		medarbejdere.add(e.getValue());
+    	}
+    	
+    	//Viser den allerede valgte medarbejder
+    	aktivitetMedarbejderDropDown.setValue(a.Medarbejder());
     	
     	
     }
 	
 	@FXML
 	private void gemAktivitetMedarbejder(ActionEvent event) {
-		
+    	Aktivitet a = aktivitetTabel.getSelectionModel().getSelectedItems().get(0);
+    	if(a==null) {
+    		popup("Du burde vaelge en aktivitet foerst");
+    		return;
+    	}
+    	a.SaetMedarbejder(aktivitetMedarbejderDropDown.getValue());
 	}
 
 //Medarbejder metoder -------------------------------------------------------------------------------------------------------------------
@@ -550,11 +555,16 @@ public class MainController implements Initializable {
     	String navn = tilfoejMedarbejderNavn.getText();
     	if(navn.length()<1) {
     		popup("Vær sød at indtaste et navn");
-    	}else {
-    		Medarbejder m = new Medarbejder(navn);
-    		m.Gem();
-    		medarbejderTabel.getItems().add(m);
+    		return;
     	}
+    	if(navn.length()>4) {
+    		popup("Kun 4 initialer");
+    		return;
+    	}
+    	
+    	Medarbejder m = new Medarbejder(navn);
+    	m.Gem();
+    	medarbejderTabel.getItems().add(m);
     }
 	
 	
