@@ -16,4 +16,5 @@ public interface IMedarbejderManager {
 	public List<Entry<UUID, Medarbejder>> hentAlleMedarbejdere();
 	public long AktiviteterIDenneUge(int week, int year, Medarbejder medarbejder); 
 	public Boolean MedarbejderLedig(int weekStart, int weekSlut, int yearStart, int yearSlut, Medarbejder medarbejder);
+	public Medarbejder MedarbejderUdFraNavn(String medarbejdernavn);
 }

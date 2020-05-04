@@ -64,8 +64,9 @@ public class aktivitetSteps {
 
 	@Then("Aktiviteten er ikke tilfoejet")
 	public void aktivitetenErIkkeTilfoejet() {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	    //indeholder projektet aktiviteten nu 2 aktiviteter?
+		assertTrue(aktivitetManager.AlleAktiviteterEfterProjekt(this.projekt).size()==1);
+	    
 	}
 	
 // 	Medarbejder tilfoejer tid til en aktivitet.

@@ -28,7 +28,7 @@ Scenario: Projektleder proever at slette en aktivitet som har timer registreret
     
 
 Scenario: Projekt faar aendret sin slutdato saaledes at en medarbejder kommer til at have mere end 20 aktiviteter paa 1 uge
-	Given der er en medarbjeder "TJR" som har 20 aktiviteter i uge 2
+	Given en medarbjeder "TJR" som har 20 aktiviteter i uge 2
 	And medarbejderen "TJR" har 1 aktivitet "Debug" uge 1 i projektet "Projekt6"
 	When Der forsoeges at Aktiviteten "Debug" i projekt "Projekt6" faar sin slut-uge aendret til uge 2
 	Then Aktiviteten er ikke flyttet.
