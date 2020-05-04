@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import Applikationslag.Data.Datavedholdelsesklasser.*;
 import Applikationslag.Domaeneklasser.Aktivitet;
+import Applikationslag.Domaeneklasser.Medarbejder;
 import Applikationslag.Domaeneklasser.Projekt;
 import Applikationslag.Infrastruktur.ServiceInterfaces.*;
 
@@ -43,6 +44,10 @@ public class ProjektManager implements IProjektManager{
 	else
 		ProjektData.Bibliotek.remove(projekt.ID());
 	return true;
+	}
+	
+	public List<Entry<UUID, Projekt>> hentAlleProjekter() {
+		return ProjektData.Bibliotek.entrySet().stream().collect(Collectors.toList());
 	}
 
 

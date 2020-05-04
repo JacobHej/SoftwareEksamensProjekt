@@ -15,5 +15,7 @@ public interface IProjektManager {
 	
 	public Boolean fjern(Projekt projekt);
 	
+	public List<Entry<UUID, Projekt>> hentAlleProjekter();
+	
 	
 }

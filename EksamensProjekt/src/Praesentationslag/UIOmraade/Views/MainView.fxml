@@ -241,7 +241,7 @@
                                     </Text>
                                     <TableView fx:id="medarbejderAktiviteterTabel" prefHeight="351.0" prefWidth="200.0">
                                        <columns>
-                                          <TableColumn fx:id="medarbejderAktiviteterNavnKolonne" prefWidth="199.0" text="Navn" />
+                                          <TableColumn fx:id="medarbejderAktiviteterNavnKolonne" maxWidth="200.0" prefWidth="199.0" text="Navn" />
                                        </columns>
                                     </TableView>
                                  </children>

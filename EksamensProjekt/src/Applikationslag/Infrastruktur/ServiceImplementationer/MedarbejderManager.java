@@ -3,6 +3,7 @@ package Applikationslag.Infrastruktur.ServiceImplementationer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -56,18 +57,19 @@ public class MedarbejderManager implements IMedarbejderManager {
 		return MedarbejderData.Bibliotek.entrySet().stream().collect(Collectors.toList());
 	}
 	
-	public HashMap<UUID,Medarbejder> AlleLedigeMedarbejdere(int weekStart, int weekSlut, int yearStart, int yearSlut) {
-		HashMap<UUID, Medarbejder> result = (HashMap<UUID, Medarbejder>) MedarbejderData.Bibliotek.clone();
+	public List<Entry<UUID, Medarbejder>> AlleLedigeMedarbejdere(int weekStart, int weekSlut, int yearStart, int yearSlut) {
+		List<Entry<UUID, Medarbejder>> result = MedarbejderData.Bibliotek.entrySet().stream().collect(Collectors.toList());
 		
 		for(int i = yearStart; i <= yearSlut; i ++)
 		{
 			for(int j = (i == yearStart ? weekStart : 0); j <= (i == yearSlut ? weekSlut : 53); j++)
 			{
-				for(Entry<UUID, Medarbejder> m : result.entrySet())
-				{
-					if(AktiviteterIDenneUge(j, i, m.getValue()) > GlobaleVariable.MaksimaleVagter())
+				Iterator<Entry<UUID, Medarbejder>> it = result.iterator();
+				while(it.hasNext()) {
+					Entry<UUID, Medarbejder> m = it.next();
+					if(AktiviteterIDenneUge(j, i, m.getValue()) >= GlobaleVariable.MaksimaleVagter())
 					{
-						result.remove(m.getValue().ID());
+						it.remove();
 					}
 				}
 			}
