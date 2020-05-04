@@ -36,6 +36,8 @@ public class Aktivitet {
 		this.slutUge = slutUge;
 		this.medarbejder = medarbejder;
 		this.navn = navn;
+		this.startaar = Dates.getYear();
+		this.slutaar = Dates.getYear();
 	}
 	
 	public Aktivitet(int startUge, int slutUge, String navn)
@@ -43,11 +45,17 @@ public class Aktivitet {
 		this.startUge = startUge;
 		this.slutUge = slutUge;
 		this.navn = navn;
+		this.startaar = Dates.getYear();
+		this.slutaar = Dates.getYear();
 	}
 	
 	public Aktivitet(String navn)
 	{
 		this.navn = navn;
+		this.startaar = Dates.getYear();
+		this.slutaar = Dates.getYear();
+		this.startUge = Dates.getCurrentWeek();
+		this.slutUge = Dates.getCurrentWeek();
 	}
 	
 	
@@ -55,7 +63,7 @@ public class Aktivitet {
 	{
 		if (medarbejderManager.MedarbejderLedig(this.startUge, this.slutUge, this.startaar, this.slutaar, nyMedarbejder)
 				&& MedarbejderData.Bibliotek.entrySet().stream()
-				.anyMatch(e -> e.getValue().getNavn() == nyMedarbejder.getNavn()))
+				.anyMatch(e -> e.getValue().getNavn().equals(nyMedarbejder.getNavn())))
 		{
 			this.medarbejder = nyMedarbejder;
 			return true;
@@ -137,7 +145,7 @@ public class Aktivitet {
 	
 	public void setProjekt(Projekt p) {
 		if(ProjektData.Bibliotek.entrySet().stream()
-		.anyMatch(e -> e.getValue().getNavn() == p.getNavn()))
+		.anyMatch(e -> e.getValue().getNavn().equals( p.getNavn())))
 			this.projekt = p;
 	}
 	

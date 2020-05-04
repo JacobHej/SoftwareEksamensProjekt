@@ -19,7 +19,7 @@ public class AktivitetManager implements IAktivitetManager{
 	public Boolean GemAktivitet(Aktivitet aktivitet) {
 		if(aktivitet.getProjekt() == null)
 			return false;
-		if (!AktivitetData.Bibliotek.entrySet().stream().anyMatch(e -> e.getValue().getNavn() == aktivitet.getNavn()) 
+		if (!AktivitetData.Bibliotek.entrySet().stream().anyMatch(e -> e.getValue().getNavn().equals(aktivitet.getNavn())) 
 				&& ProjektData.Bibliotek.containsValue(aktivitet.getProjekt()))
 			return (AktivitetData.Bibliotek.put(aktivitet.ID(), aktivitet) == null);
 		else
@@ -29,19 +29,15 @@ public class AktivitetManager implements IAktivitetManager{
 	//@Override
 	public List<Entry<UUID, Aktivitet>> AlleAktiviteterEfterProjekt(Projekt projekt) {
 		return AktivitetData.Bibliotek.entrySet().stream()
-			.filter(e -> e.getValue().getProjekt().getNavn() == projekt.getNavn())
+			.filter(e -> e.getValue().getProjekt().getNavn().equals(projekt.getNavn()))
 			.collect(Collectors.toList());
 	}
 	
 	public Aktivitet AktivitetEfterProjektOgNavn (Projekt p, String navn) {
-		Aktivitet a;
-		a= (AktivitetData.Bibliotek.entrySet().stream()
+		return (AktivitetData.Bibliotek.entrySet().stream()
 				.filter(e -> e.getValue().getNavn().equals(navn))
+				.filter(e -> e.getValue().getProjekt() == p)
 				.collect(Collectors.toList()).get(0).getValue());
-		if (a.getProjekt()==p) {
-			return a;
-		}
-		return null;
 	}
 	
 	public Boolean eksisterer(Aktivitet aktivitet)
