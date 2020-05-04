@@ -521,6 +521,9 @@ public class MainController implements Initializable {
     		medarbejdere.add(e.getValue());
     	}
     	
+    	//Viser den allerede valgte medarbejder
+    	aktivitetMedarbejderDropDown.setValue(a.Medarbejder());
+    	
     	
     }
 	
@@ -531,7 +534,7 @@ public class MainController implements Initializable {
     		popup("Du burde vaelge en aktivitet foerst");
     		return;
     	}
-    	a.SaetMedarbejder(lederDropDown.getValue());
+    	a.SaetMedarbejder(aktivitetMedarbejderDropDown.getValue());
 	}
 
 //Medarbejder metoder -------------------------------------------------------------------------------------------------------------------
