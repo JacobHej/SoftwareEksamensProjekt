@@ -98,9 +98,15 @@ public class Aktivitet {
 		return this.startUge;
 	}
 	
-	public void setStartUge(int startUge)
+	public boolean setStartUge(int startUge)
 	{
-		this.startUge = startUge;
+		if(medarbejder.ledig(startUge, slutUge, startaar, slutaar)) {
+			this.startUge = startUge;
+			return true;
+		}else {
+			return false;
+		}
+		
 	}
 	
 	public int getSlutUge()
@@ -108,9 +114,14 @@ public class Aktivitet {
 		return this.slutUge;
 	}
 	
-	public void setSlutUge(int slutUge)
+	public boolean setSlutUge(int slutUge)
 	{
-		this.slutUge = slutUge;
+		if(medarbejder.ledig(startUge, slutUge, startaar, slutaar)) {
+			this.slutUge = slutUge;
+			return true;
+		}else {
+			return false;
+		}
 	}
 	
 	public int getStartaar()
@@ -118,9 +129,14 @@ public class Aktivitet {
 		return this.startaar;
 	}
 	
-	public void setStartaar(int startaar)
+	public boolean setStartaar(int startaar)
 	{
-		this.startaar = startaar;
+		if(medarbejder.ledig(startUge, slutUge, startaar, slutaar)) {
+			this.startaar = startaar;
+			return true;
+		}else {
+			return false;
+		}
 	}
 	
 	public int getSlutaar()
@@ -128,9 +144,14 @@ public class Aktivitet {
 		return this.slutaar;
 	}
 	
-	public void setSlutaar(int slutaar)
+	public boolean setSlutaar(int slutaar)
 	{
-		this.slutaar = slutaar;
+		if(medarbejder.ledig(startUge, slutUge, startaar, slutaar)) {
+			this.slutaar = slutaar;
+			return true;
+		}else {
+			return false;
+		}
 	}
 	
 	public UUID ID()

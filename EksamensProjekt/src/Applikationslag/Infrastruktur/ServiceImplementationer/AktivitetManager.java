@@ -2,6 +2,7 @@ package Applikationslag.Infrastruktur.ServiceImplementationer;
 
 import Applikationslag.Domaeneklasser.Aktivitet;
 import Applikationslag.Domaeneklasser.Brugttid;
+import Applikationslag.Domaeneklasser.Medarbejder;
 import Applikationslag.Domaeneklasser.Projekt;
 import Applikationslag.Infrastruktur.ServiceInterfaces.IAktivitetManager;
 
@@ -52,6 +53,13 @@ public class AktivitetManager implements IAktivitetManager{
 		else
 			AktivitetData.Bibliotek.remove(aktivitet.ID());
 		return true;
+	}
+
+	@Override
+	public List<Entry<UUID, Aktivitet>> AlleAktiviteterEfterMedarbejder(Medarbejder medarbejder) {
+		return AktivitetData.Bibliotek.entrySet().stream()
+				.filter(e -> e.getValue().Medarbejder()==(medarbejder))
+				.collect(Collectors.toList());
 	}
 
 }

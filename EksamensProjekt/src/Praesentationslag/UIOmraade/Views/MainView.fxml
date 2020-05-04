@@ -232,6 +232,23 @@
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </padding>
                               </VBox>
+                              <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="200.0" spacing="5.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Aktiviteter">
+                                       <font>
+                                          <Font size="25.0" />
+                                       </font>
+                                    </Text>
+                                    <TableView fx:id="medarbejderAktiviteterTabel" prefHeight="351.0" prefWidth="200.0">
+                                       <columns>
+                                          <TableColumn fx:id="medarbejderAktiviteterNavnKolonne" prefWidth="199.0" text="Navn" />
+                                       </columns>
+                                    </TableView>
+                                 </children>
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </padding>
+                              </VBox>
                            </children>
                            <padding>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

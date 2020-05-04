@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.Map.Entry;
 
+import Applikationslag.Infrastruktur.ServiceInterfaces.IAktivitetManager;
 import Applikationslag.Infrastruktur.ServiceInterfaces.IMedarbejderManager;
 import Applikationslag.Redskaber.Managers;
 
@@ -13,6 +14,7 @@ public class Medarbejder
     private UUID id = UUID.randomUUID();
     private String navn;
     
+	private IAktivitetManager aktivitetManager = Managers.FaaAktivitetManager();
     private static IMedarbejderManager medarbejderManager = Managers.FaaMedarbejderManager();
     
     //metoder
@@ -44,4 +46,13 @@ public class Medarbejder
     {
     	return medarbejderManager.GemMedarbejder(this);
     }
+    
+	public List<Entry<UUID, Aktivitet>> getAlleAktiviteter()
+	{
+		return aktivitetManager.AlleAktiviteterEfterMedarbejder(this);
+	}
+	
+	public boolean ledig(int weekStart, int weekSlut, int yearStart, int yearSlut) {
+		return medarbejderManager.MedarbejderLedig(weekStart, weekSlut, yearStart, yearSlut, this);
+	}
 }

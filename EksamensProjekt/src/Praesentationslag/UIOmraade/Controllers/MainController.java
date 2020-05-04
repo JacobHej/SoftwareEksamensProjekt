@@ -3,6 +3,7 @@ package Praesentationslag.UIOmraade.Controllers;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
@@ -56,6 +57,10 @@ public class MainController implements Initializable {
 	@FXML private TableView<Medarbejder> medarbejderTabel;
 	@FXML private TableColumn<Medarbejder,String> medarbejderInitialKolonne;
 	
+	//medarbejderAktiviteterTabel
+	@FXML private TableView<Aktivitet> medarbejderAktiviteterTabel;
+	@FXML private TableColumn<Aktivitet,String> medarbejderAktiviteterNavnKolonne;
+	
 	//The projekt info
 	@FXML private TextField ugeNrProjektStart;
 	@FXML private TextField aarstalProjektStart;
@@ -93,6 +98,7 @@ public class MainController implements Initializable {
 		initializeProjectsTable();
 		initializeActivitiesTable();
 		initializeMedlemmerTabel();
+		initializeMedarbejderActivitiesTable();
 		initializeProjektLederDropDown();
 		initializeAktivitetMedarbejderDropDown();
 	}
@@ -156,6 +162,16 @@ public class MainController implements Initializable {
 		medarbejderInitialKolonne.setCellValueFactory(new PropertyValueFactory<Medarbejder, String>("navn"));
 		tilfoejMedarbejdere();
 		visMedarbejdere();
+		
+		medarbejderTabel.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+		    if (newSelection != null) {
+		    	medarbejderOnSelectStart();
+		    }
+		});
+	}
+	
+	public void initializeMedarbejderActivitiesTable() {
+		medarbejderAktiviteterNavnKolonne.setCellValueFactory(new PropertyValueFactory<Aktivitet, String>("navn"));
 	}
 	
 	public void tilfoejMedarbejdere() {
@@ -311,8 +327,6 @@ public class MainController implements Initializable {
     		updateTable(projektTabel);
     	}
     }
-    
-    
     
     @FXML
     private void gemProjektStart(ActionEvent event)
@@ -567,8 +581,24 @@ public class MainController implements Initializable {
     	medarbejderTabel.getItems().add(m);
     }
 	
-	
-	
+    private void medarbejderOnSelectStart(){
+    	System.out.println("der bliv valgt en medarbejder");
+    	Medarbejder m = medarbejderTabel.getSelectionModel().getSelectedItems().get(0);
+    	if(m==null) {
+    		popup("Du valgte en medarbejder men ingen medarbejder blev valgt???");
+    		return;
+    	}
+    	visMedarbejderAktiviteter(m);
+    }
+    
+    private void visMedarbejderAktiviteter(Medarbejder m){
+    	ObservableList<Aktivitet> aktiviteter = FXCollections.observableArrayList();
+    	medarbejderAktiviteterTabel.setItems(aktiviteter);
+        for(Entry<UUID, Aktivitet> e : m.getAlleAktiviteter()) {
+        	medarbejderAktiviteterTabel.getItems().add(e.getValue());
+        }
+        
+    }
 	
 //Brugbare metoder----------------------------------------------------------------------------------------------------------------
 	private void popup(String s){
