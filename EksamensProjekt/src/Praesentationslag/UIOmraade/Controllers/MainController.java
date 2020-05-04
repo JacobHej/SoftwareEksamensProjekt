@@ -151,7 +151,7 @@ public class MainController implements Initializable {
 	
 	public void initializeMedlemmerTabel() {
 		//set up the columns in the table
-		medarbejderInitialKolonne.setCellValueFactory(new PropertyValueFactory<Medarbejder, String>("initialer"));
+		medarbejderInitialKolonne.setCellValueFactory(new PropertyValueFactory<Medarbejder, String>("navn"));
 		tilfoejMedarbejdere();
 		visMedarbejdere();
 	}
@@ -183,7 +183,7 @@ public class MainController implements Initializable {
               if (medarbejder== null){
                 return null;
               } else {
-                return medarbejder.Navn();
+                return medarbejder.getNavn();
               }
             }
 

@@ -26,7 +26,7 @@ public class Medarbejder
     	return this.id;
     }
     
-    public String Navn()
+    public String getNavn()
     {
     	return this.navn;
     }
