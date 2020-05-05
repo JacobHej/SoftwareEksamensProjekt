@@ -23,6 +23,8 @@ import Applikationslag.Redskaber.Dates;
 import Applikationslag.Redskaber.GlobaleVariable;
 
 public class MedarbejderManager implements IMedarbejderManager {
+	
+	
 
 	@Override
 	public Boolean GemMedarbejder(Medarbejder medarbejder) {
@@ -59,6 +61,15 @@ public class MedarbejderManager implements IMedarbejderManager {
 	public List<Entry<UUID, Medarbejder>> hentAlleMedarbejdere() {
 		return ((HashMap<UUID, Medarbejder>)MedarbejderData.Bibliotek.clone())
 				.entrySet().stream().collect(Collectors.toList());
+	}
+	
+	public boolean eksistererMedNavn(String navn) {
+		for(Entry<UUID, Medarbejder> e : MedarbejderData.Bibliotek.entrySet()) {
+			if (e.getValue().getNavn().equals(navn)) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public List<Entry<UUID, Medarbejder>> AlleLedigeMedarbejdere(int weekStart, int weekSlut, int yearStart, int yearSlut) {
@@ -113,9 +124,15 @@ public class MedarbejderManager implements IMedarbejderManager {
 	}
 	
 	public Medarbejder MedarbejderUdFraNavn(String medarbejdernavn){
-		return (MedarbejderData.Bibliotek.entrySet().stream()
+		List<Entry<UUID, Medarbejder>> l = MedarbejderData.Bibliotek.entrySet().stream()
 				.filter(e -> e.getValue().getNavn().equals(medarbejdernavn))
-				.collect(Collectors.toList()).get(0).getValue());
+				.collect(Collectors.toList());
+		if(!l.isEmpty()) {
+			return (l.get(0).getValue());
+		}else {
+			return null;
+		}
+		
 	}
 
 	@Override

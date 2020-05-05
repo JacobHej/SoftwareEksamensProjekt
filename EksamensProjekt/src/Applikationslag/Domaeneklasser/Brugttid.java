@@ -70,7 +70,7 @@ public class Brugttid {
 	
 	public String getFlotDato() {
 		String day = dato.getDate()+"";
-		String month = dato.getMonth()+"";
+		String month = (dato.getMonth()+1)+"";
 		String year = (dato.getYear()+1900)+"";
 		return day+"/"+month+"/"+year;
 	}

@@ -18,8 +18,15 @@ public interface IMedarbejderManager {
 	public long AktiviteterIDenneUge(int week, int year, Medarbejder medarbejder); 
 	public Boolean MedarbejderLedig(int weekStart, int weekSlut, int yearStart, int yearSlut, Medarbejder medarbejder);
 	public Medarbejder MedarbejderUdFraNavn(String medarbejdernavn);
+
+	public boolean eksistererMedNavn(String navn);
+
 	public Boolean MedarbejderFri(int weekStart, int weekSlut, int yearStart, int yearSlut, Medarbejder medarbejder) ;
+
 	public Boolean GemFerie(Ferie ferie);
 	public Boolean SletFerie(Ferie ferie);
 	List<Entry<UUID, Ferie>> hentAlleFerier();
+
+
+
 }
