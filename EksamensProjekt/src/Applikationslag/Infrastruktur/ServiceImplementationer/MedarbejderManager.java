@@ -23,8 +23,6 @@ import Applikationslag.Redskaber.GlobaleVariable;
 import Applikationslag.Redskaber.Managers;
 
 public class MedarbejderManager implements IMedarbejderManager {
-	
-	
 
 	private IFerieManager ferieManager = Managers.FaaFerieManager();
 	@Override
@@ -62,15 +60,6 @@ public class MedarbejderManager implements IMedarbejderManager {
 	public List<Entry<UUID, Medarbejder>> hentAlleMedarbejdere() {
 		return ((HashMap<UUID, Medarbejder>)MedarbejderData.Bibliotek.clone())
 				.entrySet().stream().collect(Collectors.toList());
-	}
-	
-	public boolean eksistererMedNavn(String navn) {
-		for(Entry<UUID, Medarbejder> e : MedarbejderData.Bibliotek.entrySet()) {
-			if (e.getValue().getNavn().equals(navn)) {
-				return true;
-			}
-		}
-		return false;
 	}
 	
 	public List<Entry<UUID, Medarbejder>> AlleLedigeMedarbejdere(int weekStart, int weekSlut, int yearStart, int yearSlut) {
@@ -125,15 +114,9 @@ public class MedarbejderManager implements IMedarbejderManager {
 	}
 	
 	public Medarbejder MedarbejderUdFraNavn(String medarbejdernavn){
-		List<Entry<UUID, Medarbejder>> l = MedarbejderData.Bibliotek.entrySet().stream()
+		return (MedarbejderData.Bibliotek.entrySet().stream()
 				.filter(e -> e.getValue().getNavn().equals(medarbejdernavn))
-				.collect(Collectors.toList());
-		if(!l.isEmpty()) {
-			return (l.get(0).getValue());
-		}else {
-			return null;
-		}
-		
+				.collect(Collectors.toList()).get(0).getValue());
 	}
 
 }
