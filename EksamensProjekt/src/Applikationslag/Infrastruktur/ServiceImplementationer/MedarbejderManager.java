@@ -59,6 +59,15 @@ public class MedarbejderManager implements IMedarbejderManager {
 				.entrySet().stream().collect(Collectors.toList());
 	}
 	
+	public boolean eksistererMedNavn(String navn) {
+		for(Entry<UUID, Medarbejder> e : MedarbejderData.Bibliotek.entrySet()) {
+			if (e.getValue().getNavn().equals(navn)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public List<Entry<UUID, Medarbejder>> AlleLedigeMedarbejdere(int weekStart, int weekSlut, int yearStart, int yearSlut) {
 		List<Entry<UUID, Medarbejder>> result = MedarbejderData.Bibliotek.entrySet().stream().collect(Collectors.toList());
 		
