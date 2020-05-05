@@ -80,6 +80,12 @@ public class MainController implements Initializable {
 	@FXML private TextField aarstalAAIU;
 	@FXML private DatePicker hentBrugtTidDag;
 	
+	//Ferie Stuff
+	@FXML private TextField ferieUgeStart;
+	@FXML private TextField ferieUgeSlut;
+	@FXML private TextField ferieAarStart;
+	@FXML private TextField ferieAarSlut;
+	
 	//TidBrugt ting
 	@FXML private TableView<Brugttid> tidBrugtTabel;
 	@FXML private TableColumn<Brugttid,String> tidBrugtDatoKolonne;
@@ -344,6 +350,10 @@ public class MainController implements Initializable {
 		textFieldNumbersOnly(aarstalAktivitetSlut);
 		textFieldNumbersOnly(ugeNrProjektStart);
 		textFieldNumbersOnly(aarstalProjektStart);
+		textFieldNumbersOnly(ferieUgeStart);
+		textFieldNumbersOnly(ferieUgeSlut);
+		textFieldNumbersOnly(ferieAarStart);
+		textFieldNumbersOnly(ferieAarSlut);
 	}
 
 	private void textFieldNumbersOnly(TextField textField) {
@@ -1130,6 +1140,7 @@ public class MainController implements Initializable {
     private void hentTidBrugtDagKnap(ActionEvent event) {
     	Medarbejder m = medarbejderTabel.getSelectionModel().getSelectedItem();
     	if(m==null) {
+    		popup("Ingen medarbejder valgt");
     		return;
     	}
     	LocalDate d = hentBrugtTidDag.getValue();
@@ -1146,6 +1157,37 @@ public class MainController implements Initializable {
     
     @FXML
     private void tagFerieKnap(ActionEvent event) {
+    	Medarbejder m = medarbejderTabel.getSelectionModel().getSelectedItem();
+    	if(m==null) {
+    		popup("Ingen medarbejder valgt");
+    		return;
+    	}
+    	int startUge;
+		int slutUge;
+		int startaar;
+		int slutaar;
+		try {
+			startUge = Integer.parseInt(ferieUgeStart.getText());
+			slutUge = Integer.parseInt(ferieUgeSlut.getText());
+			startaar = Integer.parseInt(ferieAarSlut.getText());
+			slutaar = Integer.parseInt(ferieAarSlut.getText());
+		} catch (Exception e) {
+			popup("En af de intastede tal var ikke et tal");
+			return;
+		}
+    	
+		if(
+				startUge<1||startUge>53||
+				slutUge<1||slutUge>53||
+				startaar<1900||slutaar<1900
+			) {
+			popup("Uger går kun fra 1 til 53 og aar start på 1900");
+			return;
+		}
+    	if(!m.tagFerie(startUge, slutUge, startaar, slutaar)) {
+    		popup("Noget ferie gik galt, tjek at du ikke har arbejde i den uge");
+    		return;
+    	}
     	
     }
 //	HER
