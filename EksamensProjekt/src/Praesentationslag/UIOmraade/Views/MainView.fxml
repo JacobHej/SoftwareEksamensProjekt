@@ -271,6 +271,101 @@
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </padding>
                               </VBox>
+                              <VBox prefHeight="200.0" prefWidth="210.0" spacing="5.0">
+                                 <padding>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </padding>
+                                 <children>
+                                    <Accordion prefHeight="568.0" prefWidth="200.0">
+                                      <panes>
+                                        <TitledPane animated="false" text="MedarbejderInfo">
+                                          <content>
+                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <VBox alignment="TOP_CENTER" layoutX="49.0" layoutY="54.0" prefHeight="465.0" prefWidth="198.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                         <children>
+                                                            <HBox alignment="CENTER" prefHeight="13.0" prefWidth="179.0" spacing="5.0">
+                                                               <children>
+                                                                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ID" />
+                                                                  <TextField fx:id="medarbejderID" prefHeight="25.0" prefWidth="131.0" />
+                                                               </children>
+                                                            </HBox>
+                                                            <Button mnemonicParsing="false" onAction="#gemMedarbejderNavnNyt" text="Gem ID" />
+                                                            <AnchorPane prefHeight="24.0" prefWidth="179.0" />
+                                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Antal aktiviteter i uge" />
+                                                            <HBox alignment="CENTER" prefHeight="7.0" prefWidth="179.0" spacing="5.0">
+                                                               <children>
+                                                                  <TextField fx:id="ugeNrAAIU" minWidth="60.0" prefHeight="25.0" prefWidth="45.0" promptText="UgeNr" />
+                                                                  <TextField fx:id="aarstalAAIU" prefHeight="25.0" prefWidth="200.0" promptText="Aar" />
+                                                                  <Button minWidth="45.0" mnemonicParsing="false" onAction="#hentAntalAktiviteter" prefHeight="25.0" prefWidth="50.0" text="Hent" />
+                                                               </children>
+                                                            </HBox>
+                                                            <AnchorPane prefHeight="50.0" prefWidth="179.0" />
+                                                            <DatePicker fx:id="hentBrugtTidDag" promptText="vaelg dag" />
+                                                            <Button mnemonicParsing="false" onAction="#hentTidBrugtDagKnap" text="Hent tidBrugt på dag" />
+                                                         </children>
+                                                      </VBox>
+                                                   </children>
+                                                </AnchorPane>
+                                          </content>
+                                        </TitledPane>
+                                        <TitledPane animated="false" text="Aktivitet's Info">
+                                          <content>
+                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                                   <children>
+                                                      <VBox alignment="TOP_CENTER" layoutX="49.0" layoutY="57.0" prefHeight="465.0" prefWidth="198.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                         <children>
+                                                            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Bed Om Hjælp" />
+                                                            <DatePicker fx:id="tidDagVaelgerHjælper" promptText="Vælg Dato" />
+                                                            <ComboBox fx:id="tidsVaelgerHjælper" maxHeight="100.0" prefWidth="150.0" promptText="Vælg Tid" />
+                                                            <ComboBox fx:id="medarbejderDropDownHjælper" prefHeight="0.0" prefWidth="133.0" promptText="Vælg Hjælper" />
+                                                            <Button mnemonicParsing="false" onAction="#gemBrugtTidHjælper" text="Tilfoej Tid Brugt" />
+                                                         </children>
+                                                      </VBox>
+                                                   </children></AnchorPane>
+                                          </content>
+                                        </TitledPane>
+                                        <TitledPane animated="false" text="Tid Brugt Info">
+                                          <content>
+                                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="532.0" prefWidth="198.0">
+                                                   <children>
+                                                      <VBox alignment="TOP_CENTER" layoutX="49.0" layoutY="66.0" prefHeight="465.0" prefWidth="198.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                         <children>
+                                                            <HBox alignment="CENTER" prefHeight="0.0" prefWidth="179.0" spacing="10.0">
+                                                               <children>
+                                                                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Projekt:" />
+                                                                  <Text fx:id="tidBrugtProjekt" strokeType="OUTSIDE" strokeWidth="0.0" text="Projektnavn" />
+                                                               </children>
+                                                            </HBox>
+                                                            <HBox alignment="CENTER" prefHeight="0.0" prefWidth="179.0" spacing="10.0">
+                                                               <children>
+                                                                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Aktivitet:" />
+                                                                  <Text fx:id="tidBrugtAktivitet" strokeType="OUTSIDE" strokeWidth="0.0" text="Aktivitetnavn" />
+                                                               </children>
+                                                            </HBox>
+                                                            <HBox alignment="CENTER" prefHeight="0.0" prefWidth="179.0" spacing="10.0">
+                                                               <children>
+                                                                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Medarbejder:" />
+                                                                  <Text fx:id="tidBrugtMedarbejder" strokeType="OUTSIDE" strokeWidth="0.0" text="Medarbejdernavn" />
+                                                               </children>
+                                                            </HBox>
+                                                            <HBox alignment="CENTER" prefHeight="0.0" prefWidth="179.0" spacing="10.0">
+                                                               <children>
+                                                                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tid Brugt:" />
+                                                                  <ComboBox fx:id="tidBrugtTidBrugt" maxHeight="100.0" prefWidth="150.0" promptText="Tid Brugt" />
+                                                               </children>
+                                                            </HBox>
+                                                            <Button mnemonicParsing="false" onAction="#gemNyTidBrugt" text="Gem ny tid" />
+                                                            <Button mnemonicParsing="false" onAction="#sletTidBrugt" text="Slet Tid Brugt" />
+                                                         </children>
+                                                      </VBox>
+                                                   </children></AnchorPane>
+                                          </content>
+                                        </TitledPane>
+                                      </panes>
+                                    </Accordion>
+                                 </children>
+                              </VBox>
                            </children>
                            <padding>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
