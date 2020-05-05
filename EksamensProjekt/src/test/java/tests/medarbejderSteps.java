@@ -117,4 +117,29 @@ public class medarbejderSteps {
 	    // Write code here that turns the phrase above into concrete actions
 	    throw new io.cucumber.java.PendingException();
 	}
+	
+	//OPRET NY MEDARBEJDER
+	@Given("Der findes ikke en medarbejder med navnet {string}")
+	public void derFindesIkkeEnMedarbejderMedNavnet(String string) {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new io.cucumber.java.PendingException();
+	}
+
+	@Then("Der kan oprettes en medarbejder med navnet {string}")
+	public void derKanOprettesEnMedarbejderMedNavnet(String string) {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new io.cucumber.java.PendingException();
+	}
+
+	@Given("Der er en medarbejder med navnet {string}")
+	public void derErEnMedarbejderMedNavnet(String string) {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new io.cucumber.java.PendingException();
+	}
+
+	@Then("Der kan ikke oprettes en ny medarbejder med navnet {string}")
+	public void derKanIkkeOprettesEnNyMedarbejderMedNavnet(String string) {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new io.cucumber.java.PendingException();
+	}
 }
