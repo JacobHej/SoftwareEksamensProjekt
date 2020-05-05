@@ -27,6 +27,7 @@ public class medarbejderSteps {
 	Aktivitet Currentaktivitet;
 	Projekt Currentprojekt;
 	
+	
 	@Given("medarbejder {string} har mindre end {int} vagter i uge {int}")
 	public void medarbejderHarMindreEndVagterIUge(String Medarbejdernavn, Integer int1, Integer int2) {
 	    Currentmedarbejder = new Medarbejder(Medarbejdernavn);
@@ -110,7 +111,7 @@ public class medarbejderSteps {
 
 	@When("{string} melder ferie i uge {int}")
 	public void melderFerieIUge(String string, Integer int1) {
-	    // Write code here that turns the phrase above into concrete actions
+		// Write code here that turns the phrase above into concrete actions
 	    throw new io.cucumber.java.PendingException();
 	}
 
