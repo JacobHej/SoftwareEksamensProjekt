@@ -99,6 +99,16 @@ public class MedarbejderManager implements IMedarbejderManager {
 		return true;
 	}
 	
+	public boolean eksistererMedNavn(String navn) {
+		for(Entry<UUID, Medarbejder> e : MedarbejderData.Bibliotek.entrySet()) {
+			if (e.getValue().getNavn().equals(navn)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
 	public Boolean MedarbejderFri(int weekStart, int weekSlut, int yearStart, int yearSlut, Medarbejder medarbejder) {
 		for(int i = yearStart; i <= yearSlut; i ++)
 		{
