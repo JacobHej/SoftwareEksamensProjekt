@@ -1,4 +1,4 @@
-ackage Praesentationslag.UIOmraade.Models;
+package Praesentationslag.UIOmraade.Models;
 
 public class MainModel {
 
