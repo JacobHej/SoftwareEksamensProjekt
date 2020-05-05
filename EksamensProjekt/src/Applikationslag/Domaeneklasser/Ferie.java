@@ -2,15 +2,37 @@ package Applikationslag.Domaeneklasser;
 
 import java.util.UUID;
 
+import Applikationslag.Infrastruktur.ServiceInterfaces.IFerieManager;
+import Applikationslag.Redskaber.Managers;
+
 public class Ferie {
+	
+	private IFerieManager ferieManager = Managers.FaaFerieManager();
+	
 	private int startUge;
 	private int slutUge;
 	private int startaar;
 	private int sluttaar;
+	private String forklaring;
 	
 	private UUID id = UUID.randomUUID();
 	
 	private Medarbejder medarbejder;
+	
+	public Ferie(int startUge, int slutUge, int startaar, int slutaar) {
+		this.startUge=startUge;
+		this.slutUge=slutUge;
+		this.startaar = startaar;
+		this.sluttaar = slutaar;
+	}
+	
+	public Ferie(int startUge, int slutUge, int startaar, int slutaar,String forklaring) {
+		this.startUge=startUge;
+		this.slutUge=slutUge;
+		this.startaar = startaar;
+		this.sluttaar = slutaar;
+		this.forklaring = forklaring;
+	}
 	
 	public int StartUge()
 	{
@@ -39,5 +61,17 @@ public class Ferie {
 
 	public UUID ID() {
 		return this.id;
+	}
+	
+	public String getForklaring() {
+		return forklaring;
+	}
+	
+	public void setForklaring(String forklaring) {
+		this.forklaring=forklaring;
+	}
+	
+	public boolean gem() {
+		return ferieManager.Gem(this);
 	}
 }

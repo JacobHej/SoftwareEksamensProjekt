@@ -2,8 +2,10 @@ package Praesentationslag.UIOmraade.Controllers;
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.temporal.WeekFields;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
@@ -14,10 +16,13 @@ import Applikationslag.Domaeneklasser.Aktivitet;
 import Applikationslag.Domaeneklasser.Brugttid;
 import Applikationslag.Domaeneklasser.Medarbejder;
 import Applikationslag.Domaeneklasser.Projekt;
+import Applikationslag.Infrastruktur.ServiceInterfaces.IBrugttidManager;
 import Applikationslag.Infrastruktur.ServiceInterfaces.IMedarbejderManager;
 import Applikationslag.Infrastruktur.ServiceInterfaces.IProjektManager;
 import Applikationslag.Redskaber.Managers;
 import Praesentationslag.UIOmraade.Views.App;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -31,9 +36,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.TextFlow;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -46,6 +53,7 @@ public class MainController implements Initializable {
 	//Managers
 	IMedarbejderManager medarbejderManager = Managers.FaaMedarbejderManager();
 	IProjektManager projektManager = Managers.FaaProjektManager();
+	IBrugttidManager brugttidManager = Managers.FaaBrugttidManager();
 	
 	//FXML Variables
 	//The Project Table
@@ -64,6 +72,13 @@ public class MainController implements Initializable {
 	//medarbejderAktiviteterTabel
 	@FXML private TableView<Aktivitet> medarbejderAktiviteterTabel;
 	@FXML private TableColumn<Aktivitet,String> medarbejderAktiviteterNavnKolonne;
+	@FXML private TableColumn<Aktivitet,String> medarbejderAktiviteterStartKolonne;
+
+	//medarbejderInfo
+	@FXML private TextField medarbejderID;
+	@FXML private TextField ugeNrAAIU;
+	@FXML private TextField aarstalAAIU;
+	@FXML private DatePicker hentBrugtTidDag;
 	
 	//TidBrugt ting
 	@FXML private TableView<Brugttid> tidBrugtTabel;
@@ -71,6 +86,12 @@ public class MainController implements Initializable {
 	@FXML private TableColumn<Brugttid,String> tidBrugtTidKolonne;
 	
 	@FXML private ComboBox<String> tidsVaelger;
+	@FXML private DatePicker tidDagVaelger;
+
+	@FXML private Text tidBrugtProjekt;
+	@FXML private Text tidBrugtAktivitet;
+	@FXML private Text tidBrugtMedarbejder;
+	@FXML private ComboBox<String> tidBrugtTidBrugt;
 	
 	//The projekt info
 	@FXML private TextField ugeNrProjektStart;
@@ -85,6 +106,18 @@ public class MainController implements Initializable {
 	@FXML private TextField aarstalAktivitetSlut;
 	@FXML private Text aktivitetInfoNavn;
 	@FXML private ComboBox<Medarbejder> aktivitetMedarbejderDropDown;
+	@FXML private TextField budgetMinutter;
+	@FXML private TextField budgetTimer;
+	@FXML private TextField budgetDage;
+	@FXML private Text aktivitetBrugtM;
+	@FXML private Text aktivitetBrugtT;
+	@FXML private Text aktivitetBrugtD;
+	@FXML private ProgressBar aktivitetTidProgress;
+
+	//bed om hjælp
+	@FXML private DatePicker tidDagVaelgerHjælper;
+	@FXML private ComboBox<String> tidsVaelgerHjælper;
+	@FXML private ComboBox<Medarbejder> medarbejderDropDownHjælper;
 	
 	//The add and remove project 
 	@FXML private TextField tilfoejProjektNavn;
@@ -115,6 +148,8 @@ public class MainController implements Initializable {
 		initializeMedarbejderActivitiesTable();
 		initializeProjektLederDropDown();
 		initializeAktivitetMedarbejderDropDown();
+		initializeAktivitetmedarbejderDropDownHjælper();
+		initializeNumbersOnly();
 	}
 	
 	public void initializeProjectsTable() {
@@ -183,6 +218,7 @@ public class MainController implements Initializable {
 	
 	public void initializeMedarbejderActivitiesTable() {
 		medarbejderAktiviteterNavnKolonne.setCellValueFactory(new PropertyValueFactory<Aktivitet, String>("navn"));
+		medarbejderAktiviteterStartKolonne.setCellValueFactory(new PropertyValueFactory<Aktivitet, String>("start"));
 		
 		medarbejderAktiviteterTabel.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
 		    if (newSelection != null) {
@@ -195,18 +231,18 @@ public class MainController implements Initializable {
 	private void initializeBrugtTidTabel() {
 		tidBrugtDatoKolonne.setCellValueFactory(new PropertyValueFactory<Brugttid, String>("flotDato"));
 		tidBrugtTidKolonne.setCellValueFactory(new PropertyValueFactory<Brugttid, String>("flotTid"));
+		
+		tidBrugtTabel.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+		    if (newSelection != null) {
+		    	tidBrugtOnSelectStart();
+		    }
+		});
 	}
 	
 	private void intitializeTidsValg() {
-		for(int i = 1; i<48; i++) {
-			int timer = i/2;
-			String minutter = ((i%2)*30)+"";
-			if(minutter.length()<2) {
-				minutter += "0";
-			}
-			tidsVaelger.getItems().add(timer+":"+minutter);
-		}
-		
+		comboBoxTimePicker(tidsVaelger);
+		comboBoxTimePicker(tidsVaelgerHjælper);
+		comboBoxTimePicker(tidBrugtTidBrugt);
 	}
 	
 	public void tilfoejMedarbejdere() {
@@ -264,6 +300,24 @@ public class MainController implements Initializable {
 		
 	}
 	
+	private void initializeAktivitetmedarbejderDropDownHjælper() {
+		medarbejderDropDownHjælper.setConverter(new StringConverter<Medarbejder>() {
+            @Override
+            public String toString(Medarbejder medarbejder) {
+              if (medarbejder== null){
+                return null;
+              } else {
+                return medarbejder.getNavn();
+              }
+            }
+
+          @Override
+          public Medarbejder fromString(String id) {
+              return null;
+          }
+		});
+	}
+	
 	private void lavTommy() {
 		Medarbejder m;
 		m = new Medarbejder("TJR");
@@ -280,6 +334,46 @@ public class MainController implements Initializable {
 		}
 	}
 	
+	private void initializeNumbersOnly() {
+		textFieldNumbersOnly(budgetMinutter);
+		textFieldNumbersOnly(budgetTimer);
+		textFieldNumbersOnly(budgetDage);
+		textFieldNumbersOnly(ugeNrAktivitetStart);
+		textFieldNumbersOnly(ugeNrAktivitetSlut);
+		textFieldNumbersOnly(aarstalAktivitetStart);
+		textFieldNumbersOnly(aarstalAktivitetSlut);
+		textFieldNumbersOnly(ugeNrProjektStart);
+		textFieldNumbersOnly(aarstalProjektStart);
+	}
+
+	private void textFieldNumbersOnly(TextField textField) {
+		textField.textProperty().addListener(new ChangeListener<String>() {
+		    @Override
+		    public void changed(ObservableValue<? extends String> observable, String oldValue, 
+		        String newValue) {
+		        if (!newValue.matches("\\d*")) {
+		            textField.setText(newValue.replaceAll("[^\\d]", ""));
+		        }
+		    }
+		});
+	}
+
+	private void comboBoxTimePicker(ComboBox<String> c) {
+		for(int i = 1; i<48; i++) {
+			int timer = i/2;
+			String minutter = ((i%2)*30)+"";
+			if(minutter.length()<2) {
+				minutter += "0";
+			}
+			c.getItems().add(timer+":"+minutter);
+		}
+	}
+
+//	HER
+//	BEGYNDER
+//	PROJEKT
+//	METODER
+	
 //Projekt metoder ----------------------------------------------------------------------------------------------------------
 	
 	private void visProjekter() {
@@ -289,16 +383,20 @@ public class MainController implements Initializable {
         for(Entry<UUID, Projekt> e : projektManager.hentAlleProjekter()) {
         	projektTabel.getItems().add(e.getValue());
         }
+        
+        projektTabel.refresh();
 	}
 	
 	@FXML
     private void tilfoejProjekt(ActionEvent event)
     {
 		Projekt p = new Projekt(tilfoejProjektNavn.getText());
-		p.Gem();
+		if(!p.Gem()) {
+			popup("Der skete en fejl. Tjek om et projekt med samme navn eksisterer");
+		}
 		//Get all the items from the table as a list, then add the new person to
 		//the list
-		projektTabel.getItems().add(p);
+		visProjekter();
 		
     }
 	
@@ -438,6 +536,11 @@ public class MainController implements Initializable {
     	p.setLeder(lederDropDown.getValue());
     }
     
+//	HER
+//	BEGYNDER
+//	AKTIVITET
+//	METODER
+    
 //Aktivitet metoder -------------------------------------------------------------------------------------------------------------------
 	
 	@FXML
@@ -445,11 +548,17 @@ public class MainController implements Initializable {
     {
 		System.out.println("You tried to AddActivity");
         Projekt p = projektTabel.getSelectionModel().getSelectedItems().get(0);
-        if(p!=null) {
-        	Aktivitet a = new Aktivitet(tilfoejAktivitetNavn.getText());
-        	p.tilfoejAktivitet(a);
-        	aktivitetTabel.getItems().add(a);
+        if(p==null) {
+        	popup("Intet projekt valgt");
+        	return;
         }
+
+        Aktivitet a = new Aktivitet(tilfoejAktivitetNavn.getText());
+        if(!p.tilfoejAktivitet(a)) {
+        	popup("Noget gik galt. Tjek om aktivitet med samme navn eksisterer");
+        	return;
+        }
+        visAktiviteter(p);
     }
 	
 	@FXML
@@ -637,6 +746,16 @@ public class MainController implements Initializable {
     	//Viser den allerede valgte medarbejder
     	aktivitetMedarbejderDropDown.setValue(a.Medarbejder());
     	
+    	//TidBrugt og budget
+    	budgetMinutter.setText(a.getMinutterBudget()+"");
+    	budgetTimer.setText(a.getTimerBudget()+"");
+    	budgetDage.setText(a.getDageBudget()+"");
+
+    	aktivitetBrugtM.setText(a.getMinutterBrugt()+"");
+    	aktivitetBrugtT.setText(a.getTimerBrugt()+"");
+    	aktivitetBrugtD.setText(a.getDageBrugt()+"");
+
+    	aktivitetTidProgress.setProgress(a.getProcentFaerdig());
     	
     }
 	
@@ -651,7 +770,57 @@ public class MainController implements Initializable {
     		popup("Medarbejderen er ikke ledig her");
     	}
     	
+    	Medarbejder m = medarbejderTabel.getSelectionModel().getSelectedItems().get(0);
+    	if(m!=null) {
+    		visMedarbejderAktiviteter(m);
+    	}
+
+    	
 	}
+	
+	@FXML
+	private void gemBudgetAendringer() {
+		Aktivitet a = aktivitetTabel.getSelectionModel().getSelectedItems().get(0);
+		if(a==null) {
+			popup("Ingen aktivitet valgt");
+			return;
+		}
+		try {
+			int minutter = 0;
+			if(budgetMinutter.getText().length()>0) {
+				minutter = Integer.parseInt(budgetMinutter.getText());
+				minutter = minutter - minutter%30;
+				budgetMinutter.setText(minutter+"");
+			}
+			int timer = 0;
+			if(budgetTimer.getText().length()>0) {
+				timer = Integer.parseInt(budgetTimer.getText());
+			}
+			int dage = 0;
+			if(budgetDage.getText().length()>0) {
+				dage = Integer.parseInt(budgetDage.getText());
+			}
+			System.out.println(minutter+" "+timer+" "+dage);
+
+			//målt i halve timer og med 12 timer om dagen
+			int samlet = minutter/30+timer*2+dage*24;
+			System.out.println(samlet);
+			a.SaetBudgetteretTid(samlet);
+		} catch (Exception e) {
+			popup("HOW THE FUCK DID YOU DO THAT YOURE NOT EVEN ALLOWED TO ENTER LETTERS LIKE REALLY WTF");
+			return;
+		}
+
+		visAktivitetInfo(a);
+
+	}
+
+//	HER
+//	BEGYNDER
+//	METODERNE
+//	PÅ
+//	MEDARBEJDER
+//	TAB
 
 //Medarbejder metoder -------------------------------------------------------------------------------------------------------------------
 	
@@ -662,8 +831,11 @@ public class MainController implements Initializable {
         medarbejderTabel.setItems(medarbejdere);
         
         for(Entry<UUID, Medarbejder> e : medarbejderManager.hentAlleMedarbejdere()) {
+        	System.out.println(e.getValue().getNavn());
         	medarbejderTabel.getItems().add(e.getValue());
         }
+        
+        medarbejderTabel.refresh();
     }
     
     @FXML
@@ -691,6 +863,9 @@ public class MainController implements Initializable {
     		return;
     	}
     	visMedarbejderAktiviteter(m);
+    	visMedarbejderInfo(m);
+    	visMuligeHjælpere(m);
+    	visBrugtTid(null);
     }
     
     private void visMedarbejderAktiviteter(Medarbejder m){
@@ -700,6 +875,40 @@ public class MainController implements Initializable {
         	medarbejderAktiviteterTabel.getItems().add(e.getValue());
         }
     }
+    
+    private void visMedarbejderInfo(Medarbejder m) {
+    	medarbejderID.setText(m.getNavn());
+    }
+
+    @FXML
+    private void gemMedarbejderNavnNyt(ActionEvent event){
+
+    	Medarbejder m = medarbejderTabel.getSelectionModel().getSelectedItems().get(0);
+    	if(m==null) {
+    		popup("Du burde vælge en medarbejder.");
+    		return;
+    	}
+    	String navn = medarbejderID.getText();
+    	if(navn.length()<1) {
+    		popup("Vær sød at indtaste et navn");
+    		return;
+    	}
+    	if(navn.length()>4) {
+    		popup("Kun 4 initialer");
+    		return;
+    	}
+    	if(!m.setNavn(navn)) {
+    		popup("Noget gik galt, tjek om der findes en medarbejder med samme navn");
+    		return;
+    	}
+
+    	for(Entry<UUID, Medarbejder> e : medarbejderManager.hentAlleMedarbejdere()) {
+    		System.out.println(e.getValue().getNavn());
+        }
+
+    	visMedarbejdere();
+
+    }
 	
     private void medarbejderAktivitetOnSelectStart(){
     	Aktivitet a = medarbejderAktiviteterTabel.getSelectionModel().getSelectedItems().get(0);
@@ -707,21 +916,252 @@ public class MainController implements Initializable {
     }
     
     private void visBrugtTid(Aktivitet a) {
+    	Brugttid b = tidBrugtTabel.getSelectionModel().getSelectedItem();
     	ObservableList<Brugttid> tider = FXCollections.observableArrayList();
     	tidBrugtTabel.setItems(tider);
+    	
+    	if(a==null) {
+    		return;
+    	}
+    	
         for(Entry<UUID, Brugttid> e : a.getAlleBrugttid()) {
         	tidBrugtTabel.getItems().add(e.getValue());
         }
+        
+        tidBrugtTabel.refresh();
+        if(b!=null&&b.Aktivitet()==a&&brugttidManager.Eksisterer(b)) {
+        	tidBrugtTabel.getSelectionModel().select(b);
+    	}
     }
+    
+    @FXML
+    private void gemBrugtTid(ActionEvent event) {
+    	Aktivitet a = medarbejderAktiviteterTabel.getSelectionModel().getSelectedItems().get(0);
+    	if(a==null) {
+    		popup("Ingen aktivitet valgt");
+    		return;
+    	}
+    	LocalDate date = tidDagVaelger.getValue();
+    	if(date == null) {
+    		popup("Ingen dato valgt");
+    		return;
+    	}
+    	WeekFields weekFields = WeekFields.of(Locale.getDefault());
+    	int uge = date.get(weekFields.weekOfWeekBasedYear());
+    	int aar = date.getYear();
+    	boolean d1 = a.getStartaar()<aar || (a.getStartaar()==aar&&a.getStartUge()<=uge);
+    	boolean d2 = a.getSlutaar()>aar || (a.getSlutaar()==aar&&a.getSlutUge()>=uge);
+    	if(!(d1&&d2)) {
+    		popup("Dato valgt ligger ikke i aktivitets ugerne");
+    		return;
+    	}
+    	String tid = tidsVaelger.getValue();
+    	if(tid.length()<1) {
+    		popup("Ingen tid valgt");
+    		return;
+    	}
+    	System.out.println(tid);
+    	int i;
+    	int j;
+    	try {
+    		i = Integer.parseInt(tid.substring(0, tid.length()-3));
+        	j = Integer.parseInt(tid.substring(tid.length()-2, tid.length()));
+    	}catch(Exception e){
+    		popup("Forkert tid valgt");
+    		return;
+    	}
+
+    	int tidConvert = i*2 + j/30;
+
+    	a.TilfoejTid(tidConvert, new Date(date.getYear()-1900,date.getMonthValue()-1,date.getDayOfMonth()));
+
+    	visBrugtTid(a);
+    }
+
+    @FXML
+    private void hentAntalAktiviteter(ActionEvent event){
+    	Medarbejder m = medarbejderTabel.getSelectionModel().getSelectedItems().get(0);
+    	if(m==null) {
+    		popup("Ingen medarbejder valgt");
+    		return;
+    	}
+
+    	try {
+    		int ugeNr = Integer.parseInt(ugeNrAAIU.getText());
+    		int aarstal = Integer.parseInt(aarstalAAIU.getText());
+    		if(ugeNr<1||ugeNr>53) {
+    			popup("ugenumre går fra 1 til 53");
+    			return;
+    		}
+    		if(aarstal<1900) {
+    			popup("laveste år muligt er 1900");
+    			return;
+    		}
+			long i = m.AktiviteterIDenneUge(ugeNr,aarstal);
+			popup(m.getNavn()+" har "+i+" aktiviteter i uge "+ugeNr+" år "+aarstal);
+		} catch (Exception e) {
+			popup("Enten uge eller år var ikke tal");
+			return;
+		}
+
+
+    }
+
+    private void visMuligeHjælpere(Medarbejder m) {
+    	//Indsæt mulige hjælpere
+    	ObservableList<Medarbejder> hjælpere =  FXCollections.observableArrayList();
+    	medarbejderDropDownHjælper.setItems(hjælpere);
+    	for(Entry<UUID, Medarbejder> e : medarbejderManager.hentAlleMedarbejdere()) {
+    		if(!e.getValue().equals(m)) {
+    			hjælpere.add(e.getValue());
+    		}
+    	}
+    }
+
+    @FXML
+    private void gemBrugtTidHjælper() {
+    	Aktivitet a = medarbejderAktiviteterTabel.getSelectionModel().getSelectedItems().get(0);
+    	if(a==null) {
+    		popup("Ingen aktivitet valgt");
+    		return;
+    	}
+    	LocalDate date = tidDagVaelgerHjælper.getValue();
+    	if(date == null) {
+    		popup("Ingen dato valgt");
+    		return;
+    	}
+    	WeekFields weekFields = WeekFields.of(Locale.getDefault());
+    	int uge = date.get(weekFields.weekOfWeekBasedYear());
+    	int aar = date.getYear();
+    	boolean d1 = a.getStartaar()<aar || (a.getStartaar()==aar&&a.getStartUge()<=uge);
+    	boolean d2 = a.getSlutaar()>aar || (a.getSlutaar()==aar&&a.getSlutUge()>=uge);
+    	if(!(d1&&d2)) {
+    		popup("Dato valgt ligger ikke i aktivitets ugerne");
+    		return;
+    	}
+    	String tid = tidsVaelgerHjælper.getValue();
+    	if(tid.length()<1) {
+    		popup("Ingen tid valgt");
+    		return;
+    	}
+    	System.out.println(tid);
+    	int i;
+    	int j;
+    	try {
+    		i = Integer.parseInt(tid.substring(0, tid.length()-3));
+        	j = Integer.parseInt(tid.substring(tid.length()-2, tid.length()));
+    	}catch(Exception e){
+    		popup("Forkert tid valgt");
+    		return;
+    	}
+
+    	int tidConvert = i*2 + j/30;
+
+    	Medarbejder m = medarbejderDropDownHjælper.getValue();
+    	if(m==null) {
+    		popup("Der var ingen medarbejder?");
+    		return;
+    	}
+
+    	a.TilfoejTid(tidConvert, new Date(date.getYear()-1900,date.getMonthValue()-1,date.getDayOfMonth()),m);
+
+    	visBrugtTid(a);
+    }
+
+    private void tidBrugtOnSelectStart() {
+    	Brugttid b = tidBrugtTabel.getSelectionModel().getSelectedItems().get(0);
+    	if(b==null) {
+    		popup("Så du selectede en brugt tid, men ingen brugt tid var selected.... Skriv til Erik for hjælp");
+    		return;
+    	}
+    	visTidBrugtInfo(b);
+    }
+
+    private void visTidBrugtInfo(Brugttid b) {
+    	tidBrugtProjekt.setText(b.Aktivitet().getProjekt().getNavn());
+    	tidBrugtAktivitet.setText(b.Aktivitet().getNavn());
+    	tidBrugtMedarbejder.setText(b.Medarbejder().getNavn());
+    	tidBrugtTidBrugt.setValue(b.getFlotTid());
+    }
+
+    @FXML
+    private void gemNyTidBrugt() {
+    	Brugttid b = tidBrugtTabel.getSelectionModel().getSelectedItems().get(0);
+    	if(b==null) {
+    		popup("Du mangler at vælge en brugt tid at ændre");
+    		return;
+    	}
+
+    	String tid = tidBrugtTidBrugt.getValue();
+    	if(tid.length()<1) {
+    		popup("Ingen tid valgt");
+    		return;
+    	}
+    	System.out.println(tid);
+    	int i;
+    	int j;
+    	try {
+    		i = Integer.parseInt(tid.substring(0, tid.length()-3));
+        	j = Integer.parseInt(tid.substring(tid.length()-2, tid.length()));
+    	}catch(Exception e){
+    		popup("Forkert tid valgt");
+    		return;
+    	}
+
+    	int tidConvert = i*2 + j/30;
+
+    	b.AendreTid(tidConvert);
+
+    	visBrugtTid(medarbejderAktiviteterTabel.getSelectionModel().getSelectedItems().get(0));
+    }
+
+    @FXML
+    private void sletTidBrugt() {
+    	Brugttid b = tidBrugtTabel.getSelectionModel().getSelectedItems().get(0);
+    	if(b==null) {
+    		popup("Du mangler at vælge en brugt tid at ændre");
+    		return;
+    	}
+    	brugttidManager.fjern(b);
+    	visBrugtTid(medarbejderAktiviteterTabel.getSelectionModel().getSelectedItems().get(0));
+    }
+
+    @FXML
+    private void hentTidBrugtDagKnap(ActionEvent event) {
+    	Medarbejder m = medarbejderTabel.getSelectionModel().getSelectedItem();
+    	if(m==null) {
+    		return;
+    	}
+    	LocalDate d = hentBrugtTidDag.getValue();
+    	int tid = m.tidBrugtIdag(new Date(d.getYear()-1900,d.getMonthValue()-1,d.getDayOfMonth()));
+    	int timer = tid/2;
+		String minutter = ((tid%2)*30)+"";
+		if(minutter.length()<2) {
+			minutter += "0";
+		}
+    	String flottid = timer+":"+minutter;
+    	popup(m.getNavn()+" har brugt "+flottid+" Timer på den valgte dag");
+    	
+    }
+    
+    @FXML
+    private void tagFerieKnap(ActionEvent event) {
+    	
+    }
+//	HER
+//	BEGYNDER
+//	NYTTIGE
+//	METODER
+    
     
 //Brugbare metoder----------------------------------------------------------------------------------------------------------------
 	private void popup(String s){
         final Stage popup = new Stage();
         popup.initModality(Modality.APPLICATION_MODAL);
         App.initOwner(popup);
-        VBox dialogVbox = new VBox(10);
-        dialogVbox.getChildren().add(new Text(s));
-        Scene dialogScene = new Scene(dialogVbox, 300, 200);
+        TextFlow dialogbox = new TextFlow();
+        dialogbox.getChildren().add(new Text(s));
+        Scene dialogScene = new Scene(dialogbox, 200, 100);
         popup.setScene(dialogScene);
         popup.show();
 	}

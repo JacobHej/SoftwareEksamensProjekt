@@ -26,6 +26,8 @@ public class Aktivitet {
 	private Medarbejder medarbejder;
 	private String navn;
 	private Boolean faerdig;
+	
+	//Målt i halve timer
 	private int budgetTid;
 	
 	private IAktivitetManager aktivitetManager = Managers.FaaAktivitetManager();
@@ -96,9 +98,20 @@ public class Aktivitet {
 		return brugttidManager.GemBrugttid(new Brugttid(this, this.medarbejder, tid));
 	}
 	
+	public Boolean TilfoejTid(int tid, Date dato)
+	{
+		// er det mere tid end aktiviteten har eksisteret
+		return brugttidManager.GemBrugttid(new Brugttid(this, this.medarbejder, tid,dato));
+	}
+	
 	public Boolean TilfoejTid(int tid, Medarbejder medarbejder)
 	{
 		return brugttidManager.GemBrugttid(new Brugttid(this, medarbejder, tid));
+	}
+	
+	public Boolean TilfoejTid(int tid,Date dato, Medarbejder medarbejder)
+	{
+		return brugttidManager.GemBrugttid(new Brugttid(this, medarbejder, tid , dato));
 	}
 	
 	public boolean TilfoejTid(Brugttid brugttid) {
@@ -246,4 +259,53 @@ public class Aktivitet {
 		}
 		return false;
 	}
+	
+	public String getStart() {
+		return "Y:"+startaar+"U:"+startUge;
+	}
+
+	public int getTidBrugt() {
+		int i = 0;
+		for(Entry<UUID, Brugttid> e : getAlleBrugttid()) {
+			i+= e.getValue().Tid();
+		}
+		return i;
+	}
+
+	public int getDageBrugt() {
+		return getTidBrugt()/24;
+	}
+
+	public int getDageBudget(){
+		return budgetTid/24;
+	}
+
+	public int getTimerBrugt() {
+		return (getTidBrugt()%24)/2;
+	}
+
+	public int getTimerBudget() {
+		return (budgetTid%24)/2;
+	}
+
+	public int getMinutterBrugt() {
+		return (getTidBrugt()%2)*30;
+	}
+
+	public int getMinutterBudget() {
+		return (budgetTid%2)*30;
+	}
+
+	public float getProcentFaerdig() {
+		if(budgetTid<1) {
+			return 1;
+		}
+		float i = ((float)getTidBrugt())/budgetTid;
+		System.out.println(getTidBrugt()+"/"+budgetTid+"="+i);
+		if(i>100) {
+			return 100;
+		}
+		return i;
+	}
+	
 }
