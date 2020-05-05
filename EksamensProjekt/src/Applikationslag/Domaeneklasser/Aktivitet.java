@@ -113,7 +113,7 @@ public class Aktivitet {
 	
 	public boolean setStartUge(int startUge)
 	{
-		if(slutUge > startUge && (medarbejder == null || medarbejder.ledig(startUge, slutUge, startaar, slutaar))) {
+		if(slutUge >= startUge && (medarbejder == null || medarbejder.ledig(startUge, slutUge, startaar, slutaar))) {
 			this.startUge = startUge;
 			return true;
 		}else {
@@ -129,7 +129,7 @@ public class Aktivitet {
 	
 	public boolean setSlutUge(int slutUge)
 	{
-		if(slutUge > startUge && (medarbejder == null || medarbejder.ledig(startUge, slutUge, startaar, slutaar))) {
+		if(slutUge >= startUge && (medarbejder == null || medarbejder.ledig(startUge, slutUge, startaar, slutaar))) {
 			this.slutUge = slutUge;
 			return true;
 		}else {
