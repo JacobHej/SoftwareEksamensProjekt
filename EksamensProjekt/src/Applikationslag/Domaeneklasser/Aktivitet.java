@@ -6,6 +6,7 @@ import java.util.UUID;
 import Applikationslag.Data.Datavedholdelsesklasser.MedarbejderData;
 import Applikationslag.Data.Datavedholdelsesklasser.ProjektData;
 import Applikationslag.Infrastruktur.ServiceInterfaces.IAktivitetManager;
+import Applikationslag.Infrastruktur.ServiceInterfaces.IAssistanceManager;
 import Applikationslag.Infrastruktur.ServiceInterfaces.IBrugttidManager;
 import Applikationslag.Infrastruktur.ServiceInterfaces.IMedarbejderManager;
 import Applikationslag.Redskaber.Dates;
@@ -28,6 +29,7 @@ public class Aktivitet {
 	private IAktivitetManager aktivitetManager = Managers.FaaAktivitetManager();
 	private IBrugttidManager brugttidManager = Managers.FaaBrugttidManager();
 	private IMedarbejderManager medarbejderManager = Managers.FaaMedarbejderManager();
+	private IAssistanceManager assistanceManager = Managers.FaaAssistanceManager();
 	
 	//Metoder
 	public Aktivitet(int startUge, int slutUge, Medarbejder medarbejder, String navn)
@@ -58,6 +60,11 @@ public class Aktivitet {
 		this.slutUge = Dates.getCurrentWeek();
 	}
 	
+	public Boolean soegAssistance()
+	{
+		Assistance assistance = new Assistance(this);
+		return assistanceManager.Gem(assistance);
+	}
 	
 	public Boolean SaetMedarbejder(Medarbejder nyMedarbejder)
 	{
@@ -71,8 +78,6 @@ public class Aktivitet {
 			}else {
 				return false;
 			}
-			
-			
 		}
 		else
 			return false;
@@ -106,7 +111,7 @@ public class Aktivitet {
 	
 	public boolean setStartUge(int startUge)
 	{
-		if(medarbejder == null || medarbejder.ledig(startUge, slutUge, startaar, slutaar)) {
+		if(slutUge > startUge && (medarbejder == null || medarbejder.ledig(startUge, slutUge, startaar, slutaar))) {
 			this.startUge = startUge;
 			return true;
 		}else {
@@ -122,7 +127,7 @@ public class Aktivitet {
 	
 	public boolean setSlutUge(int slutUge)
 	{
-		if(medarbejder == null || medarbejder.ledig(startUge, slutUge, startaar, slutaar)) {
+		if(slutUge > startUge && (medarbejder == null || medarbejder.ledig(startUge, slutUge, startaar, slutaar))) {
 			this.slutUge = slutUge;
 			return true;
 		}else {
