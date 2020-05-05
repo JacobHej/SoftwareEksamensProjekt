@@ -128,7 +128,7 @@ public class projektSteps {
 	    Currentmedarbejder.Gem();
 	    Projekt Filler = new Projekt("Fillerprojekt for" + Currentmedarbejder.getNavn());
 	    Filler.Gem();
-	    for (int i = 0; i <= AktiviteterUge2; i++){
+	    for (int i = 0; i < AktiviteterUge2; i++){
 	    	Aktivitet Fill = new Aktivitet("FillerAktivitet"  + i);
 	    	Filler.tilfoejAktivitet(Fill);
 	    	Fill.SaetMedarbejder(Currentmedarbejder);
