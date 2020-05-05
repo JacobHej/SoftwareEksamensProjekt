@@ -58,9 +58,9 @@ public class medarbejderSteps {
 	    for (int i = 0; i < Aktiviteter; i++){
 	    	Aktivitet Fill = new Aktivitet("FyldeAktivitet"  + i);
 	    	Fyld.tilfoejAktivitet(Fill);
-	    	Fill.SaetMedarbejder(Currentmedarbejder);
 	    	Fill.setStartaar(2020);Fill.setSlutaar(2020);
 	    	Fill.setStartUge(Uge2);Fill.setSlutUge(Uge2);
+	    	Fill.SaetMedarbejder(Currentmedarbejder);
 	    }
 	    assertTrue((medarbejderManager.AktiviteterIDenneUge(Uge2, 2020, Currentmedarbejder))==Aktiviteter);
 	    assertTrue((medarbejderManager.AktiviteterIDenneUge(Uge2, 2020, Currentmedarbejder))==20);
