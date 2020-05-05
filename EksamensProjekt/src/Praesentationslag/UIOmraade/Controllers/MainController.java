@@ -11,6 +11,7 @@ import java.util.UUID;
 import java.util.Map.Entry;
 
 import Applikationslag.Domaeneklasser.Aktivitet;
+import Applikationslag.Domaeneklasser.Brugttid;
 import Applikationslag.Domaeneklasser.Medarbejder;
 import Applikationslag.Domaeneklasser.Projekt;
 import Applikationslag.Infrastruktur.ServiceInterfaces.IMedarbejderManager;
@@ -65,7 +66,11 @@ public class MainController implements Initializable {
 	@FXML private TableColumn<Aktivitet,String> medarbejderAktiviteterNavnKolonne;
 	
 	//TidBrugt ting
-	@FXML private ChoiceBox tidsVaelger;
+	@FXML private TableView<Brugttid> tidBrugtTabel;
+	@FXML private TableColumn<Brugttid,String> tidBrugtDatoKolonne;
+	@FXML private TableColumn<Brugttid,String> tidBrugtTidKolonne;
+	
+	@FXML private ComboBox<String> tidsVaelger;
 	
 	//The projekt info
 	@FXML private TextField ugeNrProjektStart;
@@ -102,9 +107,11 @@ public class MainController implements Initializable {
 		System.out.println("Initializing main Controller");
 		
 		lavTommy();
+		intitializeTidsValg();
 		initializeProjectsTable();
 		initializeActivitiesTable();
 		initializeMedlemmerTabel();
+		initializeBrugtTidTabel();
 		initializeMedarbejderActivitiesTable();
 		initializeProjektLederDropDown();
 		initializeAktivitetMedarbejderDropDown();
@@ -176,6 +183,30 @@ public class MainController implements Initializable {
 	
 	public void initializeMedarbejderActivitiesTable() {
 		medarbejderAktiviteterNavnKolonne.setCellValueFactory(new PropertyValueFactory<Aktivitet, String>("navn"));
+		
+		medarbejderAktiviteterTabel.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+		    if (newSelection != null) {
+		    	medarbejderAktivitetOnSelectStart();
+		    }
+		});
+	
+	}
+	
+	private void initializeBrugtTidTabel() {
+		tidBrugtDatoKolonne.setCellValueFactory(new PropertyValueFactory<Brugttid, String>("flotDato"));
+		tidBrugtTidKolonne.setCellValueFactory(new PropertyValueFactory<Brugttid, String>("flotTid"));
+	}
+	
+	private void intitializeTidsValg() {
+		for(int i = 1; i<48; i++) {
+			int timer = i/2;
+			String minutter = ((i%2)*30)+"";
+			if(minutter.length()<2) {
+				minutter += "0";
+			}
+			tidsVaelger.getItems().add(timer+":"+minutter);
+		}
+		
 	}
 	
 	public void tilfoejMedarbejdere() {
@@ -230,6 +261,7 @@ public class MainController implements Initializable {
               return null;
           }
       });
+		
 	}
 	
 	private void lavTommy() {
@@ -244,6 +276,7 @@ public class MainController implements Initializable {
         		//System.out.println("Aktivitet tilføjet");
         	}
         	a.SaetMedarbejder(m);
+        	a.TilfoejTid(2);
 		}
 	}
 	
@@ -666,9 +699,21 @@ public class MainController implements Initializable {
         for(Entry<UUID, Aktivitet> e : m.getAlleAktiviteter()) {
         	medarbejderAktiviteterTabel.getItems().add(e.getValue());
         }
-        
     }
 	
+    private void medarbejderAktivitetOnSelectStart(){
+    	Aktivitet a = medarbejderAktiviteterTabel.getSelectionModel().getSelectedItems().get(0);
+    	visBrugtTid(a);
+    }
+    
+    private void visBrugtTid(Aktivitet a) {
+    	ObservableList<Brugttid> tider = FXCollections.observableArrayList();
+    	tidBrugtTabel.setItems(tider);
+        for(Entry<UUID, Brugttid> e : a.getAlleBrugttid()) {
+        	tidBrugtTabel.getItems().add(e.getValue());
+        }
+    }
+    
 //Brugbare metoder----------------------------------------------------------------------------------------------------------------
 	private void popup(String s){
         final Stage popup = new Stage();
