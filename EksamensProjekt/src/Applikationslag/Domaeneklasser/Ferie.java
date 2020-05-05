@@ -8,7 +8,7 @@ public class Ferie {
 	private int startaar;
 	private int sluttaar;
 	
-	private UUID id = UUID.randomUUID()();
+	private UUID id = UUID.randomUUID();
 	
 	private Medarbejder medarbejder;
 	
@@ -32,7 +32,7 @@ public class Ferie {
 		return this.sluttaar;
 	}
 	
-	public Medarbejder Medarbejer()
+	public Medarbejder Medarbejder()
 	{
 		return this.medarbejder;
 	}
