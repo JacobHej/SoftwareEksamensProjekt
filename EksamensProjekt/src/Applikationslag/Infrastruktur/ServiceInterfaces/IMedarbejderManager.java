@@ -7,7 +7,6 @@ import java.util.UUID;
 import java.util.Map.Entry;
 
 import Applikationslag.Domaeneklasser.Aktivitet;
-import Applikationslag.Domaeneklasser.Ferie;
 import Applikationslag.Domaeneklasser.Medarbejder;
 import Applikationslag.Domaeneklasser.Projekt;
 
@@ -19,7 +18,4 @@ public interface IMedarbejderManager {
 	public Boolean MedarbejderLedig(int weekStart, int weekSlut, int yearStart, int yearSlut, Medarbejder medarbejder);
 	public Medarbejder MedarbejderUdFraNavn(String medarbejdernavn);
 	public Boolean MedarbejderFri(int weekStart, int weekSlut, int yearStart, int yearSlut, Medarbejder medarbejder) ;
-	public Boolean GemFerie(Ferie ferie);
-	public Boolean SletFerie(Ferie ferie);
-	List<Entry<UUID, Ferie>> hentAlleFerier();
 }

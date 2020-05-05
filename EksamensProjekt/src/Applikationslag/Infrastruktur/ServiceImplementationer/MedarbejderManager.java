@@ -11,19 +11,20 @@ import java.util.stream.Collectors;
 import java.util.UUID;
 
 import Applikationslag.Data.Datavedholdelsesklasser.AktivitetData;
-import Applikationslag.Data.Datavedholdelsesklasser.FerieData;
 import Applikationslag.Data.Datavedholdelsesklasser.MedarbejderData;
 import Applikationslag.Data.Datavedholdelsesklasser.ProjektData;
 import Applikationslag.Domaeneklasser.Aktivitet;
-import Applikationslag.Domaeneklasser.Ferie;
 import Applikationslag.Domaeneklasser.Medarbejder;
 import Applikationslag.Domaeneklasser.Projekt;
+import Applikationslag.Infrastruktur.ServiceInterfaces.IFerieManager;
 import Applikationslag.Infrastruktur.ServiceInterfaces.IMedarbejderManager;
 import Applikationslag.Redskaber.Dates;
 import Applikationslag.Redskaber.GlobaleVariable;
+import Applikationslag.Redskaber.Managers;
 
 public class MedarbejderManager implements IMedarbejderManager {
 
+	private IFerieManager ferieManager = Managers.FaaFerieManager();
 	@Override
 	public Boolean GemMedarbejder(Medarbejder medarbejder) {
 		if(!MedarbejderData.Bibliotek.entrySet().stream()
@@ -72,7 +73,7 @@ public class MedarbejderManager implements IMedarbejderManager {
 				while(it.hasNext()) {
 					Entry<UUID, Medarbejder> m = it.next();
 					if(AktiviteterIDenneUge(j, i, m.getValue()) >= GlobaleVariable.MaksimaleVagter()
-							|| FerieEfterPeriodeOgMedarbejder(weekStart, weekSlut, yearStart, yearSlut, m.getValue()))
+							|| ferieManager.FerieEfterPeriodeOgMedarbejder(weekStart, weekSlut, yearStart, yearSlut, m.getValue()))
 					{
 						it.remove();
 					}
@@ -89,7 +90,7 @@ public class MedarbejderManager implements IMedarbejderManager {
 			for(int j = (i == yearStart ? weekStart : 0); j <= (i == yearSlut ? weekSlut : 0); j++)
 			{
 				if(AktiviteterIDenneUge(j, i, medarbejder) >= GlobaleVariable.MaksimaleVagter()
-						|| FerieEfterPeriodeOgMedarbejder(weekStart, weekSlut, yearStart, yearSlut, medarbejder))
+						|| ferieManager.FerieEfterPeriodeOgMedarbejder(weekStart, weekSlut, yearStart, yearSlut, medarbejder))
 				{
 					return false;
 				}
@@ -118,62 +119,4 @@ public class MedarbejderManager implements IMedarbejderManager {
 				.collect(Collectors.toList()).get(0).getValue());
 	}
 
-	@Override
-	public Boolean GemFerie(Ferie ferie) {
-		// implementer tjek for ferie i medarbejder manager
-		if (MedarbejderFri(ferie.StartUge(), ferie.SlutUge(), ferie.Startaar(), ferie.Slutaar(), ferie.Medarbejder()))
-		{
-			FerieData.Bibliotek.put(ferie.ID(), ferie);
-			return true;
-		}
-		return false;
-	}
-
-	@Override
-	public Boolean SletFerie(Ferie ferie) {
-		FerieData.Bibliotek.remove(ferie.ID());
-		return true;
-	}
-
-	@Override
-	public List<Entry<UUID, Ferie>> hentAlleFerier() {
-		return ((HashMap<UUID, Ferie>)FerieData.Bibliotek.clone())
-				.entrySet().stream().collect(Collectors.toList());
-	}
-
-	public Boolean FerieEfterPeriodeOgMedarbejder(int weekStart, int weekSlut, int yearStart, int yearSlut, Medarbejder medarbejder)
-	{
-		for(int i = yearStart; i <= yearSlut; i ++)
-		{
-			for(int j = (i == yearStart ? weekStart : 0); j <= (i == yearSlut ? weekSlut : 0); j++)
-			{
-				if(FerieIDenneUge(j, i, medarbejder) >= GlobaleVariable.MaksimaleVagter())
-				{
-					return false;
-				}
-			}
-		}
-		return true;
-	}
-	
-	public long FerieIDenneUge(int week, int year, Medarbejder medarbejder) {
-		return FerieData.Bibliotek.entrySet().stream()
-			.filter(e -> e.getValue().Medarbejder() != null)
-			.filter(e -> e.getValue().Medarbejder().ID() == medarbejder.ID())
-			.filter(e -> 
-					((
-							((e.getValue().Startaar() < year) 
-								|| 
-								(e.getValue().Startaar() == year 
-									&&
-								(e.getValue().StartUge() <= week)))
-						&&
-							((e.getValue().Slutaar() > year) 
-								|| 
-								(e.getValue().Slutaar() == year 
-									&& 
-								(e.getValue().SlutUge() >= week)))	
-					))
-					).count();
-	}
 }
