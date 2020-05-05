@@ -12,6 +12,7 @@ import java.util.UUID;
 
 import Applikationslag.Data.Datavedholdelsesklasser.AktivitetData;
 import Applikationslag.Data.Datavedholdelsesklasser.MedarbejderData;
+import Applikationslag.Data.Datavedholdelsesklasser.ProjektData;
 import Applikationslag.Domaeneklasser.Aktivitet;
 import Applikationslag.Domaeneklasser.Medarbejder;
 import Applikationslag.Domaeneklasser.Projekt;
@@ -54,7 +55,8 @@ public class MedarbejderManager implements IMedarbejderManager {
 	
 	@Override
 	public List<Entry<UUID, Medarbejder>> hentAlleMedarbejdere() {
-		return MedarbejderData.Bibliotek.entrySet().stream().collect(Collectors.toList());
+		return ((HashMap<UUID, Medarbejder>)MedarbejderData.Bibliotek.clone())
+				.entrySet().stream().collect(Collectors.toList());
 	}
 	
 	public List<Entry<UUID, Medarbejder>> AlleLedigeMedarbejdere(int weekStart, int weekSlut, int yearStart, int yearSlut) {
