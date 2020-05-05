@@ -157,6 +157,30 @@ public class aktivitetSteps {
 		assertTrue(this.aktivitet.getStartUge()==int1);
 		assertTrue(this.aktivitet.getSlutUge() ==int2);
 	}
+	
+	
+	//Feature: ret i tid registreret.
+	@Given("Vi kigger paa projektet {string}")
+	public void viKiggerPaaProjektet(String string) {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new io.cucumber.java.PendingException();
+	}
 
+	@Given("{string} har registreret {int} timer paa aktiviteten {string}")
+	public void harRegistreretTimerPaaAktiviteten(String string, Integer int1, String string2) {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new io.cucumber.java.PendingException();
+	}
 
+	@When("{string} retter tiden som han har brugt i aktiviteten til {int}")
+	public void retterTidenSomHanHarBrugtIAktivitetenTil(String string, Integer int1) {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new io.cucumber.java.PendingException();
+	}
+
+	@Then("{string} har kun {int} timer registreret i aktiviteten {string}")
+	public void harKunTimerRegistreretIAktiviteten(String string, Integer int1, String string2) {
+	    // Write code here that turns the phrase above into concrete actions
+	    throw new io.cucumber.java.PendingException();
+	}
 }
