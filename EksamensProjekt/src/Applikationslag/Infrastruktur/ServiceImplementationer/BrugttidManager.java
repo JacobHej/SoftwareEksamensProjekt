@@ -9,7 +9,6 @@ import java.util.UUID;
 import Applikationslag.Data.Datavedholdelsesklasser.AktivitetData;
 import Applikationslag.Data.Datavedholdelsesklasser.BrugttidData;
 import Applikationslag.Data.Datavedholdelsesklasser.MedarbejderData;
-import Applikationslag.Data.Datavedholdelsesklasser.ProjektData;
 import Applikationslag.Domaeneklasser.Aktivitet;
 import Applikationslag.Domaeneklasser.Brugttid;
 import Applikationslag.Domaeneklasser.Medarbejder;
@@ -76,11 +75,6 @@ public class BrugttidManager implements IBrugttidManager {
 	public Boolean fjern(Brugttid brugttid) {
 		BrugttidData.Bibliotek.remove(brugttid.ID());
 		return true;
-	}
-
-	@Override
-	public boolean Eksisterer(Brugttid b) {
-		return BrugttidData.Bibliotek.containsValue(b);
 	}
 
 }

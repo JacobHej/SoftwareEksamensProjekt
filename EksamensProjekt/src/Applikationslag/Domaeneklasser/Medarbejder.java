@@ -37,11 +37,8 @@ public class Medarbejder
     	if(navn.length()>4) {
     		return false;
     	}else {
-    		if(medarbejderManager.MedarbejderUdFraNavn(navn)==null) {
-    			this.navn=navn;
-    			return true;
-    		}
-    		return false;
+    		this.navn=navn;
+    		return true;
     	}
     }
    
@@ -53,11 +50,6 @@ public class Medarbejder
 	public List<Entry<UUID, Aktivitet>> getAlleAktiviteter()
 	{
 		return aktivitetManager.AlleAktiviteterEfterMedarbejder(this);
-	}
-	
-	public long AktiviteterIDenneUge(int week, int year)
-	{
-		return medarbejderManager.AktiviteterIDenneUge(week, year, this);
 	}
 	
 	public boolean ledig(int weekStart, int weekSlut, int yearStart, int yearSlut) {
