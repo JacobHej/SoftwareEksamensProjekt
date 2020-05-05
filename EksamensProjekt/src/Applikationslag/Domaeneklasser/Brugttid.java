@@ -58,4 +58,10 @@ public class Brugttid {
 	{
 		return this.dato;
 	}
+	
+	public String getFlotTid() {
+		String minutter = ((tid%2)*30)+"";
+		String timer = (tid/2)+"";
+		return timer+":"+minutter;
+	}
 }
