@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import java.util.UUID;
 
 import Applikationslag.Data.Datavedholdelsesklasser.AktivitetData;
@@ -124,14 +125,10 @@ public class MedarbejderManager implements IMedarbejderManager {
 	}
 	
 	public Medarbejder MedarbejderUdFraNavn(String medarbejdernavn){
-		List<Entry<UUID, Medarbejder>> l = MedarbejderData.Bibliotek.entrySet().stream()
+		return (MedarbejderData.Bibliotek.entrySet().stream()
 				.filter(e -> e.getValue().getNavn().equals(medarbejdernavn))
-				.collect(Collectors.toList());
-		if(!l.isEmpty()) {
-			return (l.get(0).getValue());
-		}else {
-			return null;
-		}
+				.collect(Collectors.toList()).get(0).getValue());
+				
 	}
 
 }
