@@ -352,6 +352,7 @@
                                                                </children>
                                                             </HBox>
                                                             <Button mnemonicParsing="false" onAction="#gemMedarbejderNavnNyt" text="Gem ID" />
+                                                            <AnchorPane prefHeight="24.0" prefWidth="179.0" />
                                                             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Antal aktiviteter i uge" />
                                                             <HBox alignment="CENTER" prefHeight="7.0" prefWidth="179.0" spacing="5.0">
                                                                <children>
@@ -360,6 +361,9 @@
                                                                   <Button minWidth="45.0" mnemonicParsing="false" onAction="#hentAntalAktiviteter" prefHeight="25.0" prefWidth="50.0" text="Hent" />
                                                                </children>
                                                             </HBox>
+                                                            <AnchorPane prefHeight="50.0" prefWidth="179.0" />
+                                                            <DatePicker fx:id="hentBrugtTidDag" promptText="vaelg dag" />
+                                                            <Button mnemonicParsing="false" onAction="#hentTidBrugtDagKnap" text="Hent tidBrugt på dag" />
                                                          </children>
                                                       </VBox>
                                                    </children>
