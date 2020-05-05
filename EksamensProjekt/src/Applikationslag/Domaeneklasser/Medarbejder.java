@@ -15,7 +15,7 @@ public class Medarbejder
 {
 	// klassevariable
     private UUID id = UUID.randomUUID();
-    private String navn;
+    private String navn = "TesT";
     
     private IBrugttidManager brugttidManager = Managers.FaaBrugttidManager();
     private IAktivitetManager aktivitetManager = Managers.FaaAktivitetManager();
@@ -42,11 +42,8 @@ public class Medarbejder
     	if(navn.length()>4) {
     		return false;
     	}else {
-    		if(medarbejderManager.MedarbejderUdFraNavn(navn)==null) {
-    			this.navn=navn;
-    			return true;
-    		}
-    		return false;
+    		this.navn=navn;
+    		return true;
     	}
     }
    
