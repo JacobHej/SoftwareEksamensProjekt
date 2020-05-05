@@ -7,7 +7,7 @@ import Applikationslag.Domaeneklasser.Brugttid;
 import Applikationslag.Domaeneklasser.Ferie;
 
 public final class FerieData {
-	private DerieData()
+	private FerieData()
 	{
 		
 	}

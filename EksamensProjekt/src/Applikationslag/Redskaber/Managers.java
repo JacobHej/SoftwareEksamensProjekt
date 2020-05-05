@@ -38,4 +38,9 @@ public final class Managers {
 	{
 		return new AssistanceManager();
 	}
+	
+	public static IFerieManager FaaFerieManager()
+	{
+		return new FerieManager();
+	}
 }
