@@ -27,6 +27,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
@@ -62,6 +63,9 @@ public class MainController implements Initializable {
 	//medarbejderAktiviteterTabel
 	@FXML private TableView<Aktivitet> medarbejderAktiviteterTabel;
 	@FXML private TableColumn<Aktivitet,String> medarbejderAktiviteterNavnKolonne;
+	
+	//TidBrugt ting
+	@FXML private ChoiceBox tidsVaelger;
 	
 	//The projekt info
 	@FXML private TextField ugeNrProjektStart;
