@@ -59,6 +59,7 @@ public class InformationSteps {
 	}
 
 	//************
+	@Given("{string} har en aktivitet {string} i uge {int}")
 	public void harEnAktivitetIUge(String medarbejdernavn, String aktivitetnavn, Integer ugenummer) {
 	    Currentmedarbejder = medarbejderManager.MedarbejderUdFraNavn(medarbejdernavn);
 	    	    
@@ -74,6 +75,7 @@ public class InformationSteps {
 	@When("Der spoerges om hvornaar {string} har aktiviteter")
 	public void derSpoergesOmHvornaarHarAktiviteter(String medarbejdernavn) {
 		assertTrue(Currentmedarbejder == medarbejderManager.MedarbejderUdFraNavn(medarbejdernavn));
+		this.TestString="";
 		for (int i = 0; i < Currentmedarbejder.getAlleAktiviteter().size(); i++) {
 			this.TestString=this.TestString
 					+Currentmedarbejder.getAlleAktiviteter().get(i).getValue().getStartUge() + "-" +
@@ -107,6 +109,7 @@ public class InformationSteps {
 	@Then("det kan ses at {string} har {int} aktivitet i uge {int} og {int} aktiviteter i uge {int}")
 	public void detKanSesAtHarAktivitetIUgeOgAktiviteterIUge(String medarbejdernavn, Integer int1, Integer int2, Integer int3, Integer int4) {
 		derSpoergesOmHvornaarHarAktiviteter(medarbejdernavn);
+		System.out.println(this.TestString);
 		assertTrue(TestString.contains("5-5:2020-2020,5-5:2020-2020"));
 		assertTrue(TestString.contains("4-4:2020-2020"));
 	}
@@ -114,8 +117,15 @@ public class InformationSteps {
 	//***********
 	@Then("det ses at {string} har aktiviteterme {string} og {string} og {string}")
 	public void detSesAtHarAktivitetermeOgOg(String medarbejdernavn, String aktivitetnavn1, String aktivitetnavn2, String aktivitetnavn3) {
-	    TestString = "";
-	    throw new io.cucumber.java.PendingException();
+	    this.TestString="";
+		aktivitetManager.AlleAktiviteterEfterMedarbejder(Currentmedarbejder);
+	    for (int i = 0; i <aktivitetManager.AlleAktiviteterEfterMedarbejder(Currentmedarbejder).size(); i++) {
+	    	this.TestString=this.TestString+aktivitetManager.AlleAktiviteterEfterMedarbejder(Currentmedarbejder).get(i).getValue().getNavn() + " ";
+	    }
+	    
+	    assertTrue(this.TestString.contains(aktivitetnavn1)
+	    		&& this.TestString.contains(aktivitetnavn2)
+	    		&& this.TestString.contains(aktivitetnavn3));
 	}
 	
 }
