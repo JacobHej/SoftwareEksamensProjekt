@@ -131,9 +131,26 @@ public class projektSteps {
 	    for (int i = 0; i <= AktiviteterUge2; i++){
 	    	Aktivitet Fill = new Aktivitet("FillerAktivitet"  + i);
 	    	Filler.tilfoejAktivitet(Fill);
-	    	Fill.SaetMedarbejder(Currentmedarbejder);
-	    	Fill.setStartaar(2020);Fill.setSlutaar(2020);
-	    	Fill.setStartUge(Uge2);Fill.setSlutUge(Uge2);
+	    	if(Fill.SaetMedarbejder(Currentmedarbejder)) {
+	    		System.out.println("Set Medarbejder");
+	    	}
+	    	
+	    	if(Fill.setStartaar(2020)) {
+	    		System.out.println("Set startaar");
+	    	}
+	    	if(Fill.setSlutaar(2020)) {
+	    		System.out.println("Set slutaar");
+	    	}
+	    	if(Fill.setStartUge(Uge2)) {
+	    		System.out.println("Set startUge");
+	    	}
+	    	if(Fill.setSlutUge(Uge2)) {
+	    		System.out.println("Set slutUge");
+	    	}
+	    	
+	    	
+	    	
+	    	
 	    	System.out.println("i = " + i + " " +  Currentmedarbejder.getNavn() + " " + medarbejderManager.AktiviteterIDenneUge(Uge2, 2020, Currentmedarbejder));
 	    }
 	    System.out.println(Currentmedarbejder.getNavn() + " " + medarbejderManager.AktiviteterIDenneUge(Uge2, 2020, Currentmedarbejder));
