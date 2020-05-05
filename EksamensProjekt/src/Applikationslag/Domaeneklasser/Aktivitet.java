@@ -102,6 +102,7 @@ public class Aktivitet {
 	}
 	
 	public boolean TilfoejTid(Brugttid brugttid) {
+		
 		return brugttidManager.GemBrugttid(brugttid);
 	}
 	
