@@ -114,7 +114,12 @@ public class Aktivitet {
 	
 	public boolean setStartUge(int startUge)
 	{
-		if(slutUge >= startUge && (medarbejder == null || medarbejder.ledig(startUge, slutUge, startaar, slutaar))) {
+//		if(startUge>this.startUge&&slutUge >= startUge) {
+//			this.startUge = startUge;
+//			return true;
+//		}
+//		slutUge >= startUge &&
+		if( (medarbejder == null || medarbejder.ledig(startUge, slutUge, startaar, slutaar))) {
 			this.startUge = startUge;
 			return true;
 		}else {
@@ -130,7 +135,12 @@ public class Aktivitet {
 	
 	public boolean setSlutUge(int slutUge)
 	{
-		if(slutUge >= startUge && (medarbejder == null || medarbejder.ledig(startUge, slutUge, startaar, slutaar))) {
+//		if(slutUge<this.slutUge&&slutUge >= startUge) {
+//			this.slutUge = slutUge;
+//			return true;
+//		}
+//		slutUge >= startUge && 
+		if((medarbejder == null || medarbejder.ledig(startUge, slutUge, startaar, slutaar))) {
 			this.slutUge = slutUge;
 			return true;
 		}else {
@@ -145,7 +155,12 @@ public class Aktivitet {
 	
 	public boolean setStartaar(int startaar)
 	{
-		if(medarbejder == null || medarbejder.ledig(startUge, slutUge, startaar, slutaar)) {
+//		if(startaar>this.startaar&&slutaar >= startaar) {
+//			this.startaar = startaar;
+//			return true;
+//		}
+//		slutaar >= startaar && 
+		if((medarbejder == null || medarbejder.ledig(startUge, slutUge, startaar, slutaar))) {
 			this.startaar = startaar;
 			return true;
 		}else {
@@ -160,7 +175,12 @@ public class Aktivitet {
 	
 	public boolean setSlutaar(int slutaar)
 	{
-		if(medarbejder == null || medarbejder.ledig(startUge, slutUge, startaar, slutaar)) {
+//		if(slutaar<this.slutaar&&slutaar >= startaar) {
+//			this.slutaar = slutaar;
+//			return true;
+//		}
+//		slutaar >= startaar && 
+		if((medarbejder == null || medarbejder.ledig(startUge, slutUge, startaar, slutaar))) {
 			this.slutaar = slutaar;
 			return true;
 		}else {
@@ -215,5 +235,15 @@ public class Aktivitet {
 	public List<Entry<UUID, Brugttid>> getAlleBrugttid(){
 		return brugttidManager.AlleBrugttidEfterAktivitet(this);
 	}
-
+	
+	public boolean setTidsperiode(int startUge, int slutUge, int startaar, int slutaar) {
+		if(medarbejder == null || medarbejder.ledig(startUge, slutUge, startaar, slutaar)) {
+			this.startUge = startUge;
+			this.slutUge = slutUge;
+			this.startaar = startaar;
+			this.slutaar = slutaar;
+			return true;
+		}
+		return false;
+	}
 }
