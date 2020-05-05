@@ -1,7 +1,9 @@
 package Applikationslag.Domaeneklasser;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
+import java.util.Map.Entry;
 
 import Applikationslag.Data.Datavedholdelsesklasser.MedarbejderData;
 import Applikationslag.Data.Datavedholdelsesklasser.ProjektData;
@@ -208,5 +210,9 @@ public class Aktivitet {
 	public String toString() {
     	return navn;
     }
+	
+	public List<Entry<UUID, Brugttid>> getAlleBrugttid(){
+		return brugttidManager.AlleBrugttidEfterAktivitet(this);
+	}
 
 }

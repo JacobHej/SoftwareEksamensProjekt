@@ -61,7 +61,17 @@ public class Brugttid {
 	
 	public String getFlotTid() {
 		String minutter = ((tid%2)*30)+"";
+		if(minutter.length()<2) {
+			minutter+= "0";
+		}
 		String timer = (tid/2)+"";
 		return timer+":"+minutter;
+	}
+	
+	public String getFlotDato() {
+		String day = dato.getDate()+"";
+		String month = dato.getMonth()+"";
+		String year = (dato.getYear()+1900)+"";
+		return day+"/"+month+"/"+year;
 	}
 }
