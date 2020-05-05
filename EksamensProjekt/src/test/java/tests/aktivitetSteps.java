@@ -8,8 +8,12 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import Applikationslag.Data.Datavedholdelsesklasser.AktivitetData;
 import Applikationslag.Domaeneklasser.*;
+import Applikationslag.Infrastruktur.ServiceImplementationer.MedarbejderManager;
+import Applikationslag.Infrastruktur.ServiceImplementationer.ProjektManager;
 import Applikationslag.Infrastruktur.ServiceInterfaces.IAktivitetManager;
 import Applikationslag.Infrastruktur.ServiceInterfaces.IBrugttidManager;
+import Applikationslag.Infrastruktur.ServiceInterfaces.IProjektManager;
+import Applikationslag.Infrastruktur.ServiceInterfaces.IMedarbejderManager;
 import Applikationslag.Redskaber.Managers;
 
 import java.util.Date;
@@ -22,8 +26,13 @@ public class aktivitetSteps {
 	Medarbejder medarbejder;
 	Projekt projekt;
 	Aktivitet aktivitet;
+	Projekt Currentprojekt;Aktivitet Currentaktivitet;Medarbejder Currentmedarbejder;
+	Brugttid Currentbrugttid;
 	IAktivitetManager aktivitetManager= Managers.FaaAktivitetManager();
+	IMedarbejderManager medarbejderManager= Managers.FaaMedarbejderManager();
 	IBrugttidManager brugttidManager= Managers.FaaBrugttidManager();
+	IProjektManager projektManager= Managers.FaaProjektManager();
+	
 	
 	@Given("der er et projekt {string} med lederen {string}")
 	public void derErEtProjektMedLederen(String projektNavn, String lederID) {
@@ -161,14 +170,14 @@ public class aktivitetSteps {
 	
 	//Feature: ret i tid registreret.
 	@Given("Vi kigger paa projektet {string}")
-	public void viKiggerPaaProjektet(String string) {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	public void viKiggerPaaProjektet(String projektnavn) {
+	    Currentprojekt=projektManager.projektUdFraNavn(projektnavn);
+	    assertTrue(Currentprojekt.getNavn().equals(projektnavn));
 	}
 
 	@Given("{string} har registreret {int} timer paa aktiviteten {string}")
-	public void harRegistreretTimerPaaAktiviteten(String string, Integer int1, String string2) {
-	    // Write code here that turns the phrase above into concrete actions
+	public void harRegistreretTimerPaaAktiviteten(String medarbejdernavn, Integer antalTimer, String aktivitetnavn) {
+		// Write code here that turns the phrase above into concrete actions
 	    throw new io.cucumber.java.PendingException();
 	}
 
