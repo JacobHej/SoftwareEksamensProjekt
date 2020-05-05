@@ -18,4 +18,5 @@ public interface IMedarbejderManager {
 	public Boolean MedarbejderLedig(int weekStart, int weekSlut, int yearStart, int yearSlut, Medarbejder medarbejder);
 	public Medarbejder MedarbejderUdFraNavn(String medarbejdernavn);
 	public Boolean MedarbejderFri(int weekStart, int weekSlut, int yearStart, int yearSlut, Medarbejder medarbejder) ;
+	public boolean eksistererMedNavn(String navn);
 }

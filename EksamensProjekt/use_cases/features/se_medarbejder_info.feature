@@ -15,6 +15,6 @@ Scenario: Hvor mange aktiviteter har medarbejder i given uge
 	Then det kan ses at "PAUL" har 1 aktivitet i uge 4 og 2 aktiviteter i uge 5
 	
 Scenario: Hvilke aktiviteter har medarbejderen
-	Given vi kigger igen paa medarbejderen "Paul"
+	Given vi kigger igen paa medarbejderen "PAUL"
 	Then det ses at "PAUL" har aktiviteterme "Vaer PAUL" og "Bliv ved med at vaere PAUL" og "Undgaa at lave andet en at vaere PAUL"
 	

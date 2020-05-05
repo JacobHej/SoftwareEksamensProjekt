@@ -120,26 +120,29 @@ public class medarbejderSteps {
 	
 	//OPRET NY MEDARBEJDER
 	@Given("Der findes ikke en medarbejder med navnet {string}")
-	public void derFindesIkkeEnMedarbejderMedNavnet(String string) {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	public void derFindesIkkeEnMedarbejderMedNavnet(String medarbejdernavn) {
+		assertFalse(medarbejderManager.eksistererMedNavn(medarbejdernavn));
 	}
 
 	@Then("Der kan oprettes en medarbejder med navnet {string}")
-	public void derKanOprettesEnMedarbejderMedNavnet(String string) {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
-	}
+	public void derKanOprettesEnMedarbejderMedNavnet(String medarbejdernavn) {
+	    Currentmedarbejder = new Medarbejder (medarbejdernavn);
+	    assertTrue(Currentmedarbejder.Gem());
+	    assertTrue(medarbejderManager.eksistererMedNavn(medarbejdernavn));
+ 	}
 
 	@Given("Der er en medarbejder med navnet {string}")
-	public void derErEnMedarbejderMedNavnet(String string) {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	public void derErEnMedarbejderMedNavnet(String medarbejdernavn) {
+	    if (!medarbejderManager.eksistererMedNavn(medarbejdernavn)) {
+	    	Currentmedarbejder = new Medarbejder(medarbejdernavn);
+	    	Currentmedarbejder.Gem();
+	    }
+	    assertTrue(medarbejderManager.eksistererMedNavn(medarbejdernavn));
 	}
 
 	@Then("Der kan ikke oprettes en ny medarbejder med navnet {string}")
-	public void derKanIkkeOprettesEnNyMedarbejderMedNavnet(String string) {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
-	}
+	public void derKanIkkeOprettesEnNyMedarbejderMedNavnet(String medarbejdernavn) {
+	    Medarbejder KanIkkeOprettes = new Medarbejder(medarbejdernavn);
+	    assertFalse(KanIkkeOprettes.Gem());
+	}	
 }
