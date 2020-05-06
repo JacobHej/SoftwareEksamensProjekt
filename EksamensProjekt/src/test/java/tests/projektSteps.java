@@ -99,9 +99,9 @@ public class projektSteps {
 	public void aktivitetenIProjektetHarTimerRegistreret(String AktivitetNavn, String ProjektNavn, Integer int1) {
 	    Currentprojekt=projektManager.projektUdFraNavn(ProjektNavn);
 	    Currentaktivitet=aktivitetManager.AktivitetEfterProjektOgNavn(Currentprojekt, AktivitetNavn);
-	    this.medarbejder=new Medarbejder("Hans");
-	    assertTrue(this.medarbejder.Gem());
-	    assertTrue(Currentaktivitet.SaetMedarbejder(this.medarbejder));
+	    Currentmedarbejder=new Medarbejder("Hans");
+	    assertTrue(Currentmedarbejder.Gem());
+	    assertTrue(Currentaktivitet.SaetMedarbejder(Currentmedarbejder));
 		assertTrue(Currentaktivitet.TilfoejTid(int1));
 	}
 

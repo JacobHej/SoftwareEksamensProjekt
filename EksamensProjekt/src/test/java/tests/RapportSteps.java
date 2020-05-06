@@ -23,6 +23,7 @@ public class RapportSteps {
 	IMedarbejderManager medarbejderManager= Managers.FaaMedarbejderManager();
 	IProjektManager projektManager= Managers.FaaProjektManager();
 	IAktivitetManager aktivitetManager= Managers.FaaAktivitetManager();
+	Rapport Rapport;
 	Projekt Currentprojekt;
 	Aktivitet Currentaktivitet;
 	Medarbejder Currentmedarbejder;
@@ -77,13 +78,18 @@ public class RapportSteps {
 	@When("Der laves en rapport over projektet {string}")
 	public void derLavesEnRapportOverProjektet(String projektnavn) {
 	    Currentprojekt = projektManager.projektUdFraNavn(projektnavn);
-	    System.out.println(Currentprojekt.genererRapport());
+	    if(Currentprojekt == null) {
+	    	Currentprojekt = projektManager.projektUdFraNavn(projektnavn); 
+	    }
+	    System.out.println(projektManager.eksisterer(Currentprojekt));
+	    Rapport.GenererRapport(Currentprojekt);
 	}
 
 	@Then("Det fremgaar af rapporten, at der er {int} aktiviteter i projektet med navne {string} og {string}")
-	public void detFremgaarAfRapportenAtDerErAktiviteterIProjektetMedNavneOg(Integer int1, String string, String string2) {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	public void detFremgaarAfRapportenAtDerErAktiviteterIProjektetMedNavneOg(Integer antalAktiviteter, String aktivitetnavn1, String aktivitetnavn2) {
+		assertTrue(Rapport.AktivitetsInformationer().size()==antalAktiviteter);
+		assertTrue((Rapport.AktivitetsInformationer().get(1).Aktivitet().getNavn() + "" + Rapport.AktivitetsInformationer().get(2).Aktivitet().getNavn()).contains(aktivitetnavn1));
+		assertTrue((Rapport.AktivitetsInformationer().get(1).Aktivitet().getNavn() + "" + Rapport.AktivitetsInformationer().get(2).Aktivitet().getNavn()).contains(aktivitetnavn2));
 	}
 
 	@Then("{string} er blevet tildelt medarbejderen {string} og {string} har ingen medarbejder tildelt")
@@ -92,8 +98,8 @@ public class RapportSteps {
 	    throw new io.cucumber.java.PendingException();
 	}
 
-	@Then("Der er {int} timer registreret p� aktiviteten {string} og {int} timer paa aktiviteten {string}")
-	public void derErTimerRegistreretPAktivitetenOgTimerPaaAktiviteten(Integer int1, String string, Integer int2, String string2) {
+	@Then("Der er {int} timer registreret paa aktiviteten {string} og {int} timer paa aktiviteten {string}")
+	public void derErTimerRegistreretPaaAktivitetenOgTimerPaaAktiviteten(Integer int1, String string, Integer int2, String string2) {
 	    // Write code here that turns the phrase above into concrete actions
 	    throw new io.cucumber.java.PendingException();
 	}
