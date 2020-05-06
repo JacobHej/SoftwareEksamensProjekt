@@ -12,7 +12,7 @@ public class Ferie {
 	private int startUge;
 	private int slutUge;
 	private int startaar;
-	private int sluttaar;
+	private int slutaar;
 	private String forklaring;
 	
 	private UUID id = UUID.randomUUID();
@@ -23,7 +23,7 @@ public class Ferie {
 		this.startUge=startUge;
 		this.slutUge=slutUge;
 		this.startaar = startaar;
-		this.sluttaar = slutaar;
+		this.slutaar = slutaar;
 		this.medarbejder = medarbejder;
 	}
 	
@@ -31,7 +31,7 @@ public class Ferie {
 		this.startUge=startUge;
 		this.slutUge=slutUge;
 		this.startaar = startaar;
-		this.sluttaar = slutaar;
+		this.slutaar = slutaar;
 		this.forklaring = forklaring;
 		this.medarbejder = medarbejder;
 	}
@@ -53,7 +53,7 @@ public class Ferie {
 	
 	public int Slutaar()
 	{
-		return this.sluttaar;
+		return this.slutaar;
 	}
 	
 	public Medarbejder Medarbejder()
@@ -75,5 +75,13 @@ public class Ferie {
 	
 	public boolean gem() {
 		return ferieManager.Gem(this);
+	}
+	
+	public String getFlotStart() {
+		return "U:"+startUge+" Y:"+startaar;
+	}
+	
+	public String getFlotSlut() {
+		return "U:"+slutUge+" Y:"+slutaar;
 	}
 }

@@ -41,11 +41,6 @@
                                           <TableColumn fx:id="projektNummerKolonne" prefWidth="99.0" text="Nummer" />
                                        </columns>
                                     </TableView>
-                                    <Button fx:id="fjernValgteProjekterKnap" mnemonicParsing="false" onAction="#fjernValgteProjekt" text="Fjern valgte projekt">
-                                       <VBox.margin>
-                                          <Insets />
-                                       </VBox.margin>
-                                    </Button>
                                     <HBox prefHeight="5.0" prefWidth="301.0" spacing="10.0">
                                        <children>
                                           <TextField fx:id="tilfoejProjektNavn" prefHeight="25.0" prefWidth="195.0" promptText="Projekt navn" />
@@ -132,11 +127,6 @@
                                           <TableColumn fx:id="aktivitetNavnKolonne" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="200.0" resizable="false" text="Aktiviteter" />
                                        </columns>
                                     </TableView>
-                                    <Button fx:id="fjernValgteAktiviteterKnap" mnemonicParsing="false" onAction="#fjernValgteAktivitet" text="Fjern valgte aktivitet">
-                                       <VBox.margin>
-                                          <Insets top="10.0" />
-                                       </VBox.margin>
-                                    </Button>
                                     <TextField fx:id="tilfoejAktivitetNavn" promptText="Aktivitet's navn">
                                        <VBox.margin>
                                           <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -367,6 +357,25 @@
                                                             <DatePicker fx:id="hentBrugtTidDag" promptText="vaelg dag" />
                                                             <Button mnemonicParsing="false" onAction="#hentTidBrugtDagKnap" text="Hent tidBrugt på dag" />
                                                             <AnchorPane prefHeight="33.0" prefWidth="200.0" />
+                                                         </children>
+                                                      </VBox>
+                                                   </children>
+                                                </AnchorPane>
+                                          </content>
+                                        </TitledPane>
+                                          <TitledPane prefHeight="200.0" prefWidth="200.0" text="Ferie">
+                                             <content>
+                                                <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                                                   <children>
+                                                      <VBox alignment="TOP_CENTER" layoutX="49.0" layoutY="120.0" prefHeight="440.0" prefWidth="198.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                         <children>
+                                                            <Text fx:id="medarbejderFerier" strokeType="OUTSIDE" strokeWidth="0.0" text="Medarbejdernavn's ferier" wrappingWidth="134.13671112060547" />
+                                                            <TableView fx:id="ferieTabel" prefHeight="200.0" prefWidth="200.0">
+                                                              <columns>
+                                                                <TableColumn fx:id="ferieStartKolonne" prefWidth="86.00000154972076" text="Start" />
+                                                                <TableColumn fx:id="ferieSlutKolonne" prefWidth="92.99999237060547" text="Slut" />
+                                                              </columns>
+                                                            </TableView>
                                                             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Ferie" />
                                                             <HBox alignment="CENTER" prefHeight="0.0" prefWidth="200.0">
                                                                <children>
@@ -385,8 +394,8 @@
                                                       </VBox>
                                                    </children>
                                                 </AnchorPane>
-                                          </content>
-                                        </TitledPane>
+                                             </content>
+                                          </TitledPane>
                                         <TitledPane animated="false" text="Aktivitet's Info">
                                           <content>
                                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">

@@ -14,6 +14,7 @@ import java.util.Map.Entry;
 
 import Applikationslag.Domaeneklasser.Aktivitet;
 import Applikationslag.Domaeneklasser.Brugttid;
+import Applikationslag.Domaeneklasser.Ferie;
 import Applikationslag.Domaeneklasser.Medarbejder;
 import Applikationslag.Domaeneklasser.Projekt;
 import Applikationslag.Infrastruktur.ServiceInterfaces.IBrugttidManager;
@@ -85,6 +86,10 @@ public class MainController implements Initializable {
 	@FXML private TextField ferieUgeSlut;
 	@FXML private TextField ferieAarStart;
 	@FXML private TextField ferieAarSlut;
+	@FXML private Text medarbejderFerier;
+	@FXML private TableView<Ferie> ferieTabel;
+	@FXML private TableColumn<Ferie,String> ferieStartKolonne;
+	@FXML private TableColumn<Ferie,String> ferieSlutKolonne;
 	
 	//TidBrugt ting
 	@FXML private TableView<Brugttid> tidBrugtTabel;
@@ -151,11 +156,13 @@ public class MainController implements Initializable {
 		initializeActivitiesTable();
 		initializeMedlemmerTabel();
 		initializeBrugtTidTabel();
+		initializeFerieTabel();
 		initializeMedarbejderActivitiesTable();
 		initializeProjektLederDropDown();
 		initializeAktivitetMedarbejderDropDown();
 		initializeAktivitetmedarbejderDropDownHjælper();
 		initializeNumbersOnly();
+		
 	}
 	
 	public void initializeProjectsTable() {
@@ -379,6 +386,11 @@ public class MainController implements Initializable {
 		}
 	}
 
+	private void initializeFerieTabel() {
+		ferieStartKolonne.setCellValueFactory(new PropertyValueFactory<Ferie, String>("flotStart"));
+		ferieSlutKolonne.setCellValueFactory(new PropertyValueFactory<Ferie, String>("flotSlut"));
+	}
+	
 //	HER
 //	BEGYNDER
 //	PROJEKT
@@ -876,6 +888,7 @@ public class MainController implements Initializable {
     	visMedarbejderInfo(m);
     	visMuligeHjælpere(m);
     	visBrugtTid(null);
+    	visFerier();
     }
     
     private void visMedarbejderAktiviteter(Medarbejder m){
@@ -1188,8 +1201,26 @@ public class MainController implements Initializable {
     		popup("Noget ferie gik galt, tjek at du ikke har arbejde i den uge");
     		return;
     	}
+    	visFerier();
     	
     }
+
+    private void visFerier() {
+    	Medarbejder m = medarbejderTabel.getSelectionModel().getSelectedItem();
+    	if(m==null) {
+    		popup("Ingen medarbejder valgt");
+    		return;
+    	}
+    	medarbejderFerier.setText(m.getNavn()+"'s ferier");
+    	
+    	ObservableList<Ferie> ferier = FXCollections.observableArrayList();
+    	ferieTabel.setItems(ferier);
+    	for(Entry<UUID, Ferie> e : m.getFerier()) {
+    		ferieTabel.getItems().add(e.getValue());
+        }
+    	
+    }
+    
 //	HER
 //	BEGYNDER
 //	NYTTIGE

@@ -19,7 +19,7 @@ public class Medarbejder
     
     private IBrugttidManager brugttidManager = Managers.FaaBrugttidManager();
     private IAktivitetManager aktivitetManager = Managers.FaaAktivitetManager();
-    
+    private IFerieManager ferieManager = Managers.FaaFerieManager();
     private static IMedarbejderManager medarbejderManager = Managers.FaaMedarbejderManager();
     
     //metoder
@@ -76,13 +76,17 @@ public class Medarbejder
 	}
 
 	public boolean tagFerie(int startUge, int slutUge, int startaar, int slutaar) {
-		Ferie f = new Ferie(this, slutaar, slutaar, slutaar, slutaar);
+		Ferie f = new Ferie(this, startUge, slutUge, startaar, slutaar);
 		return f.gem();
 	}
 	
 	public boolean tagFerie(int startUge, int slutUge, int startaar, int slutaar, String forklaring) {
-		Ferie f = new Ferie(this, slutaar, slutaar, slutaar, slutaar, forklaring);
+		Ferie f = new Ferie(this, startUge, slutUge, startaar, slutaar, forklaring);
 		return f.gem();
+	}
+	
+	public List<Entry<UUID, Ferie>> getFerier(){
+		return ferieManager.hentMedarbejders(this);
 	}
 
 }
