@@ -98,6 +98,7 @@ public class medarbejderSteps {
 	public void harAktiviteterIUge(String medarbejdernavn, Integer antalAktiviteter, Integer ugenummer) {
 	    Currentprojekt=new Projekt("ProjektMedXAktiviteter");Currentprojekt.Gem();
 	    for (int i = 0; i < antalAktiviteter; i++) {
+//	    	System.out.println("Der bliver tilfoejet Xaktivitet:"+i);
 	    	Currentaktivitet = new Aktivitet("Xaktivitet" + i);
 	    	Currentaktivitet.setTidsperiode(ugenummer, ugenummer, 2020, 2020);
 	    	Currentaktivitet.SaetMedarbejder(Currentmedarbejder);

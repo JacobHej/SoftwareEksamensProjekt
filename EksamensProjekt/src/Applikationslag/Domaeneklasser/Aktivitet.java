@@ -213,10 +213,15 @@ public class Aktivitet {
 		return this.projekt;
 	}
 	
-	public void setProjekt(Projekt p) {
+	public boolean setProjekt(Projekt p) {
 		if(ProjektData.Bibliotek.entrySet().stream()
-		.anyMatch(e -> e.getValue().getNavn().equals( p.getNavn())))
+		.anyMatch(e -> e.getValue().getNavn().equals( p.getNavn()))) {
 			this.projekt = p;
+			return true;
+		}else {
+			return false;
+		}
+			
 	}
 	
 	public Medarbejder Medarbejder()

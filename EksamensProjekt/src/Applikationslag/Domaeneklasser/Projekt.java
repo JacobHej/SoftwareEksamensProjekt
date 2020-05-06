@@ -50,8 +50,14 @@ public class Projekt {
 	
 	public Boolean tilfoejAktivitet(Aktivitet aktivitet)
 	{
-		aktivitet.setProjekt(this);
-		return aktivitetManager.GemAktivitet(aktivitet);
+		boolean done1 = !aktivitet.setProjekt(this);
+		if(done1) {
+//			System.out.println("Done 1 fejlede");
+			return false;
+		}
+		boolean done2 = aktivitetManager.GemAktivitet(aktivitet);
+//		System.out.println("Her er done2:"+done2);
+		return done2;
 	}
 	
 	public Boolean tilfoejAktivitet(String navn)
