@@ -16,6 +16,7 @@ import Applikationslag.Infrastruktur.ServiceInterfaces.IAktivitetManager;
 import Applikationslag.Redskaber.Managers;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 import java.util.Map.Entry;
 
@@ -24,6 +25,7 @@ public class InformationSteps {
 	IProjektManager projektManager= Managers.FaaProjektManager();
 	IAktivitetManager aktivitetManager= Managers.FaaAktivitetManager();
 	Medarbejder Currentmedarbejder;
+	Medarbejder Currentmedarbejder2;
 	Aktivitet Currentaktivitet;
 	Projekt Currentprojekt;
 	String TestString = "";
@@ -42,27 +44,29 @@ public class InformationSteps {
 	}
 
 	@Given("Der er en medarbejder som {string} som ikke er ledig i uge {int}")
-	public void derErEnMedarbejderSomSomIkkeErLedigIUge(String string, Integer int1) {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	public void derErEnMedarbejderSomSomIkkeErLedigIUge(String medarbejdernavn, Integer ugenummer) {
+	    Currentmedarbejder2 = new Medarbejder(medarbejdernavn);
+	    Currentmedarbejder2.tagFerie(ugenummer, ugenummer, 2020, 2020);
+	    assertFalse(Currentmedarbejder2.ledig(ugenummer, ugenummer, 2020, 2020));
 	}
 
 	@When("Der spoerges om ledige medarbejdere i uge {int}")
-	public void derSpoergesOmLedigeMedarbejdereIUge(Integer int1) {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	public void derSpoergesOmLedigeMedarbejdereIUge(Integer ugenummer) {
+		List<Entry<UUID, Medarbejder>> a = medarbejderManager.AlleLedigeMedarbejdere(ugenummer, ugenummer, 2020, 2020);
+		this.TestString="";
+		for (int i = 0; i < a.size(); i++) {
+			this.TestString = this.TestString + a.get(i).getValue().getNavn() + " ";
+		}
 	}
 
 	@Then("{string} er i listen af ledige medarbejdere")
-	public void erIListenAfLedigeMedarbejdere(String string) {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	public void erIListenAfLedigeMedarbejdere(String medarbejdernavn) {
+		assertTrue(this.TestString.contains(medarbejdernavn + " "));
 	}
 
 	@Then("{string} er ikke i listen af ledige medarbejdere")
-	public void erIkkeIListenAfLedigeMedarbejdere(String string) {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	public void erIkkeIListenAfLedigeMedarbejdere(String medarbejdernavn) {
+		assertFalse(this.TestString.contains(medarbejdernavn + " "));
 	}
 
 	//************
@@ -117,8 +121,8 @@ public class InformationSteps {
 	public void detKanSesAtHarAktivitetIUgeOgAktiviteterIUge(String medarbejdernavn, Integer int1, Integer int2, Integer int3, Integer int4) {
 		derSpoergesOmHvornaarHarAktiviteter(medarbejdernavn);
 		System.out.println(this.TestString);
-		assertTrue(TestString.contains("5-5:2020-2020,5-5:2020-2020"));
-		assertTrue(TestString.contains("4-4:2020-2020"));
+		assertTrue(this.TestString.contains("5-5:2020-2020,5-5:2020-2020"));
+		assertTrue(this.TestString.contains("4-4:2020-2020"));
 	}
 	
 	//***********

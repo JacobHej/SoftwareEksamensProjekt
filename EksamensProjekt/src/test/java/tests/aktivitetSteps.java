@@ -177,19 +177,26 @@ public class aktivitetSteps {
 
 	@Given("{string} har registreret {int} timer paa aktiviteten {string}")
 	public void harRegistreretTimerPaaAktiviteten(String medarbejdernavn, Integer antalTimer, String aktivitetnavn) {
-		// Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+		Currentmedarbejder = medarbejderManager.MedarbejderUdFraNavn(medarbejdernavn);
+		Currentaktivitet = aktivitetManager.AktivitetEfterProjektOgNavn(Currentprojekt, aktivitetnavn);
+		assertTrue(Currentmedarbejder.getNavn().equals(medarbejdernavn));
+		Currentbrugttid = new Brugttid(Currentaktivitet, Currentmedarbejder, antalTimer);
+		assertTrue(Currentaktivitet.TilfoejTid(Currentbrugttid));
 	}
 
 	@When("{string} retter tiden som han har brugt i aktiviteten til {int}")
-	public void retterTidenSomHanHarBrugtIAktivitetenTil(String string, Integer int1) {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	public void retterTidenSomHanHarBrugtIAktivitetenTil(String medarbejdernavn, Integer antalTimer) {
+	    Currentbrugttid.AendreTid(antalTimer);
 	}
 
 	@Then("{string} har kun {int} timer registreret i aktiviteten {string}")
-	public void harKunTimerRegistreretIAktiviteten(String string, Integer int1, String string2) {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	public void harKunTimerRegistreretIAktiviteten(String medarbejdernavn, Integer antalTimer, String aktivitetnavn) {
+	    List<Entry<UUID, Brugttid>> a = brugttidManager.AlleBrugttidEfterAktivitetOgMedarbejder(Currentaktivitet, Currentmedarbejder);
+	    int b = 0;
+	    for (int i = 0; i < a.size(); i++) {
+	    	b=b+(a.get(i).getValue().Tid());
+	    }
+	    assertTrue(b==antalTimer);
+	    
 	}
 }
