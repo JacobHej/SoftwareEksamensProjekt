@@ -18,14 +18,24 @@ public class AktivitetManager implements IAktivitetManager{
 
 	//@Override
 	public Boolean GemAktivitet(Aktivitet aktivitet) {
-		if(aktivitet.getProjekt() == null)
-			return false;
-		if (!AktivitetData.Bibliotek.entrySet().stream().anyMatch(e -> e.getValue().getNavn().equals(aktivitet.getNavn())) 
-				&& ProjektData.Bibliotek.containsValue(aktivitet.getProjekt()))
-			return (AktivitetData.Bibliotek.put(aktivitet.ID(), aktivitet) == null);
-		else {
+		if(aktivitet.getProjekt() == null) {
+			System.out.println("Projektet var null da aktivitet prøvede at blive gemt");
 			return false;
 		}
+			
+			
+		if (!AktivitetData.Bibliotek.entrySet().stream().anyMatch(
+				e -> e.getValue().equals(aktivitet))) 
+		{
+			if(ProjektData.Bibliotek.containsValue(aktivitet.getProjekt())) {
+				return (AktivitetData.Bibliotek.put(aktivitet.ID(), aktivitet) == null);
+			}else {
+//				System.out.println("Projektet fandtes ikke");
+			}
+		}else {
+//			System.out.println("Aktiviteten fandtes ikke");
+		}
+		return false;
 	}
 
 	//@Override

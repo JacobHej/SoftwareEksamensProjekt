@@ -15,4 +15,6 @@ public interface IFerieManager {
 	public List<Entry<UUID, Ferie>> hentAlle();
 	
 	public Boolean FerieEfterPeriodeOgMedarbejder(int weekStart, int weekSlut, int yearStart, int yearSlut, Medarbejder medarbejder);
+	
+	public List<Entry<UUID, Ferie>> hentMedarbejders(Medarbejder m);
 }

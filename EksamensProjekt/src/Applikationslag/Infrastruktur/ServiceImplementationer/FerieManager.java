@@ -83,23 +83,6 @@ public class FerieManager implements IFerieManager {
 					).count();
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	public long AktiviteterIDenneUge(int week, int year, Medarbejder medarbejder) {
 		if(medarbejder == null) {
 			System.out.println("Youre looking for a non existant medarbejder?");
@@ -157,5 +140,11 @@ public class FerieManager implements IFerieManager {
 			}
 		}
 		return true;
+	}
+
+	@Override
+	public List<Entry<UUID, Ferie>> hentMedarbejders(Medarbejder m) {
+		return ((HashMap<UUID, Ferie>)FerieData.Bibliotek.clone())
+				.entrySet().stream().filter(e -> e.getValue().Medarbejder()==m).collect(Collectors.toList());
 	}
 }

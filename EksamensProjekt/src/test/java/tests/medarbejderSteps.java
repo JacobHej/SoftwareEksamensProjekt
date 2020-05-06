@@ -103,6 +103,7 @@ public class medarbejderSteps {
 	    
 	    
 	    for (int i = 0; i < antalAktiviteter; i++) {
+//	    	System.out.println("Der bliver tilfoejet Xaktivitet:"+i);
 	    	Currentaktivitet = new Aktivitet("Xaktivitet" + i);
 	    	assertTrue(Currentaktivitet.setTidsperiode(ugenummer, ugenummer, 2020, 2020));
 	    	assertTrue(Currentaktivitet.SaetMedarbejder(Currentmedarbejder));
