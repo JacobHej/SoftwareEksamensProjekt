@@ -29,7 +29,7 @@ public class InformationSteps {
 	String TestString = "";
 	
 	@Given("Der er en medarbejder {string} som er ledig i uge {int}")
-	public void derErEnMedarbejderSomErLedigIUge(String string, Integer int1) {
+	public void derErEnMedarbejderSomErLedigIUge(String medarbejdernavn, Integer ugenummer) {
 	    // Write code here that turns the phrase above into concrete actions
 	    throw new io.cucumber.java.PendingException();
 	}

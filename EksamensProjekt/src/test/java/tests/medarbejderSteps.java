@@ -96,11 +96,16 @@ public class medarbejderSteps {
 
 	@Given("{string} har {int} aktiviteter i uge {int}")
 	public void harAktiviteterIUge(String medarbejdernavn, Integer antalAktiviteter, Integer ugenummer) {
-	    Currentprojekt=new Projekt("ProjektMedXAktiviteter");Currentprojekt.Gem();
+		Currentprojekt=projektManager.projektUdFraNavn("ProjektMedXAktiviteter");
+		if (Currentprojekt==null){
+			Currentprojekt=new Projekt ("ProjektMedXAktiviteter");Currentprojekt.Gem();
+		}
+	    
+	    
 	    for (int i = 0; i < antalAktiviteter; i++) {
 	    	Currentaktivitet = new Aktivitet("Xaktivitet" + i);
-	    	Currentaktivitet.setTidsperiode(ugenummer, ugenummer, 2020, 2020);
-	    	Currentaktivitet.SaetMedarbejder(Currentmedarbejder);
+	    	assertTrue(Currentaktivitet.setTidsperiode(ugenummer, ugenummer, 2020, 2020));
+	    	assertTrue(Currentaktivitet.SaetMedarbejder(Currentmedarbejder));
 	    	assertTrue(Currentprojekt.tilfoejAktivitet(Currentaktivitet));
 	    	
 	    }
