@@ -46,10 +46,22 @@ public class AktivitetManager implements IAktivitetManager{
 	}
 	
 	public Aktivitet AktivitetEfterProjektOgNavn (Projekt p, String navn) {
+		List a =(AktivitetData.Bibliotek.entrySet().stream()
+				.filter(e -> e.getValue().getNavn().equals(navn))
+				.filter(e -> e.getValue().getProjekt() == p)
+				.collect(Collectors.toList()));
+		if (a.size()==0) {
+			return null;
+		}
 		return (AktivitetData.Bibliotek.entrySet().stream()
 				.filter(e -> e.getValue().getNavn().equals(navn))
 				.filter(e -> e.getValue().getProjekt() == p)
 				.collect(Collectors.toList()).get(0).getValue());
+		
+		
+		
+		
+		
 	}
 	
 	public Boolean eksisterer(Aktivitet aktivitet)

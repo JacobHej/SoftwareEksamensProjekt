@@ -72,6 +72,7 @@ public class Aktivitet {
 	
 	public Boolean SaetMedarbejder(Medarbejder nyMedarbejder)
 	{
+
 		if (medarbejderManager.MedarbejderLedig(this.startUge, this.slutUge, this.startaar, this.slutaar, nyMedarbejder)
 				&& MedarbejderData.Bibliotek.entrySet().stream()
 				.anyMatch(e -> e.getValue()
@@ -86,6 +87,7 @@ public class Aktivitet {
 			}
 		}
 		else
+			System.out.println("Hvad sker der her (Aktivitet.java)");
 			return false;
 	}
 	
