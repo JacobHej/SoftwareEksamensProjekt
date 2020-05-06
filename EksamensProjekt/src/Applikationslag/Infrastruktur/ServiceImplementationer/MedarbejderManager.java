@@ -127,12 +127,26 @@ public class MedarbejderManager implements IMedarbejderManager {
 	}
 	
 	public Medarbejder MedarbejderUdFraNavn(String medarbejdernavn){
-		return (MedarbejderData.Bibliotek.entrySet().stream()
+		List a = (MedarbejderData.Bibliotek.entrySet().stream()
 					.filter(e -> e.getValue().getNavn().equals(medarbejdernavn))
-					.collect(Collectors.toList()).get(0).getValue());
+					.collect(Collectors.toList()));
 		
+		if (a.size()==0) {
+			return null;
+		}
+		return (MedarbejderData.Bibliotek.entrySet().stream()
+				.filter(e -> e.getValue().getNavn().equals(medarbejdernavn))
+				.collect(Collectors.toList()).get(0).getValue());
 				
 	}
+	
+//	public Medarbejder MedarbejderUdFraNavn(String medarbejdernavn){
+//		return (MedarbejderData.Bibliotek.entrySet().stream()
+//					.filter(e -> e.getValue().getNavn().equals(medarbejdernavn))
+//					.collect(Collectors.toList()).get(0).getValue());
+//		
+//				
+//	}
 
 	@Override
 	public Boolean fjern(Medarbejder m) {
