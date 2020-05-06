@@ -67,7 +67,6 @@ public class aktivitetSteps {
 
 	@When("lederen proever at lave en ny aktivitet med navnet {string}")
 	public void lederenProeverAtLaveEnNyAktivitetMedNavnet(String string) {
-		System.out.println(this.projekt.getAlleAktiviteter().get(0).getValue().getNavn() + "<--- her!!!!!!!");
 		Aktivitet sammeNavn= new Aktivitet(this.aktivitet.getNavn());
 		assertFalse(this.projekt.tilfoejAktivitet(sammeNavn));
 	}

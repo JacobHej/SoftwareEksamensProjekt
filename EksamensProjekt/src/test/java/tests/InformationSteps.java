@@ -30,8 +30,15 @@ public class InformationSteps {
 	
 	@Given("Der er en medarbejder {string} som er ledig i uge {int}")
 	public void derErEnMedarbejderSomErLedigIUge(String medarbejdernavn, Integer ugenummer) {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	    Currentmedarbejder=medarbejderManager.MedarbejderUdFraNavn(medarbejdernavn);
+	    if (Currentmedarbejder==null) {
+	    	Currentmedarbejder=new Medarbejder(medarbejdernavn);
+	    	Currentmedarbejder.Gem();
+	    }
+		assertTrue(medarbejderManager.eksistererMedNavn(medarbejdernavn));
+		Currentmedarbejder=medarbejderManager.MedarbejderUdFraNavn(medarbejdernavn);
+		
+		assertTrue(medarbejderManager.MedarbejderLedig(ugenummer, ugenummer, 2020, 2020, Currentmedarbejder));
 	}
 
 	@Given("Der er en medarbejder som {string} som ikke er ledig i uge {int}")
