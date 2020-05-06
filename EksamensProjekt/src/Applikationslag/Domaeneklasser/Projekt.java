@@ -93,6 +93,10 @@ public class Projekt {
 		return projektManager.GemProjekt(this);
 	}
 	
+	public Boolean fjernFraData() {
+		return projektManager.fjern(this);
+    }
+	
 	public List<Entry<UUID, Aktivitet>> getAlleAktiviteter()
 	{
 		return aktivitetManager.AlleAktiviteterEfterProjekt(this);

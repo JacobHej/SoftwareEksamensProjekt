@@ -12,6 +12,8 @@ import java.util.stream.Stream;
 import java.util.UUID;
 
 import Applikationslag.Data.Datavedholdelsesklasser.AktivitetData;
+import Applikationslag.Data.Datavedholdelsesklasser.BrugttidData;
+import Applikationslag.Data.Datavedholdelsesklasser.FerieData;
 import Applikationslag.Data.Datavedholdelsesklasser.MedarbejderData;
 import Applikationslag.Data.Datavedholdelsesklasser.ProjektData;
 import Applikationslag.Domaeneklasser.Aktivitet;
@@ -132,4 +134,20 @@ public class MedarbejderManager implements IMedarbejderManager {
 				
 	}
 
+	@Override
+	public Boolean fjern(Medarbejder m) {
+		if (BrugttidData.Bibliotek.entrySet().stream()
+				.anyMatch(e -> e.getValue().Medarbejder() ==  m)) {
+			return false;
+		}else if(AktivitetData.Bibliotek.entrySet().stream()
+				.anyMatch(e -> e.getValue().Medarbejder() ==  m)) {
+			return false;
+		}else if(FerieData.Bibliotek.entrySet().stream()
+				.anyMatch(e -> e.getValue().Medarbejder() ==  m)){
+			return false;
+		}else {
+			MedarbejderData.Bibliotek.remove(m.ID());
+			return true;
+		}
+	}
 }
