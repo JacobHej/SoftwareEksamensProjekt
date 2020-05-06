@@ -63,9 +63,7 @@ public class Projekt {
 	public Boolean tilfoejAktivitet(String navn)
 	{
 		Aktivitet a = new Aktivitet(navn);
-		a.setProjekt(this);
-		aktivitetManager.GemAktivitet(a);
-		return true;
+		return tilfoejAktivitet(a);
 	}
 	
 	public Boolean tilfoejAktivitet(int start, int slut, String navn)
