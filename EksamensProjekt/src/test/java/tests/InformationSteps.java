@@ -120,9 +120,8 @@ public class InformationSteps {
 	@Then("det kan ses at {string} har {int} aktivitet i uge {int} og {int} aktiviteter i uge {int}")
 	public void detKanSesAtHarAktivitetIUgeOgAktiviteterIUge(String medarbejdernavn, Integer int1, Integer int2, Integer int3, Integer int4) {
 		derSpoergesOmHvornaarHarAktiviteter(medarbejdernavn);
-		System.out.println(this.TestString);
-		assertTrue(this.TestString.contains("5-5:2020-2020,5-5:2020-2020"));
-		assertTrue(this.TestString.contains("4-4:2020-2020"));
+		assertTrue(this.TestString.replace("4-4:2020-2020,", "").contains("5-5:2020-2020,5-5:2020-2020"));
+		assertTrue(this.TestString.replace("5-5:2020-2020,", "").contains("4-4:2020-2020"));
 	}
 	
 	//***********
