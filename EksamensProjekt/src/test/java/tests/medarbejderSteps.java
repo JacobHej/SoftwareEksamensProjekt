@@ -116,7 +116,7 @@ public class medarbejderSteps {
 	}
 
 	@When("{string} melder ferie i uge {int}")
-	public void melderFerieIUge(String string, Integer int1) {
+	public void melderFerieIUge(String medarbejdernavn, Integer ugenummer) {
 		// Write code here that turns the phrase above into concrete actions
 	    throw new io.cucumber.java.PendingException();
 	}
