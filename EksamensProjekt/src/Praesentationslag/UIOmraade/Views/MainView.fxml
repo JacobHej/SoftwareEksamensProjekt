@@ -67,12 +67,14 @@
                                                       </Text>
                                                       <TextField fx:id="projektInfoNavn" promptText="Projekt Navn" />
                                                       <Button fx:id="gemProjektNavn" mnemonicParsing="false" onAction="#gemProjektNavn" text="Gem Navn" />
+                                                      <AnchorPane prefHeight="24.0" prefWidth="171.0" />
                                                       <HBox alignment="CENTER" prefHeight="30.0" prefWidth="171.0" spacing="5.0">
                                                          <children>
                                                             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Projektnummer:" />
                                                             <Text fx:id="ProjektNummer" strokeType="OUTSIDE" strokeWidth="0.0" text="ProjektNummer" />
                                                          </children>
                                                       </HBox>
+                                                      <AnchorPane prefHeight="24.0" prefWidth="171.0" />
                                                       <HBox alignment="CENTER_LEFT" prefHeight="23.0" prefWidth="171.0" spacing="5.0">
                                                          <children>
                                                             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Leder:" />
@@ -80,6 +82,7 @@
                                                          </children>
                                                       </HBox>
                                                       <Button mnemonicParsing="false" onAction="#gemLederValg" text="Gem Ledervalg" />
+                                                      <AnchorPane prefHeight="24.0" prefWidth="171.0" />
                                                       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Projekt-start" textAlignment="CENTER" wrappingWidth="135.779296875">
                                                          <font>
                                                             <Font size="20.0" />
@@ -99,6 +102,8 @@
                                                             <TextField fx:id="aarstalProjektStart" layoutX="48.0" layoutY="27.0" prefHeight="25.0" prefWidth="68.0" promptText="aarstal" />
                                                          </children>
                                                       </AnchorPane>
+                                                      <AnchorPane prefHeight="24.0" prefWidth="171.0" />
+                                                      <Button mnemonicParsing="false" onAction="#sletValgteProjekt" text="Slet valgte Projekt" />
                                                    </children>
                                                    <padding>
                                                       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -149,33 +154,34 @@
                                     </Text>
                                     <AnchorPane prefHeight="125.0" prefWidth="200.0">
                                        <children>
-                                          <TextField fx:id="ugeNrAktivitetStart" layoutX="124.0" layoutY="24.0" prefHeight="25.0" prefWidth="62.0" promptText="UgeNr">
+                                          <TextField fx:id="ugeNrAktivitetStart" layoutX="137.0" layoutY="23.0" prefHeight="25.0" prefWidth="62.0" promptText="UgeNr">
                                              <font>
                                                 <Font size="10.0" />
                                              </font>
                                           </TextField>
-                                          <Text layoutX="14.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start" />
-                                          <Button layoutX="48.0" layoutY="90.0" mnemonicParsing="false" onAction="#gemAktivitetTid" text="Gem tidsperiode" textAlignment="CENTER" />
-                                          <TextField fx:id="ugeNrAktivitetSlut" layoutX="124.0" layoutY="57.0" prefHeight="25.0" prefWidth="62.0" promptText="UgeNr">
+                                          <Text layoutX="27.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Start" />
+                                          <Button layoutX="61.0" layoutY="89.0" mnemonicParsing="false" onAction="#gemAktivitetTid" text="Gem tidsperiode" textAlignment="CENTER" />
+                                          <TextField fx:id="ugeNrAktivitetSlut" layoutX="137.0" layoutY="56.0" prefHeight="25.0" prefWidth="62.0" promptText="UgeNr">
                                              <font>
                                                 <Font size="10.0" />
                                              </font>
                                           </TextField>
-                                          <Text layoutX="16.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Slut" />
-                                          <Text layoutX="70.0" layoutY="13.0" strokeType="OUTSIDE" strokeWidth="0.0" text="aar" />
-                                          <Text layoutX="137.0" layoutY="15.0" strokeType="OUTSIDE" strokeWidth="0.0" text="UgeNr" />
-                                          <TextField fx:id="aarstalAktivitetStart" layoutX="51.0" layoutY="24.0" prefHeight="25.0" prefWidth="62.0" promptText="aarstal">
+                                          <Text layoutX="29.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Slut" />
+                                          <Text layoutX="83.0" layoutY="12.0" strokeType="OUTSIDE" strokeWidth="0.0" text="aar" />
+                                          <Text layoutX="150.0" layoutY="14.0" strokeType="OUTSIDE" strokeWidth="0.0" text="UgeNr" />
+                                          <TextField fx:id="aarstalAktivitetStart" layoutX="64.0" layoutY="23.0" prefHeight="25.0" prefWidth="62.0" promptText="aarstal">
                                              <font>
                                                 <Font size="10.0" />
                                              </font>
                                           </TextField>
-                                          <TextField fx:id="aarstalAktivitetSlut" layoutX="51.0" layoutY="57.0" prefHeight="25.0" prefWidth="62.0" promptText="aarstal">
+                                          <TextField fx:id="aarstalAktivitetSlut" layoutX="64.0" layoutY="56.0" prefHeight="25.0" prefWidth="62.0" promptText="aarstal">
                                              <font>
                                                 <Font size="10.0" />
                                              </font>
                                           </TextField>
                                        </children>
                                     </AnchorPane>
+                                    <AnchorPane prefHeight="20.0" prefWidth="264.0" />
                                     <HBox alignment="CENTER_LEFT" prefHeight="0.0" prefWidth="200.0" spacing="5.0">
                                        <children>
                                           <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Medarbejder" />
@@ -183,6 +189,7 @@
                                        </children>
                                     </HBox>
                                     <Button mnemonicParsing="false" onAction="#gemAktivitetMedarbejder" text="Gem Medarbejder" />
+                                    <AnchorPane prefHeight="27.0" prefWidth="264.0" />
                                     <HBox alignment="CENTER" prefHeight="80.0" prefWidth="200.0">
                                        <children>
                                           <VBox alignment="CENTER" prefHeight="200.0" prefWidth="90.0">
@@ -242,6 +249,8 @@
                                     </HBox>
                                     <ProgressBar fx:id="aktivitetTidProgress" prefWidth="200.0" progress="0.0" />
                                     <Button mnemonicParsing="false" onAction="#gemBudgetAendringer" text="Gem Budget Aendringer" />
+                                    <AnchorPane prefHeight="20.0" prefWidth="264.0" />
+                                    <Button mnemonicParsing="false" onAction="#sletValgteAktivitet" text="Slet valgte Aktivitet" />
                                  
                                  </children>
                               </VBox>
@@ -279,6 +288,7 @@
                                        </children>
                                     </HBox>
                                     <Button mnemonicParsing="false" onAction="#tilfoejMedarbejder" text="Tilfoej Medarbejder" />
+                                    <Button mnemonicParsing="false" onAction="#sletValgteMedarbejder" text="Slet valgte Medarbejder" />
                                  </children>
                                  <padding>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -390,6 +400,7 @@
                                                                </children>
                                                             </HBox>
                                                             <Button mnemonicParsing="false" onAction="#tagFerieKnap" text="Tag ferie" />
+                                                            <Button mnemonicParsing="false" onAction="#sletValgteFerie" text="Slet valgte Ferie" />
                                                          </children>
                                                       </VBox>
                                                    </children>

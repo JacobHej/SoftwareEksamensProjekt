@@ -36,6 +36,10 @@ public class Ferie {
 		this.medarbejder = medarbejder;
 	}
 	
+	public Boolean fjernFraData() {
+		return ferieManager.fjern(this);
+    }
+	
 	public int StartUge()
 	{
 		return this.slutUge;

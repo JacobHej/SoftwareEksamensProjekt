@@ -52,6 +52,10 @@ public class Medarbejder
     	return medarbejderManager.GemMedarbejder(this);
     }
     
+    public Boolean fjernFraData() {
+		return medarbejderManager.fjern(this);
+    }
+    
     public long AktiviteterIDenneUge(int week, int year)
 	{
 		return medarbejderManager.AktiviteterIDenneUge(week, year, this);

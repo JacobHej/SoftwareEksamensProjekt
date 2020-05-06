@@ -123,6 +123,10 @@ public class Aktivitet {
 		return brugttidManager.GemBrugttid(brugttid);
 	}
 	
+	public boolean fjernFraData() {
+		return aktivitetManager.fjern(this);
+    }
+	
 	//Funtioner for returnering af klassevariable
 	public int getStartUge()
 	{

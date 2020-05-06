@@ -36,7 +36,7 @@ public class FerieManager implements IFerieManager {
 	}
 
 	@Override
-	public Boolean Slet(Ferie ferie) {
+	public Boolean fjern(Ferie ferie) {
 		FerieData.Bibliotek.remove(ferie.ID());
 		return true;
 	}
@@ -147,4 +147,7 @@ public class FerieManager implements IFerieManager {
 		return ((HashMap<UUID, Ferie>)FerieData.Bibliotek.clone())
 				.entrySet().stream().filter(e -> e.getValue().Medarbejder()==m).collect(Collectors.toList());
 	}
+
+	
+
 }
