@@ -10,9 +10,11 @@ import Applikationslag.Domaeneklasser.Medarbejder;
 public interface IFerieManager {
 	public Boolean Gem(Ferie ferie);
 	
-	public Boolean Slet (Ferie ferie);
+	public Boolean fjern (Ferie ferie);
 	
 	public List<Entry<UUID, Ferie>> hentAlle();
 	
 	public Boolean FerieEfterPeriodeOgMedarbejder(int weekStart, int weekSlut, int yearStart, int yearSlut, Medarbejder medarbejder);
+	
+	public List<Entry<UUID, Ferie>> hentMedarbejders(Medarbejder m);
 }

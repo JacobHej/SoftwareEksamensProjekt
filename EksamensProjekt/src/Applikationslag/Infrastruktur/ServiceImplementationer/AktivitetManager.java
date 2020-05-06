@@ -18,13 +18,26 @@ public class AktivitetManager implements IAktivitetManager{
 
 	//@Override
 	public Boolean GemAktivitet(Aktivitet aktivitet) {
-		if(aktivitet.getProjekt() == null)
+
+		if(aktivitet.getProjekt() == null) {
+			System.out.println("Projektet var null da aktivitet prøvede at blive gemt");
 			return false;
-		if (!AktivitetData.Bibliotek.entrySet().stream().anyMatch(e -> e.getValue().getNavn().equals(aktivitet.getNavn())) 
-				&& ProjektData.Bibliotek.containsValue(aktivitet.getProjekt()))
-			return (AktivitetData.Bibliotek.put(aktivitet.ID(), aktivitet) == null);
-		else 
-			return false;
+		}
+			
+			
+		if (!AktivitetData.Bibliotek.entrySet().stream().anyMatch(
+				e -> e.getValue().getNavn().equals(aktivitet.getNavn()))) 
+		{
+			if(ProjektData.Bibliotek.containsValue(aktivitet.getProjekt())) {
+				return (AktivitetData.Bibliotek.put(aktivitet.ID(), aktivitet) == null);
+			}else {
+//				System.out.println("Projektet fandtes ikke");
+			}
+		}else {
+//			System.out.println("Aktiviteten fandtes ikke");
+		}
+		return false;
+
 	}
 
 	//@Override
@@ -35,10 +48,22 @@ public class AktivitetManager implements IAktivitetManager{
 	}
 	
 	public Aktivitet AktivitetEfterProjektOgNavn (Projekt p, String navn) {
+		List a =(AktivitetData.Bibliotek.entrySet().stream()
+				.filter(e -> e.getValue().getNavn().equals(navn))
+				.filter(e -> e.getValue().getProjekt() == p)
+				.collect(Collectors.toList()));
+		if (a.size()==0) {
+			return null;
+		}
 		return (AktivitetData.Bibliotek.entrySet().stream()
 				.filter(e -> e.getValue().getNavn().equals(navn))
 				.filter(e -> e.getValue().getProjekt() == p)
 				.collect(Collectors.toList()).get(0).getValue());
+		
+		
+		
+		
+		
 	}
 	
 	public Boolean eksisterer(Aktivitet aktivitet)

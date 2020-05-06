@@ -12,6 +12,8 @@ import java.util.stream.Stream;
 import java.util.UUID;
 
 import Applikationslag.Data.Datavedholdelsesklasser.AktivitetData;
+import Applikationslag.Data.Datavedholdelsesklasser.BrugttidData;
+import Applikationslag.Data.Datavedholdelsesklasser.FerieData;
 import Applikationslag.Data.Datavedholdelsesklasser.MedarbejderData;
 import Applikationslag.Data.Datavedholdelsesklasser.ProjektData;
 import Applikationslag.Domaeneklasser.Aktivitet;
@@ -125,11 +127,41 @@ public class MedarbejderManager implements IMedarbejderManager {
 	}
 	
 	public Medarbejder MedarbejderUdFraNavn(String medarbejdernavn){
-		return (MedarbejderData.Bibliotek.entrySet().stream()
+		List a = (MedarbejderData.Bibliotek.entrySet().stream()
 					.filter(e -> e.getValue().getNavn().equals(medarbejdernavn))
-					.collect(Collectors.toList()).get(0).getValue());
+					.collect(Collectors.toList()));
 		
+		if (a.size()==0) {
+			return null;
+		}
+		return (MedarbejderData.Bibliotek.entrySet().stream()
+				.filter(e -> e.getValue().getNavn().equals(medarbejdernavn))
+				.collect(Collectors.toList()).get(0).getValue());
 				
 	}
+	
+//	public Medarbejder MedarbejderUdFraNavn(String medarbejdernavn){
+//		return (MedarbejderData.Bibliotek.entrySet().stream()
+//					.filter(e -> e.getValue().getNavn().equals(medarbejdernavn))
+//					.collect(Collectors.toList()).get(0).getValue());
+//		
+//				
+//	}
 
+	@Override
+	public Boolean fjern(Medarbejder m) {
+		if (BrugttidData.Bibliotek.entrySet().stream()
+				.anyMatch(e -> e.getValue().Medarbejder() ==  m)) {
+			return false;
+		}else if(AktivitetData.Bibliotek.entrySet().stream()
+				.anyMatch(e -> e.getValue().Medarbejder() ==  m)) {
+			return false;
+		}else if(FerieData.Bibliotek.entrySet().stream()
+				.anyMatch(e -> e.getValue().Medarbejder() ==  m)){
+			return false;
+		}else {
+			MedarbejderData.Bibliotek.remove(m.ID());
+			return true;
+		}
+	}
 }

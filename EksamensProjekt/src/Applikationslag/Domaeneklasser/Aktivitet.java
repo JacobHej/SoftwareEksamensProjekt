@@ -72,6 +72,7 @@ public class Aktivitet {
 	
 	public Boolean SaetMedarbejder(Medarbejder nyMedarbejder)
 	{
+
 		if (medarbejderManager.MedarbejderLedig(this.startUge, this.slutUge, this.startaar, this.slutaar, nyMedarbejder)
 				&& MedarbejderData.Bibliotek.entrySet().stream()
 				.anyMatch(e -> e.getValue()
@@ -86,6 +87,7 @@ public class Aktivitet {
 			}
 		}
 		else
+			System.out.println("Hvad sker der her (Aktivitet.java)");
 			return false;
 	}
 	
@@ -120,6 +122,10 @@ public class Aktivitet {
 		
 		return brugttidManager.GemBrugttid(brugttid);
 	}
+	
+	public boolean fjernFraData() {
+		return aktivitetManager.fjern(this);
+    }
 	
 	//Funtioner for returnering af klassevariable
 	public int getStartUge()
@@ -208,10 +214,16 @@ public class Aktivitet {
 		return this.projekt;
 	}
 	
-	public void setProjekt(Projekt p) {
+	public boolean setProjekt(Projekt p) {
 		if(ProjektData.Bibliotek.entrySet().stream()
 				.anyMatch(e -> e.getValue().getNavn().equals( p.getNavn())))
+		{
 			this.projekt = p;
+			return true;
+		}else {
+			return false;
+		}
+			
 	}
 	
 	public Medarbejder Medarbejder()

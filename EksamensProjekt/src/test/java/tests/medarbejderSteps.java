@@ -96,36 +96,42 @@ public class medarbejderSteps {
 
 	@Given("{string} har {int} aktiviteter i uge {int}")
 	public void harAktiviteterIUge(String medarbejdernavn, Integer antalAktiviteter, Integer ugenummer) {
-	    Currentprojekt=new Projekt("ProjektMedXAktiviteter");Currentprojekt.Gem();
+		Currentprojekt=projektManager.projektUdFraNavn("ProjektMedXAktiviteter");
+		if (Currentprojekt==null){
+			Currentprojekt=new Projekt ("ProjektMedXAktiviteter");Currentprojekt.Gem();
+		}
+	    
+	    
 	    for (int i = 0; i < antalAktiviteter; i++) {
 	    	Currentaktivitet = new Aktivitet("Xaktivitet" + i);
-	    	Currentaktivitet.setTidsperiode(ugenummer, ugenummer, 2020, 2020);
-	    	Currentaktivitet.SaetMedarbejder(Currentmedarbejder);
+	    	assertTrue(Currentaktivitet.setTidsperiode(ugenummer, ugenummer, 2020, 2020));
+	    	assertTrue(Currentaktivitet.SaetMedarbejder(Currentmedarbejder));
 	    	assertTrue(Currentprojekt.tilfoejAktivitet(Currentaktivitet));
 	    	
 	    }
-	    System.out.println(medarbejderManager.AktiviteterIDenneUge(ugenummer, 2020, Currentmedarbejder));
-		System.out.println(aktivitetManager.AlleAktiviteterEfterMedarbejder(Currentmedarbejder).size() + " = " + antalAktiviteter);
 		assertTrue(aktivitetManager.AlleAktiviteterEfterMedarbejder(Currentmedarbejder).size()==antalAktiviteter);
 	}
 
 	@When("{string} melder ferie i uge {int}")
-	public void melderFerieIUge(String string, Integer int1) {
-		// Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	public void melderFerieIUge(String medarbejdernavn, Integer ugenummer) {
+		assertTrue(Currentmedarbejder.getNavn().equals(medarbejdernavn));
+		Currentmedarbejder.tagFerie(ugenummer, ugenummer, 2020, 2020);
 	}
 
 	@Then("{string} er optaget af ferie i uge {int}")
-	public void erOptagetAfFerieIUge(String string, Integer int1) {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	public void erOptagetAfFerieIUge(String medarbejdernavn, Integer ugenummer) {
+		assertTrue(Currentmedarbejder.getNavn().equals(medarbejdernavn));
+		assertTrue(Currentmedarbejder.getFerier().size()==1);
+		assertTrue(Currentmedarbejder.getFerier().get(0).getValue().getFlotStart().contains("U:22 Y:2020"));
+		assertFalse(Currentmedarbejder.ledig(ugenummer, ugenummer, 2020, 2020));
 	}
 	
 	//Scenario: medarbejder  melder ferie i uge hvor han har aktiviteter
 	@Then("{string} har ikke faaet ferie u uge {int}")
-	public void harIkkeFaaetFerieUUge(String string, Integer int1) {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	public void harIkkeFaaetFerieUUge(String medarbejdernavn, Integer ugenummer) {
+		assertTrue(Currentmedarbejder.getNavn().equals(medarbejdernavn));
+		assertTrue(Currentmedarbejder.getFerier().size()==0);
+		
 	}
 	
 	//OPRET NY MEDARBEJDER

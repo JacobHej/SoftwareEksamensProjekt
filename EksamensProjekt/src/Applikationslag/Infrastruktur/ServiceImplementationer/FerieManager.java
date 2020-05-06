@@ -5,11 +5,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import java.util.UUID;
 
 import Applikationslag.Data.Datavedholdelsesklasser.AktivitetData;
 import Applikationslag.Data.Datavedholdelsesklasser.FerieData;
 import Applikationslag.Data.Datavedholdelsesklasser.MedarbejderData;
+import Applikationslag.Domaeneklasser.Aktivitet;
 import Applikationslag.Domaeneklasser.Ferie;
 import Applikationslag.Domaeneklasser.Medarbejder;
 import Applikationslag.Infrastruktur.ServiceInterfaces.IFerieManager;
@@ -34,7 +36,7 @@ public class FerieManager implements IFerieManager {
 	}
 
 	@Override
-	public Boolean Slet(Ferie ferie) {
+	public Boolean fjern(Ferie ferie) {
 		FerieData.Bibliotek.remove(ferie.ID());
 		return true;
 	}
@@ -81,14 +83,20 @@ public class FerieManager implements IFerieManager {
 					).count();
 	}
 
-	
-	
-	
-	
+
 	public long AktiviteterIDenneUge(int week, int year, Medarbejder medarbejder) {
+		if(medarbejder == null) {
+			System.out.println("Youre looking for a non existant medarbejder?");
+			//return 0;
+		}
 		return AktivitetData.Bibliotek.entrySet().stream()
 			.filter(e -> e.getValue().Medarbejder() != null)
-			.filter(e -> e.getValue().Medarbejder().ID() == medarbejder.ID())
+			.filter(e -> 
+				e != null
+				&&e.getValue() != null
+				&&e.getValue().Medarbejder() != null
+				&&e.getValue().Medarbejder().ID() != null 
+				&& e.getValue().Medarbejder().ID() == medarbejder.ID())
 			.filter(e -> 
 					((
 							((e.getValue().getStartaar() < year) 
@@ -134,4 +142,13 @@ public class FerieManager implements IFerieManager {
 		}
 		return true;
 	}
+
+	@Override
+	public List<Entry<UUID, Ferie>> hentMedarbejders(Medarbejder m) {
+		return ((HashMap<UUID, Ferie>)FerieData.Bibliotek.clone())
+				.entrySet().stream().filter(e -> e.getValue().Medarbejder()==m).collect(Collectors.toList());
+	}
+
+	
+
 }

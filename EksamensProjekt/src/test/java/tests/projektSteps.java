@@ -50,9 +50,7 @@ public class projektSteps {
 	
 	@When("Projektets navn aendres fra {string} til {string}")
 	public void projektetsNavnAendresFraTil(String GammeltNavn, String NytNavn) {
-		System.out.println(projektManager.projektUdFraNavn(GammeltNavn));
 		Currentprojekt = (projektManager.projektUdFraNavn(GammeltNavn));
-		System.out.println(Currentprojekt.getNavn());
 		Currentprojekt.setNavn(NytNavn);
 	}
 
@@ -101,9 +99,9 @@ public class projektSteps {
 	public void aktivitetenIProjektetHarTimerRegistreret(String AktivitetNavn, String ProjektNavn, Integer int1) {
 	    Currentprojekt=projektManager.projektUdFraNavn(ProjektNavn);
 	    Currentaktivitet=aktivitetManager.AktivitetEfterProjektOgNavn(Currentprojekt, AktivitetNavn);
-	    this.medarbejder=new Medarbejder("Hans");
-	    assertTrue(this.medarbejder.Gem());
-	    assertTrue(Currentaktivitet.SaetMedarbejder(this.medarbejder));
+	    Currentmedarbejder=new Medarbejder("Hans");
+	    assertTrue(Currentmedarbejder.Gem());
+	    assertTrue(Currentaktivitet.SaetMedarbejder(Currentmedarbejder));
 		assertTrue(Currentaktivitet.TilfoejTid(int1));
 	}
 

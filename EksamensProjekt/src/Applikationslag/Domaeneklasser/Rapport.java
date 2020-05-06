@@ -17,6 +17,7 @@ public class Rapport {
 	
 	public void GenererRapport(Projekt projekt)
 	{
+		System.out.println("hello world");
 		List<Entry<UUID, Aktivitet>> aktiviteter = aktivitetManager.AlleAktiviteterEfterProjekt(projekt);
 		for(Entry<UUID, Aktivitet> e : aktiviteter)
 		{

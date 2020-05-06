@@ -14,6 +14,7 @@ import java.util.Map.Entry;
 
 import Applikationslag.Domaeneklasser.Aktivitet;
 import Applikationslag.Domaeneklasser.Brugttid;
+import Applikationslag.Domaeneklasser.Ferie;
 import Applikationslag.Domaeneklasser.Medarbejder;
 import Applikationslag.Domaeneklasser.Projekt;
 import Applikationslag.Infrastruktur.ServiceInterfaces.IBrugttidManager;
@@ -85,6 +86,10 @@ public class MainController implements Initializable {
 	@FXML private TextField ferieUgeSlut;
 	@FXML private TextField ferieAarStart;
 	@FXML private TextField ferieAarSlut;
+	@FXML private Text medarbejderFerier;
+	@FXML private TableView<Ferie> ferieTabel;
+	@FXML private TableColumn<Ferie,String> ferieStartKolonne;
+	@FXML private TableColumn<Ferie,String> ferieSlutKolonne;
 	
 	//TidBrugt ting
 	@FXML private TableView<Brugttid> tidBrugtTabel;
@@ -151,11 +156,13 @@ public class MainController implements Initializable {
 		initializeActivitiesTable();
 		initializeMedlemmerTabel();
 		initializeBrugtTidTabel();
+		initializeFerieTabel();
 		initializeMedarbejderActivitiesTable();
 		initializeProjektLederDropDown();
 		initializeAktivitetMedarbejderDropDown();
 		initializeAktivitetmedarbejderDropDownHjælper();
 		initializeNumbersOnly();
+		
 	}
 	
 	public void initializeProjectsTable() {
@@ -379,6 +386,11 @@ public class MainController implements Initializable {
 		}
 	}
 
+	private void initializeFerieTabel() {
+		ferieStartKolonne.setCellValueFactory(new PropertyValueFactory<Ferie, String>("flotStart"));
+		ferieSlutKolonne.setCellValueFactory(new PropertyValueFactory<Ferie, String>("flotSlut"));
+	}
+	
 //	HER
 //	BEGYNDER
 //	PROJEKT
@@ -411,20 +423,21 @@ public class MainController implements Initializable {
     }
 	
 	@FXML
-    private void fjernValgteProjekt(ActionEvent event)
+    private void sletValgteProjekt(ActionEvent event)
     {
-        ObservableList<Projekt> selectedRows, allProjects;
-        allProjects = projektTabel.getItems();
         
-        //this gives us the rows that were selected
-        selectedRows = projektTabel.getSelectionModel().getSelectedItems();
-        
-        //loop over the selected rows and remove the Person objects from the table
-        for (Projekt p: selectedRows)
-        {
-            allProjects.remove(p);
+        //this gives us the Projekt selected
+        Projekt p = projektTabel.getSelectionModel().getSelectedItem();
+        if(p==null) {
+        	popup("Intet projekt valgt");
+        	return;
+        }
+        if(!p.fjernFraData()) {
+        	popup("Tjek om projektet har nogen aktiviteter foer du sletter det");
+        	return;
         }
         
+        visProjekter();
         projectOnSelectStart();
     }
 	
@@ -444,6 +457,10 @@ public class MainController implements Initializable {
     
     //Viser aktiviteter for valgte projekt
     private void visAktiviteter(Projekt p) {
+    	
+    	if(p==null) {
+    		return;
+    	}
     	
     	ObservableList<Aktivitet> aktiviteter = FXCollections.observableArrayList();
         aktivitetTabel.setItems(aktiviteter);
@@ -492,7 +509,7 @@ public class MainController implements Initializable {
     	if(navn.length()>0) {
     		Projekt p = projektTabel.getSelectionModel().getSelectedItems().get(0);
     		p.setNavn(navn);
-    		updateTable(projektTabel);
+    		projektTabel.refresh();
     	}
     }
     
@@ -556,7 +573,7 @@ public class MainController implements Initializable {
 	@FXML
     private void tilfoejAktivitet(ActionEvent event)
     {
-		System.out.println("You tried to AddActivity");
+		//System.out.println("You tried to AddActivity");
         Projekt p = projektTabel.getSelectionModel().getSelectedItems().get(0);
         if(p==null) {
         	popup("Intet projekt valgt");
@@ -572,22 +589,25 @@ public class MainController implements Initializable {
     }
 	
 	@FXML
-    private void fjernValgteAktivitet(ActionEvent event)
+    private void sletValgteAktivitet(ActionEvent event)
 	{
-        System.out.println("You tried to remove activity");
+		//this gives us the Activity selected
+        Aktivitet a = aktivitetTabel.getSelectionModel().getSelectedItem();
         
-        ObservableList<Aktivitet> valgteRaekker, alleAktiviteter;
-        alleAktiviteter = aktivitetTabel.getItems();
-        
-        //this gives us the rows that were selected
-        valgteRaekker = aktivitetTabel.getSelectionModel().getSelectedItems();
-        
-        //loop over the selected rows and remove the Person objects from the table
-        for (Aktivitet a: valgteRaekker)
-        {
-        	alleAktiviteter.remove(a);
+        if(a==null) {
+        	popup("Ingen aktivitet valgt");
+        	return;
         }
+        
+        if(!a.fjernFraData()) {
+        	popup("Tjek om aktiviteten har noget brugt tid");
+        	return;
+        }
+        
+        Projekt p = projektTabel.getSelectionModel().getSelectedItem();
+        visAktiviteter(p);
     }
+	
 	
 	@FXML
     private void gemAktivitetTid(ActionEvent event)
@@ -810,11 +830,11 @@ public class MainController implements Initializable {
 			if(budgetDage.getText().length()>0) {
 				dage = Integer.parseInt(budgetDage.getText());
 			}
-			System.out.println(minutter+" "+timer+" "+dage);
+			//System.out.println(minutter+" "+timer+" "+dage);
 
 			//målt i halve timer og med 12 timer om dagen
 			int samlet = minutter/30+timer*2+dage*24;
-			System.out.println(samlet);
+			//System.out.println(samlet);
 			a.SaetBudgetteretTid(samlet);
 		} catch (Exception e) {
 			popup("HOW THE FUCK DID YOU DO THAT YOURE NOT EVEN ALLOWED TO ENTER LETTERS LIKE REALLY WTF");
@@ -835,13 +855,16 @@ public class MainController implements Initializable {
 //Medarbejder metoder -------------------------------------------------------------------------------------------------------------------
 	
     //Viser aktiviteter for valgte projekt
-    private void visMedarbejdere() {
+    
+	//Medarbejder funktioner
+	
+	private void visMedarbejdere() {
     	
     	ObservableList<Medarbejder> medarbejdere = FXCollections.observableArrayList();
         medarbejderTabel.setItems(medarbejdere);
         
         for(Entry<UUID, Medarbejder> e : medarbejderManager.hentAlleMedarbejdere()) {
-        	System.out.println(e.getValue().getNavn());
+        	//System.out.println(e.getValue().getNavn());
         	medarbejderTabel.getItems().add(e.getValue());
         }
         
@@ -865,8 +888,26 @@ public class MainController implements Initializable {
     	medarbejderTabel.getItems().add(m);
     }
 	
+    @FXML
+    private void sletValgteMedarbejder(ActionEvent event) {
+    	//this gives us the Activity selected
+        Medarbejder m = medarbejderTabel.getSelectionModel().getSelectedItem();
+        
+        if(m==null) {
+        	popup("Ingen medarbejder valgt");
+        	return;
+        }
+        
+        if(!m.fjernFraData()) {
+        	popup("Tjek om medarbejderen har aktiviteter eller brugt tid nogen steder");
+        	return;
+        }
+        
+        visMedarbejdere();
+    }
+    
     private void medarbejderOnSelectStart(){
-    	System.out.println("der bliv valgt en medarbejder");
+    	//System.out.println("der bliv valgt en medarbejder");
     	Medarbejder m = medarbejderTabel.getSelectionModel().getSelectedItems().get(0);
     	if(m==null) {
     		popup("Du valgte en medarbejder men ingen medarbejder blev valgt???");
@@ -876,6 +917,7 @@ public class MainController implements Initializable {
     	visMedarbejderInfo(m);
     	visMuligeHjælpere(m);
     	visBrugtTid(null);
+    	visFerier();
     }
     
     private void visMedarbejderAktiviteter(Medarbejder m){
@@ -889,6 +931,7 @@ public class MainController implements Initializable {
     private void visMedarbejderInfo(Medarbejder m) {
     	medarbejderID.setText(m.getNavn());
     }
+    
 
     @FXML
     private void gemMedarbejderNavnNyt(ActionEvent event){
@@ -913,13 +956,14 @@ public class MainController implements Initializable {
     	}
 
     	for(Entry<UUID, Medarbejder> e : medarbejderManager.hentAlleMedarbejdere()) {
-    		System.out.println(e.getValue().getNavn());
+    		//System.out.println(e.getValue().getNavn());
         }
 
     	visMedarbejdere();
 
     }
 	
+    
     private void medarbejderAktivitetOnSelectStart(){
     	Aktivitet a = medarbejderAktiviteterTabel.getSelectionModel().getSelectedItems().get(0);
     	visBrugtTid(a);
@@ -970,7 +1014,7 @@ public class MainController implements Initializable {
     		popup("Ingen tid valgt");
     		return;
     	}
-    	System.out.println(tid);
+    	//System.out.println(tid);
     	int i;
     	int j;
     	try {
@@ -987,6 +1031,7 @@ public class MainController implements Initializable {
 
     	visBrugtTid(a);
     }
+    
 
     @FXML
     private void hentAntalAktiviteter(ActionEvent event){
@@ -1016,6 +1061,7 @@ public class MainController implements Initializable {
 
 
     }
+    
 
     private void visMuligeHjælpere(Medarbejder m) {
     	//Indsæt mulige hjælpere
@@ -1027,6 +1073,7 @@ public class MainController implements Initializable {
     		}
     	}
     }
+    
 
     @FXML
     private void gemBrugtTidHjælper() {
@@ -1054,7 +1101,7 @@ public class MainController implements Initializable {
     		popup("Ingen tid valgt");
     		return;
     	}
-    	System.out.println(tid);
+    	//System.out.println(tid);
     	int i;
     	int j;
     	try {
@@ -1077,6 +1124,7 @@ public class MainController implements Initializable {
 
     	visBrugtTid(a);
     }
+    
 
     private void tidBrugtOnSelectStart() {
     	Brugttid b = tidBrugtTabel.getSelectionModel().getSelectedItems().get(0);
@@ -1086,6 +1134,7 @@ public class MainController implements Initializable {
     	}
     	visTidBrugtInfo(b);
     }
+    
 
     private void visTidBrugtInfo(Brugttid b) {
     	tidBrugtProjekt.setText(b.Aktivitet().getProjekt().getNavn());
@@ -1093,6 +1142,7 @@ public class MainController implements Initializable {
     	tidBrugtMedarbejder.setText(b.Medarbejder().getNavn());
     	tidBrugtTidBrugt.setValue(b.getFlotTid());
     }
+    
 
     @FXML
     private void gemNyTidBrugt() {
@@ -1107,7 +1157,7 @@ public class MainController implements Initializable {
     		popup("Ingen tid valgt");
     		return;
     	}
-    	System.out.println(tid);
+    	//System.out.println(tid);
     	int i;
     	int j;
     	try {
@@ -1124,6 +1174,7 @@ public class MainController implements Initializable {
 
     	visBrugtTid(medarbejderAktiviteterTabel.getSelectionModel().getSelectedItems().get(0));
     }
+    
 
     @FXML
     private void sletTidBrugt() {
@@ -1135,6 +1186,7 @@ public class MainController implements Initializable {
     	brugttidManager.fjern(b);
     	visBrugtTid(medarbejderAktiviteterTabel.getSelectionModel().getSelectedItems().get(0));
     }
+    
 
     @FXML
     private void hentTidBrugtDagKnap(ActionEvent event) {
@@ -1188,8 +1240,44 @@ public class MainController implements Initializable {
     		popup("Noget ferie gik galt, tjek at du ikke har arbejde i den uge");
     		return;
     	}
+    	visFerier();
     	
     }
+
+    @FXML
+    private void sletValgteFerie(ActionEvent event) {
+    	//this gives us the Activity selected
+        Ferie f = ferieTabel.getSelectionModel().getSelectedItem();
+        
+        if(f==null) {
+        	popup("Ingen ferie valgt");
+        	return;
+        }
+        
+        if(!f.fjernFraData()) {
+        	popup("Ferien burde altid return true så hvis du er her har du et problem");
+        	return;
+        }
+        
+        visFerier();
+    }
+    
+    private void visFerier() {
+    	Medarbejder m = medarbejderTabel.getSelectionModel().getSelectedItem();
+    	if(m==null) {
+    		popup("Ingen medarbejder valgt");
+    		return;
+    	}
+    	medarbejderFerier.setText(m.getNavn()+"'s ferier");
+    	
+    	ObservableList<Ferie> ferier = FXCollections.observableArrayList();
+    	ferieTabel.setItems(ferier);
+    	for(Entry<UUID, Ferie> e : m.getFerier()) {
+    		ferieTabel.getItems().add(e.getValue());
+        }
+    	
+    }
+    
 //	HER
 //	BEGYNDER
 //	NYTTIGE
@@ -1208,14 +1296,8 @@ public class MainController implements Initializable {
         popup.show();
 	}
 	
-	private void updateTable(TableView table) {
-		table.refresh();
-	}
+
 	
 //Test tab-------------------------------------------------------------------------------------------------------------------------
-	@FXML
-    private void popUpTest(ActionEvent event)
-	{
-		popup("This is a popuptest");
-	}
+	
 }
