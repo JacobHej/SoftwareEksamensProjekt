@@ -509,7 +509,7 @@ public class MainController implements Initializable {
     	if(navn.length()>0) {
     		Projekt p = projektTabel.getSelectionModel().getSelectedItems().get(0);
     		p.setNavn(navn);
-    		updateTable(projektTabel);
+    		projektTabel.refresh();
     	}
     }
     
@@ -1296,14 +1296,8 @@ public class MainController implements Initializable {
         popup.show();
 	}
 	
-	private void updateTable(TableView table) {
-		table.refresh();
-	}
+
 	
 //Test tab-------------------------------------------------------------------------------------------------------------------------
-	@FXML
-    private void popUpTest(ActionEvent event)
-	{
-		popup("This is a popuptest");
-	}
+	
 }
