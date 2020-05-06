@@ -61,7 +61,7 @@ public class RapportSteps {
 	public void derErEnMedarbejderSomErTildeltAktiviteten(String medarbejdernavn, String aktivitetnavn) {
 	    Currentmedarbejder = medarbejderManager.MedarbejderUdFraNavn(medarbejdernavn);
 	    if (Currentmedarbejder == null){
-	    	Currentmedarbejder = new Medarbejder(medarbejdernavn);
+	    	Currentmedarbejder = new Medarbejder(medarbejdernavn);Currentmedarbejder.Gem();
 	    }
 	    Currentaktivitet = aktivitetManager.AktivitetEfterProjektOgNavn(Currentprojekt, aktivitetnavn);
 
