@@ -19,19 +19,21 @@ public class Ferie {
 	
 	private Medarbejder medarbejder;
 	
-	public Ferie(int startUge, int slutUge, int startaar, int slutaar) {
+	public Ferie(Medarbejder medarbejder, int startUge, int slutUge, int startaar, int slutaar) {
 		this.startUge=startUge;
 		this.slutUge=slutUge;
 		this.startaar = startaar;
 		this.sluttaar = slutaar;
+		this.medarbejder = medarbejder;
 	}
 	
-	public Ferie(int startUge, int slutUge, int startaar, int slutaar,String forklaring) {
+	public Ferie(Medarbejder medarbejder, int startUge, int slutUge, int startaar, int slutaar,String forklaring) {
 		this.startUge=startUge;
 		this.slutUge=slutUge;
 		this.startaar = startaar;
 		this.sluttaar = slutaar;
 		this.forklaring = forklaring;
+		this.medarbejder = medarbejder;
 	}
 	
 	public int StartUge()

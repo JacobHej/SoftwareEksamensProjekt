@@ -76,12 +76,12 @@ public class Medarbejder
 	}
 
 	public boolean tagFerie(int startUge, int slutUge, int startaar, int slutaar) {
-		Ferie f = new Ferie(slutaar, slutaar, slutaar, slutaar);
+		Ferie f = new Ferie(this, slutaar, slutaar, slutaar, slutaar);
 		return f.gem();
 	}
 	
 	public boolean tagFerie(int startUge, int slutUge, int startaar, int slutaar, String forklaring) {
-		Ferie f = new Ferie(slutaar, slutaar, slutaar, slutaar, forklaring);
+		Ferie f = new Ferie(this, slutaar, slutaar, slutaar, slutaar, forklaring);
 		return f.gem();
 	}
 
