@@ -23,7 +23,7 @@ public class RapportSteps {
 	IMedarbejderManager medarbejderManager= Managers.FaaMedarbejderManager();
 	IProjektManager projektManager= Managers.FaaProjektManager();
 	IAktivitetManager aktivitetManager= Managers.FaaAktivitetManager();
-	Rapport Rapport;
+	Rapport Rapport = new Rapport();
 	Projekt Currentprojekt;
 	Aktivitet Currentaktivitet;
 	Medarbejder Currentmedarbejder;
@@ -33,7 +33,8 @@ public class RapportSteps {
 	public void derErEtProjektSomHarProjektlederen(String projektnavn, String ledernavn) {
 		Currentprojekt = projektManager.projektUdFraNavn(projektnavn);
 		if (Currentprojekt == null) {
-			Currentprojekt = new Projekt(projektnavn); Currentprojekt.Gem();
+			Currentprojekt = new Projekt(projektnavn); 
+			Currentprojekt.Gem();
 		}
 		CurrentLeder = medarbejderManager.MedarbejderUdFraNavn(ledernavn);
 		if (CurrentLeder == null) {
@@ -81,34 +82,45 @@ public class RapportSteps {
 	    if(Currentprojekt == null) {
 	    	Currentprojekt = projektManager.projektUdFraNavn(projektnavn); 
 	    }
-	    System.out.println(projektManager.eksisterer(Currentprojekt));
+	    System.out.println(projektManager.eksisterer(Currentprojekt) + "<---");
+	    System.out.println(Currentprojekt.getAlleAktiviteter().get(0).getValue().getNavn());
 	    Rapport.GenererRapport(Currentprojekt);
 	}
 
 	@Then("Det fremgaar af rapporten, at der er {int} aktiviteter i projektet med navne {string} og {string}")
 	public void detFremgaarAfRapportenAtDerErAktiviteterIProjektetMedNavneOg(Integer antalAktiviteter, String aktivitetnavn1, String aktivitetnavn2) {
 		assertTrue(Rapport.AktivitetsInformationer().size()==antalAktiviteter);
-		assertTrue((Rapport.AktivitetsInformationer().get(1).Aktivitet().getNavn() + "" + Rapport.AktivitetsInformationer().get(2).Aktivitet().getNavn()).contains(aktivitetnavn1));
-		assertTrue((Rapport.AktivitetsInformationer().get(1).Aktivitet().getNavn() + "" + Rapport.AktivitetsInformationer().get(2).Aktivitet().getNavn()).contains(aktivitetnavn2));
+		assertTrue((Rapport.AktivitetsInformationer().get(0).Aktivitet().getNavn() + "" + Rapport.AktivitetsInformationer().get(1).Aktivitet().getNavn()).contains(aktivitetnavn1));
+		assertTrue((Rapport.AktivitetsInformationer().get(0).Aktivitet().getNavn() + "" + Rapport.AktivitetsInformationer().get(1).Aktivitet().getNavn()).contains(aktivitetnavn2));
 	}
 
 	@Then("{string} er blevet tildelt medarbejderen {string} og {string} har ingen medarbejder tildelt")
 	public void erBlevetTildeltMedarbejderenOgHarIngenMedarbejderTildelt(String aktivitetnavn1, String medarbejdernavn, String aktivitetnavn2) {
 	    Currentmedarbejder = medarbejderManager.MedarbejderUdFraNavn(medarbejdernavn);
-	    String TestString = "";
-	    for (int i = 0; i < Rapport.AktivitetsInformationer().size(); i++) {
-	    	TestString=TestString + Rapport.AktivitetsInformationer().get(i).Aktivitet().getNavn() + ":" + Rapport.AktivitetsInformationer().get(i).Aktivitet().Medarbejder();
-	    }
-	    assertTrue(TestString.contains(aktivitetnavn1 + ":" + medarbejdernavn));
-	    assertTrue(TestString.contains(aktivitetnavn2 + ":" + null));
-	    throw new io.cucumber.java.PendingException();
+	    
+	    assertTrue((
+	    		Rapport.AktivitetsInformationer().get(0).Aktivitet().getNavn().equals(aktivitetnavn1)&&
+	    		Rapport.AktivitetsInformationer().get(1).Aktivitet().getNavn().equals(aktivitetnavn2)&&
+	    		Rapport.AktivitetsInformationer().get(0).Aktivitet().Medarbejder().getNavn().equals(medarbejdernavn)&&
+	    		Rapport.AktivitetsInformationer().get(1).Aktivitet().Medarbejder()==null
+	    		)||
+	    		Rapport.AktivitetsInformationer().get(1).Aktivitet().getNavn().equals(aktivitetnavn1)&&
+	    		Rapport.AktivitetsInformationer().get(0).Aktivitet().getNavn().equals(aktivitetnavn2)&&
+	    		Rapport.AktivitetsInformationer().get(1).Aktivitet().Medarbejder().getNavn().equals(medarbejdernavn)&&
+	    		Rapport.AktivitetsInformationer().get(0).Aktivitet().Medarbejder()==null);
+
 	}
 
 	@Then("Der er {int} timer registreret paa aktiviteten {string} og {int} timer paa aktiviteten {string}")
 	public void derErTimerRegistreretPaaAktivitetenOgTimerPaaAktiviteten(Integer antalTimer1, String aktivitetnavn1, Integer antalTimer2, String aktivitetnavn2) {
 		String TestString = "";
 	    for (int i = 0; i < Rapport.AktivitetsInformationer().size(); i++) {
-	    	TestString=TestString + Rapport.AktivitetsInformationer().get(i).Aktivitet().getNavn() + ":" + Rapport.AktivitetsInformationer().get(i).Aktivitet().getTimerBrugt();
+	    	TestString=TestString + Rapport.AktivitetsInformationer().get(i).Aktivitet().getNavn() + ":" + Rapport.AktivitetsInformationer().get(i).Aktivitet().getTidBrugt() + "\n";
 	    }
+	    System.out.println(Rapport.AktivitetsInformationer().get(0).Aktivitet().getTidBrugt());
+
+	    System.out.println(TestString);
+	    assertTrue(TestString.contains(aktivitetnavn1+ ":" + antalTimer1));
+	    assertTrue(TestString.contains(aktivitetnavn2+ ":" + antalTimer2));
 	}
 }

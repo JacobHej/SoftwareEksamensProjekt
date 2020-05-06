@@ -10,7 +10,7 @@ import Applikationslag.Infrastruktur.ServiceInterfaces.IBrugttidManager;
 import Applikationslag.Redskaber.Managers;
 
 public class Rapport {
-	private ArrayList<AktivitetsOpsummering> aktivitetsInformationer;
+	private ArrayList<AktivitetsOpsummering> aktivitetsInformationer = new ArrayList<AktivitetsOpsummering>();
 	
 	private IAktivitetManager aktivitetManager = Managers.FaaAktivitetManager();
 	private IBrugttidManager brugttidManager = Managers.FaaBrugttidManager();
