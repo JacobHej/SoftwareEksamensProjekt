@@ -93,14 +93,22 @@ public class RapportSteps {
 	}
 
 	@Then("{string} er blevet tildelt medarbejderen {string} og {string} har ingen medarbejder tildelt")
-	public void erBlevetTildeltMedarbejderenOgHarIngenMedarbejderTildelt(String string, String string2, String string3) {
-	    // Write code here that turns the phrase above into concrete actions
+	public void erBlevetTildeltMedarbejderenOgHarIngenMedarbejderTildelt(String aktivitetnavn1, String medarbejdernavn, String aktivitetnavn2) {
+	    Currentmedarbejder = medarbejderManager.MedarbejderUdFraNavn(medarbejdernavn);
+	    String TestString = "";
+	    for (int i = 0; i < Rapport.AktivitetsInformationer().size(); i++) {
+	    	TestString=TestString + Rapport.AktivitetsInformationer().get(i).Aktivitet().getNavn() + ":" + Rapport.AktivitetsInformationer().get(i).Aktivitet().Medarbejder();
+	    }
+	    assertTrue(TestString.contains(aktivitetnavn1 + ":" + medarbejdernavn));
+	    assertTrue(TestString.contains(aktivitetnavn2 + ":" + null));
 	    throw new io.cucumber.java.PendingException();
 	}
 
 	@Then("Der er {int} timer registreret paa aktiviteten {string} og {int} timer paa aktiviteten {string}")
-	public void derErTimerRegistreretPaaAktivitetenOgTimerPaaAktiviteten(Integer int1, String string, Integer int2, String string2) {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	public void derErTimerRegistreretPaaAktivitetenOgTimerPaaAktiviteten(Integer antalTimer1, String aktivitetnavn1, Integer antalTimer2, String aktivitetnavn2) {
+		String TestString = "";
+	    for (int i = 0; i < Rapport.AktivitetsInformationer().size(); i++) {
+	    	TestString=TestString + Rapport.AktivitetsInformationer().get(i).Aktivitet().getNavn() + ":" + Rapport.AktivitetsInformationer().get(i).Aktivitet().getTimerBrugt();
+	    }
 	}
 }
