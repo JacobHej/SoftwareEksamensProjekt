@@ -23,8 +23,9 @@ public class AktivitetManager implements IAktivitetManager{
 		if (!AktivitetData.Bibliotek.entrySet().stream().anyMatch(e -> e.getValue().getNavn().equals(aktivitet.getNavn())) 
 				&& ProjektData.Bibliotek.containsValue(aktivitet.getProjekt()))
 			return (AktivitetData.Bibliotek.put(aktivitet.ID(), aktivitet) == null);
-		else
+		else {
 			return false;
+		}
 	}
 
 	//@Override
