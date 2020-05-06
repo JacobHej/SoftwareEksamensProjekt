@@ -23,7 +23,8 @@ public class Rapport {
 			int temp = 0;
 			for(Entry<UUID, Brugttid> t : brugttidManager.AlleBrugttidEfterAktivitet(e.getValue()))
 			{
-				temp += t.getValue().Tid();
+				if(t != null)
+					temp += t.getValue().Tid();
 			}
 			aktivitetsInformationer.add(new AktivitetsOpsummering(e.getValue(), temp));
 		}

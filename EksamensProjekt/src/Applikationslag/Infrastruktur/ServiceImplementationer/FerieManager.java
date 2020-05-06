@@ -85,19 +85,6 @@ public class FerieManager implements IFerieManager {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	public long AktiviteterIDenneUge(int week, int year, Medarbejder medarbejder) {
 		return AktivitetData.Bibliotek.entrySet().stream()
 			.filter(e -> e.getValue().Medarbejder() != null)

@@ -94,11 +94,6 @@ public class Projekt {
 		return aktivitetManager.AlleAktiviteterEfterProjekt(this);
 	}
 	
-	public Rapport genererRapport()
-	{
-		return new Rapport();
-	}
-	
 	public UUID ID()
 	{
 		return this.id;
