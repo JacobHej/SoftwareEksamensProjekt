@@ -45,7 +45,7 @@ public class RapportSteps {
 
 	@Given("projektet {string} har aktiviteten {string}")
 	public void projektetHarAktiviteten(String projektnavn, String aktivitetnavn) {
-		Currentaktivitet = aktivitetManager.AktivitetEfterProjektOgNavn(Currentprojekt, aktivitetnavn);
+		Currentaktivitet = aktivitetManager.AktivitetEfterProjektOgNavn(Currentprojekt, aktivitetnavn); 
 		if (Currentaktivitet == null){
 			Currentaktivitet= new Aktivitet(aktivitetnavn);
 			assertTrue(Currentprojekt.tilfoejAktivitet(Currentaktivitet));
