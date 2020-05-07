@@ -87,7 +87,6 @@ public class Aktivitet {
 			}
 		}
 		else
-			System.out.println("Hvad sker der her (Aktivitet.java)");
 			return false;
 	}
 	
