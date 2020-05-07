@@ -115,7 +115,7 @@ public class medarbejderSteps {
 	@When("{string} melder ferie i uge {int}")
 	public void melderFerieIUge(String medarbejdernavn, Integer ugenummer) {
 		assertTrue(Currentmedarbejder.getNavn().equals(medarbejdernavn));
-		Currentmedarbejder.tagFerie(ugenummer, ugenummer, 2020, 2020);
+		Currentmedarbejder.tagFerie(ugenummer, ugenummer, 2020, 2020, "Ferie");
 	}
 
 	@Then("{string} er optaget af ferie i uge {int}")
@@ -123,6 +123,7 @@ public class medarbejderSteps {
 		assertTrue(Currentmedarbejder.getNavn().equals(medarbejdernavn));
 		assertTrue(Currentmedarbejder.getFerier().size()==1);
 		assertTrue(Currentmedarbejder.getFerier().get(0).getValue().getFlotStart().contains("U:22 Y:2020"));
+		assertTrue(Currentmedarbejder.getFerier().get(0).getValue().getForklaring().equals("Ferie"));
 		assertFalse(Currentmedarbejder.ledig(ugenummer, ugenummer, 2020, 2020));
 	}
 	
