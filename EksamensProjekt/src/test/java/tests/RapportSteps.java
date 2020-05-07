@@ -67,7 +67,6 @@ public class RapportSteps {
 	    }
 	    Currentaktivitet = aktivitetManager.AktivitetEfterProjektOgNavn(Currentprojekt, aktivitetnavn);
 
-		System.out.println(medarbejderManager.MedarbejderLedig(Currentaktivitet.getStartUge(), Currentaktivitet.getSlutUge(), Currentaktivitet.getStartaar(), Currentaktivitet.getSlutaar(), Currentmedarbejder) + " TJEK!");
 	    assertTrue(Currentaktivitet.SaetMedarbejder(Currentmedarbejder));
 	}
 
@@ -82,8 +81,6 @@ public class RapportSteps {
 	    if(Currentprojekt == null) {
 	    	Currentprojekt = projektManager.projektUdFraNavn(projektnavn); 
 	    }
-	    System.out.println(projektManager.eksisterer(Currentprojekt) + "<---");
-	    System.out.println(Currentprojekt.getAlleAktiviteter().get(0).getValue().getNavn());
 	    Rapport.GenererRapport(Currentprojekt);
 	}
 
@@ -117,9 +114,7 @@ public class RapportSteps {
 	    for (int i = 0; i < Rapport.AktivitetsInformationer().size(); i++) {
 	    	TestString=TestString + Rapport.AktivitetsInformationer().get(i).Aktivitet().getNavn() + ":" + Rapport.AktivitetsInformationer().get(i).Aktivitet().getTidBrugt() + "\n";
 	    }
-	    System.out.println(Rapport.AktivitetsInformationer().get(0).Aktivitet().getTidBrugt());
 
-	    System.out.println(TestString);
 	    assertTrue(TestString.contains(aktivitetnavn1+ ":" + antalTimer1));
 	    assertTrue(TestString.contains(aktivitetnavn2+ ":" + antalTimer2));
 	}
