@@ -200,4 +200,25 @@ public class projektSteps {
 		assertTrue(medarbejderManager.AktiviteterIDenneUge(Ugenr, aar, Currentmedarbejder)==1);
 
 	}
+	//Forsoeg at slette projekter
+	@Given("{string} har aktiviteten {string}")
+	public void harAktiviteten(String ProjektNavn, String aktivitetnavn) {
+	    Currentprojekt = projektManager.projektUdFraNavn(ProjektNavn);
+	    Currentaktivitet= new Aktivitet (aktivitetnavn);
+	    Currentprojekt.tilfoejAktivitet(Currentaktivitet);
+	}
+	
+	@Then("{string} kan ikke slettes")
+	public void kanIkkeSlettes(String ProjektNavn) {
+	    Currentprojekt = projektManager.projektUdFraNavn(ProjektNavn);
+	    System.out.println(Currentprojekt);
+	    System.out.println(Currentprojekt.getAlleAktiviteter().get(0).getValue().getNavn());
+	    assertFalse(projektManager.fjern(Currentprojekt));
+	}
+
+	@Then("{string} kan slettes")
+	public void kanSlettes(String ProjektNavn) {
+		Currentprojekt = projektManager.projektUdFraNavn(ProjektNavn);
+		assertTrue(projektManager.fjern(Currentprojekt));
+	}
 }
