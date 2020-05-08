@@ -51,7 +51,7 @@ public class FerieManager implements IFerieManager {
 	{
 		for(int i = yearStart; i <= yearSlut; i ++)
 		{
-			for(int j = (i == yearStart ? weekStart : 0); j <= (i == yearSlut ? weekSlut : 0); j++)
+			for(int j = (i == yearStart ? weekStart : 0); j <= (i == yearSlut ? weekSlut : 53); j++)
 			{
 				if(FerieIDenneUge(j, i, medarbejder) > 0)
 				{
@@ -117,7 +117,7 @@ public class FerieManager implements IFerieManager {
 	public Boolean MedarbejderLedig(int weekStart, int weekSlut, int yearStart, int yearSlut, Medarbejder medarbejder) {
 		for(int i = yearStart; i <= yearSlut; i ++)
 		{
-			for(int j = (i == yearStart ? weekStart : 0); j <= (i == yearSlut ? weekSlut : 0); j++)
+			for(int j = (i == yearStart ? weekStart : 0); j <= (i == yearSlut ? weekSlut : 53); j++)
 			{
 				if(AktiviteterIDenneUge(j, i, medarbejder) >= GlobaleVariable.MaksimaleVagter()
 						|| FerieEfterPeriodeOgMedarbejder(weekStart, weekSlut, yearStart, yearSlut, medarbejder))
