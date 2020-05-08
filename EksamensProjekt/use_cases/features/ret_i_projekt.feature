@@ -32,3 +32,10 @@ Scenario: Projekt faar aendret sin slutdato saaledes at en medarbejder kommer ti
 	And medarbejderen "TJR" har 1 aktivitet "Debug" uge 1 i projektet "Projekt6"
 	When Der forsoeges at Aktiviteten "Debug" i projekt "Projekt6" faar sin slut-uge aendret til uge 2
 	Then Aktiviteten er ikke flyttet.
+	
+Scenario: slet projekter
+	Given der er et projekt "projektNummer1" med lederen "SLET"
+	Given der er et projekt "projektNummer2" med lederen "SLET"
+	And "projektNummer1" har aktiviteten "projektNummer1Aktivitet"
+	Then "projektNummer1" kan ikke slettes
+	And "projektNummer2" kan slettes

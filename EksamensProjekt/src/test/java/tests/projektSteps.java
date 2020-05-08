@@ -99,9 +99,9 @@ public class projektSteps {
 	public void aktivitetenIProjektetHarTimerRegistreret(String AktivitetNavn, String ProjektNavn, Integer int1) {
 	    Currentprojekt=projektManager.projektUdFraNavn(ProjektNavn);
 	    Currentaktivitet=aktivitetManager.AktivitetEfterProjektOgNavn(Currentprojekt, AktivitetNavn);
-	    this.medarbejder=new Medarbejder("Hans");
-	    assertTrue(this.medarbejder.Gem());
-	    assertTrue(Currentaktivitet.SaetMedarbejder(this.medarbejder));
+	    Currentmedarbejder=new Medarbejder("Hans");
+	    assertTrue(Currentmedarbejder.Gem());
+	    assertTrue(Currentaktivitet.SaetMedarbejder(Currentmedarbejder));
 		assertTrue(Currentaktivitet.TilfoejTid(int1));
 	}
 
@@ -199,5 +199,26 @@ public class projektSteps {
 	public void kanSeAtHanHunHarEtProjektIUgeAar(String medarbejderNavn, Integer Ugenr, Integer aar) {
 		assertTrue(medarbejderManager.AktiviteterIDenneUge(Ugenr, aar, Currentmedarbejder)==1);
 
+	}
+	//Forsoeg at slette projekter
+	@Given("{string} har aktiviteten {string}")
+	public void harAktiviteten(String ProjektNavn, String aktivitetnavn) {
+	    Currentprojekt = projektManager.projektUdFraNavn(ProjektNavn);
+	    Currentaktivitet= new Aktivitet (aktivitetnavn);
+	    Currentprojekt.tilfoejAktivitet(Currentaktivitet);
+	}
+	
+	@Then("{string} kan ikke slettes")
+	public void kanIkkeSlettes(String ProjektNavn) {
+	    Currentprojekt = projektManager.projektUdFraNavn(ProjektNavn);
+	    System.out.println(Currentprojekt);
+	    System.out.println(Currentprojekt.getAlleAktiviteter().get(0).getValue().getNavn());
+	    assertFalse(projektManager.fjern(Currentprojekt));
+	}
+
+	@Then("{string} kan slettes")
+	public void kanSlettes(String ProjektNavn) {
+		Currentprojekt = projektManager.projektUdFraNavn(ProjektNavn);
+		assertTrue(projektManager.fjern(Currentprojekt));
 	}
 }

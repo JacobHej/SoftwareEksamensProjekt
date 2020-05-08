@@ -18,6 +18,7 @@ public class AktivitetManager implements IAktivitetManager{
 
 	//@Override
 	public Boolean GemAktivitet(Aktivitet aktivitet) {
+
 		if(aktivitet.getProjekt() == null) {
 			System.out.println("Projektet var null da aktivitet prøvede at blive gemt");
 			return false;
@@ -36,6 +37,7 @@ public class AktivitetManager implements IAktivitetManager{
 //			System.out.println("Aktiviteten fandtes ikke");
 		}
 		return false;
+
 	}
 
 	//@Override
@@ -71,7 +73,8 @@ public class AktivitetManager implements IAktivitetManager{
 
 	@Override
 	public Boolean fjern(Aktivitet aktivitet) {
-		if (BrugttidData.Bibliotek.entrySet().stream().anyMatch(e -> e.getValue().Aktivitet() ==  aktivitet))
+		if (BrugttidData.Bibliotek.entrySet().stream()
+				.anyMatch(e -> e.getValue().Aktivitet() ==  aktivitet))
 				return false;
 		else
 			AktivitetData.Bibliotek.remove(aktivitet.ID());

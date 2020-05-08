@@ -83,6 +83,7 @@ public class FerieManager implements IFerieManager {
 					).count();
 	}
 
+
 	public long AktiviteterIDenneUge(int week, int year, Medarbejder medarbejder) {
 		if(medarbejder == null) {
 			System.out.println("Youre looking for a non existant medarbejder?");

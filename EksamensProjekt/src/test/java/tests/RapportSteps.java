@@ -23,6 +23,7 @@ public class RapportSteps {
 	IMedarbejderManager medarbejderManager= Managers.FaaMedarbejderManager();
 	IProjektManager projektManager= Managers.FaaProjektManager();
 	IAktivitetManager aktivitetManager= Managers.FaaAktivitetManager();
+	Rapport Rapport = new Rapport();
 	Projekt Currentprojekt;
 	Aktivitet Currentaktivitet;
 	Medarbejder Currentmedarbejder;
@@ -32,7 +33,8 @@ public class RapportSteps {
 	public void derErEtProjektSomHarProjektlederen(String projektnavn, String ledernavn) {
 		Currentprojekt = projektManager.projektUdFraNavn(projektnavn);
 		if (Currentprojekt == null) {
-			Currentprojekt = new Projekt(projektnavn); Currentprojekt.Gem();
+			Currentprojekt = new Projekt(projektnavn); 
+			Currentprojekt.Gem();
 		}
 		CurrentLeder = medarbejderManager.MedarbejderUdFraNavn(ledernavn);
 		if (CurrentLeder == null) {
@@ -43,7 +45,7 @@ public class RapportSteps {
 
 	@Given("projektet {string} har aktiviteten {string}")
 	public void projektetHarAktiviteten(String projektnavn, String aktivitetnavn) {
-		Currentaktivitet = aktivitetManager.AktivitetEfterProjektOgNavn(Currentprojekt, aktivitetnavn);
+		Currentaktivitet = aktivitetManager.AktivitetEfterProjektOgNavn(Currentprojekt, aktivitetnavn); 
 		if (Currentaktivitet == null){
 			Currentaktivitet= new Aktivitet(aktivitetnavn);
 			assertTrue(Currentprojekt.tilfoejAktivitet(Currentaktivitet));
@@ -61,11 +63,10 @@ public class RapportSteps {
 	public void derErEnMedarbejderSomErTildeltAktiviteten(String medarbejdernavn, String aktivitetnavn) {
 	    Currentmedarbejder = medarbejderManager.MedarbejderUdFraNavn(medarbejdernavn);
 	    if (Currentmedarbejder == null){
-	    	Currentmedarbejder = new Medarbejder(medarbejdernavn);
+	    	Currentmedarbejder = new Medarbejder(medarbejdernavn);Currentmedarbejder.Gem();
 	    }
 	    Currentaktivitet = aktivitetManager.AktivitetEfterProjektOgNavn(Currentprojekt, aktivitetnavn);
 
-		System.out.println(medarbejderManager.MedarbejderLedig(Currentaktivitet.getStartUge(), Currentaktivitet.getSlutUge(), Currentaktivitet.getStartaar(), Currentaktivitet.getSlutaar(), Currentmedarbejder) + " TJEK!");
 	    assertTrue(Currentaktivitet.SaetMedarbejder(Currentmedarbejder));
 	}
 
@@ -77,24 +78,44 @@ public class RapportSteps {
 	@When("Der laves en rapport over projektet {string}")
 	public void derLavesEnRapportOverProjektet(String projektnavn) {
 	    Currentprojekt = projektManager.projektUdFraNavn(projektnavn);
-	    System.out.println(Currentprojekt.genererRapport());
+	    if(Currentprojekt == null) {
+	    	Currentprojekt = projektManager.projektUdFraNavn(projektnavn); 
+	    }
+	    Rapport.GenererRapport(Currentprojekt);
 	}
 
 	@Then("Det fremgaar af rapporten, at der er {int} aktiviteter i projektet med navne {string} og {string}")
-	public void detFremgaarAfRapportenAtDerErAktiviteterIProjektetMedNavneOg(Integer int1, String string, String string2) {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	public void detFremgaarAfRapportenAtDerErAktiviteterIProjektetMedNavneOg(Integer antalAktiviteter, String aktivitetnavn1, String aktivitetnavn2) {
+		assertTrue(Rapport.AktivitetsInformationer().size()==antalAktiviteter);
+		assertTrue((Rapport.AktivitetsInformationer().get(0).Aktivitet().getNavn() + "" + Rapport.AktivitetsInformationer().get(1).Aktivitet().getNavn()).contains(aktivitetnavn1));
+		assertTrue((Rapport.AktivitetsInformationer().get(0).Aktivitet().getNavn() + "" + Rapport.AktivitetsInformationer().get(1).Aktivitet().getNavn()).contains(aktivitetnavn2));
 	}
 
 	@Then("{string} er blevet tildelt medarbejderen {string} og {string} har ingen medarbejder tildelt")
-	public void erBlevetTildeltMedarbejderenOgHarIngenMedarbejderTildelt(String string, String string2, String string3) {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	public void erBlevetTildeltMedarbejderenOgHarIngenMedarbejderTildelt(String aktivitetnavn1, String medarbejdernavn, String aktivitetnavn2) {
+	    Currentmedarbejder = medarbejderManager.MedarbejderUdFraNavn(medarbejdernavn);
+	    
+	    assertTrue((
+	    		Rapport.AktivitetsInformationer().get(0).Aktivitet().getNavn().equals(aktivitetnavn1)&&
+	    		Rapport.AktivitetsInformationer().get(1).Aktivitet().getNavn().equals(aktivitetnavn2)&&
+	    		Rapport.AktivitetsInformationer().get(0).Aktivitet().Medarbejder().getNavn().equals(medarbejdernavn)&&
+	    		Rapport.AktivitetsInformationer().get(1).Aktivitet().Medarbejder()==null
+	    		)||
+	    		Rapport.AktivitetsInformationer().get(1).Aktivitet().getNavn().equals(aktivitetnavn1)&&
+	    		Rapport.AktivitetsInformationer().get(0).Aktivitet().getNavn().equals(aktivitetnavn2)&&
+	    		Rapport.AktivitetsInformationer().get(1).Aktivitet().Medarbejder().getNavn().equals(medarbejdernavn)&&
+	    		Rapport.AktivitetsInformationer().get(0).Aktivitet().Medarbejder()==null);
+
 	}
 
-	@Then("Der er {int} timer registreret p� aktiviteten {string} og {int} timer paa aktiviteten {string}")
-	public void derErTimerRegistreretPAktivitetenOgTimerPaaAktiviteten(Integer int1, String string, Integer int2, String string2) {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	@Then("Der er {int} timer registreret paa aktiviteten {string} og {int} timer paa aktiviteten {string}")
+	public void derErTimerRegistreretPaaAktivitetenOgTimerPaaAktiviteten(Integer antalTimer1, String aktivitetnavn1, Integer antalTimer2, String aktivitetnavn2) {
+		String TestString = "";
+	    for (int i = 0; i < Rapport.AktivitetsInformationer().size(); i++) {
+	    	TestString=TestString + Rapport.AktivitetsInformationer().get(i).Aktivitet().getNavn() + ":" + Rapport.AktivitetsInformationer().get(i).Aktivitet().getTidBrugt() + "\n";
+	    }
+
+	    assertTrue(TestString.contains(aktivitetnavn1+ ":" + antalTimer1));
+	    assertTrue(TestString.contains(aktivitetnavn2+ ":" + antalTimer2));
 	}
 }

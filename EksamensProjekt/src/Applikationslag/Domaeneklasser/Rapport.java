@@ -10,20 +10,22 @@ import Applikationslag.Infrastruktur.ServiceInterfaces.IBrugttidManager;
 import Applikationslag.Redskaber.Managers;
 
 public class Rapport {
-	private ArrayList<AktivitetsOpsummering> aktivitetsInformationer;
+	private ArrayList<AktivitetsOpsummering> aktivitetsInformationer = new ArrayList<AktivitetsOpsummering>();
 	
 	private IAktivitetManager aktivitetManager = Managers.FaaAktivitetManager();
 	private IBrugttidManager brugttidManager = Managers.FaaBrugttidManager();
 	
 	public void GenererRapport(Projekt projekt)
 	{
+		System.out.println("hello world");
 		List<Entry<UUID, Aktivitet>> aktiviteter = aktivitetManager.AlleAktiviteterEfterProjekt(projekt);
 		for(Entry<UUID, Aktivitet> e : aktiviteter)
 		{
 			int temp = 0;
 			for(Entry<UUID, Brugttid> t : brugttidManager.AlleBrugttidEfterAktivitet(e.getValue()))
 			{
-				temp += t.getValue().Tid();
+				if(t != null)
+					temp += t.getValue().Tid();
 			}
 			aktivitetsInformationer.add(new AktivitetsOpsummering(e.getValue(), temp));
 		}

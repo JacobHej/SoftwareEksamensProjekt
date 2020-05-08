@@ -87,7 +87,6 @@ public class Aktivitet {
 			}
 		}
 		else
-			System.out.println("Hvad sker der her (Aktivitet.java)");
 			return false;
 	}
 	
@@ -155,12 +154,7 @@ public class Aktivitet {
 	}
 	
 	public boolean setSlutUge(int slutUge)
-	{
-//		if(slutUge<this.slutUge&&slutUge >= startUge) {
-//			this.slutUge = slutUge;
-//			return true;
-//		}
-//		slutUge >= startUge && 
+	{// tjek om slutuge er før startuge
 		if((medarbejder == null || medarbejder.ledig(startUge, slutUge, startaar, slutaar))) {
 			this.slutUge = slutUge;
 			return true;
@@ -221,7 +215,8 @@ public class Aktivitet {
 	
 	public boolean setProjekt(Projekt p) {
 		if(ProjektData.Bibliotek.entrySet().stream()
-		.anyMatch(e -> e.getValue().getNavn().equals( p.getNavn()))) {
+				.anyMatch(e -> e.getValue().getNavn().equals( p.getNavn())))
+		{
 			this.projekt = p;
 			return true;
 		}else {
