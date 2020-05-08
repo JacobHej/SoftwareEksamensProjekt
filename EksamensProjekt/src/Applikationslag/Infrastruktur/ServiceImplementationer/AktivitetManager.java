@@ -34,7 +34,7 @@ public class AktivitetManager implements IAktivitetManager{
 //				System.out.println("Projektet fandtes ikke");
 			}
 		}else {
-//			System.out.println("Aktiviteten fandtes ikke");
+//			System.out.println("Aktiviteten findes allerede");
 		}
 		return false;
 

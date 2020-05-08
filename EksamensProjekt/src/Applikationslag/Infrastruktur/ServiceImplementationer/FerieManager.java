@@ -132,7 +132,7 @@ public class FerieManager implements IFerieManager {
 	public Boolean MedarbejderFri(int weekStart, int weekSlut, int yearStart, int yearSlut, Medarbejder medarbejder) {
 		for(int i = yearStart; i <= yearSlut; i ++)
 		{
-			for(int j = (i == yearStart ? weekStart : 0); j <= (i == yearSlut ? weekSlut : 0); j++)
+			for(int j = (i == yearStart ? weekStart : 0); j <= (i == yearSlut ? weekSlut : 53); j++)
 			{
 				if(AktiviteterIDenneUge(j, i, medarbejder) > 0)
 				{
