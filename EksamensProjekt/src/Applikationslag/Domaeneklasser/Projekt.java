@@ -40,19 +40,10 @@ public class Projekt {
 		genererProjektnummer();
 	}
 	
-	public Projekt(String navn, int startUge, Medarbejder leder)
-	{
-		this.navn = navn;
-		this.startUge = startUge;
-		this.leder = leder;
-		genererProjektnummer();
-	}
-	
 	public Boolean tilfoejAktivitet(Aktivitet aktivitet)
 	{
-		boolean done1 = !aktivitet.setProjekt(this);
-		if(done1) {
-//			System.out.println("Done 1 fejlede");
+		if(!aktivitet.setProjekt(this)) {
+//			System.out.println("Aktivitet kunne ikke sætte projekt");
 			return false;
 		}
 		boolean done2 = aktivitetManager.GemAktivitet(aktivitet);
@@ -64,13 +55,6 @@ public class Projekt {
 	{
 		Aktivitet a = new Aktivitet(navn);
 		return tilfoejAktivitet(a);
-	}
-	
-	public Boolean tilfoejAktivitet(int start, int slut, String navn)
-	{
-		Aktivitet a = new Aktivitet(start,slut,navn);
-		a.setProjekt(this);
-		return aktivitetManager.GemAktivitet(a);
 	}
 	
 	private boolean genererProjektnummer() {
@@ -85,8 +69,6 @@ public class Projekt {
 		}
 		
 	}
-	
-	
 
 	public Boolean Gem()
 	{
