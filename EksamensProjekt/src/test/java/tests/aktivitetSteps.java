@@ -106,6 +106,7 @@ public class aktivitetSteps {
 	public void medarbejderenTilfoejerTimerTilAktiviteten(String MedarbejderID, Integer int1, String AktivitetID) {
 		Brugttid brugttid = new Brugttid(Currentaktivitet, Currentmedarbejder, int1);
 		assertTrue(Currentaktivitet.TilfoejTid(brugttid));
+		assertTrue(brugttidManager.Eksisterer(brugttid));
 	}
 	
 	@Then("Medarbejderens timer {int} er blevet noteret")
