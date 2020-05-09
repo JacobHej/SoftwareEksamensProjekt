@@ -12,7 +12,7 @@ public interface IFerieManager {
 	
 	public Boolean fjern (Ferie ferie);
 	
-	public List<Entry<UUID, Ferie>> hentAlle();
+//	public List<Entry<UUID, Ferie>> hentAlle();
 	
 	public Boolean FerieEfterPeriodeOgMedarbejder(int weekStart, int weekSlut, int yearStart, int yearSlut, Medarbejder medarbejder);
 	

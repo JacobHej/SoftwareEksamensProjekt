@@ -29,15 +29,15 @@ public final class Managers {
 		return new BrugttidManager();
 	}
 	
-	public static ISessionManager FaaSessionManager()
-	{
-		return new SessionManager();
-	}
-	
-	public static IAssistanceManager FaaAssistanceManager()
-	{
-		return new AssistanceManager();
-	}
+//	public static ISessionManager FaaSessionManager()
+//	{
+//		return new SessionManager();
+//	}
+//	
+//	public static IAssistanceManager FaaAssistanceManager()
+//	{
+//		return new AssistanceManager();
+//	}
 	
 	public static IFerieManager FaaFerieManager()
 	{

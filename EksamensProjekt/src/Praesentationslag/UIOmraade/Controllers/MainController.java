@@ -50,7 +50,7 @@ import javafx.util.StringConverter;
 import javafx.event.ActionEvent;
 
 public class MainController implements Initializable {
-	
+
 	//Managers
 	IMedarbejderManager medarbejderManager = Managers.FaaMedarbejderManager();
 	IProjektManager projektManager = Managers.FaaProjektManager();

@@ -42,10 +42,10 @@ public class FerieManager implements IFerieManager {
 	}
 
 	@Override
-	public List<Entry<UUID, Ferie>> hentAlle() {
-		return ((HashMap<UUID, Ferie>)FerieData.Bibliotek.clone())
-				.entrySet().stream().collect(Collectors.toList());
-	}
+//	public List<Entry<UUID, Ferie>> hentAlle() {
+//		return ((HashMap<UUID, Ferie>)FerieData.Bibliotek.clone())
+//				.entrySet().stream().collect(Collectors.toList());
+//	}
 
 	public Boolean FerieEfterPeriodeOgMedarbejder(int weekStart, int weekSlut, int yearStart, int yearSlut, Medarbejder medarbejder)
 	{
@@ -114,20 +114,20 @@ public class FerieManager implements IFerieManager {
 					).count();
 	}
 
-	public Boolean MedarbejderLedig(int weekStart, int weekSlut, int yearStart, int yearSlut, Medarbejder medarbejder) {
-		for(int i = yearStart; i <= yearSlut; i ++)
-		{
-			for(int j = (i == yearStart ? weekStart : 0); j <= (i == yearSlut ? weekSlut : 53); j++)
-			{
-				if(AktiviteterIDenneUge(j, i, medarbejder) >= GlobaleVariable.MaksimaleVagter()
-						|| FerieEfterPeriodeOgMedarbejder(weekStart, weekSlut, yearStart, yearSlut, medarbejder))
-				{
-					return false;
-				}
-			}
-		}
-		return true;
-	}
+//	public Boolean MedarbejderLedig(int weekStart, int weekSlut, int yearStart, int yearSlut, Medarbejder medarbejder) {
+//		for(int i = yearStart; i <= yearSlut; i ++)
+//		{
+//			for(int j = (i == yearStart ? weekStart : 0); j <= (i == yearSlut ? weekSlut : 53); j++)
+//			{
+//				if(AktiviteterIDenneUge(j, i, medarbejder) >= GlobaleVariable.MaksimaleVagter()
+//						|| FerieEfterPeriodeOgMedarbejder(weekStart, weekSlut, yearStart, yearSlut, medarbejder))
+//				{
+//					return false;
+//				}
+//			}
+//		}
+//		return true;
+//	}
 	
 	public Boolean MedarbejderFri(int weekStart, int weekSlut, int yearStart, int yearSlut, Medarbejder medarbejder) {
 		for(int i = yearStart; i <= yearSlut; i ++)

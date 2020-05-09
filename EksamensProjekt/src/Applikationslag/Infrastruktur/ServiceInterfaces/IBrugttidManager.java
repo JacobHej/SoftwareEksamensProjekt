@@ -15,9 +15,9 @@ public interface IBrugttidManager {
 	
 	public List<Entry<UUID, Brugttid>> AlleBrugttidEfterMedarbejder(Medarbejder medarbejder);
 	public List<Entry<UUID, Brugttid>> AlleBrugttidEfterAktivitet(Aktivitet aktivitet);
-	public List<Entry<UUID, Brugttid>> AlleBrugttidEfterProjekt(Projekt projekt);
+//	public List<Entry<UUID, Brugttid>> AlleBrugttidEfterProjekt(Projekt projekt);
 	public List<Entry<UUID, Brugttid>> AlleBrugttidEfterAktivitetOgMedarbejder(Aktivitet aktivitet, Medarbejder medarbejder);
-	public List<Entry<UUID, Brugttid>> AlleBrugttidEfterDag(Date dato);
+//	public List<Entry<UUID, Brugttid>> AlleBrugttidEfterDag(Date dato);
 	public List<Entry<UUID, Brugttid>> AlleBrugttidEfterDagOgMedarbejder(Date dato, Medarbejder medarbejder);
 	public boolean Eksisterer(Brugttid b);
 	public Boolean fjern(Brugttid brugttid);

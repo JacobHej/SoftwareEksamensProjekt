@@ -8,7 +8,7 @@ import java.util.Map.Entry;
 import Applikationslag.Data.Datavedholdelsesklasser.MedarbejderData;
 import Applikationslag.Data.Datavedholdelsesklasser.ProjektData;
 import Applikationslag.Infrastruktur.ServiceInterfaces.IAktivitetManager;
-import Applikationslag.Infrastruktur.ServiceInterfaces.IAssistanceManager;
+//import Applikationslag.Infrastruktur.ServiceInterfaces.IAssistanceManager;
 import Applikationslag.Infrastruktur.ServiceInterfaces.IBrugttidManager;
 import Applikationslag.Infrastruktur.ServiceInterfaces.IMedarbejderManager;
 import Applikationslag.Redskaber.Dates;
@@ -33,28 +33,28 @@ public class Aktivitet {
 	private IAktivitetManager aktivitetManager = Managers.FaaAktivitetManager();
 	private IBrugttidManager brugttidManager = Managers.FaaBrugttidManager();
 	private IMedarbejderManager medarbejderManager = Managers.FaaMedarbejderManager();
-	private IAssistanceManager assistanceManager = Managers.FaaAssistanceManager();
+	//private IAssistanceManager assistanceManager = Managers.FaaAssistanceManager();
 	
 	//Metoder
-	public Aktivitet(int startUge, int slutUge, Medarbejder medarbejder, String navn)
-	{
-		this.startUge = startUge;
-		this.slutUge = slutUge;
-		this.medarbejder = medarbejder;
-		this.navn = navn;
-		this.startaar = Dates.getYear();
-		this.slutaar = Dates.getYear();
-	}
+//	public Aktivitet(int startUge, int slutUge, Medarbejder medarbejder, String navn)
+//	{
+//		this.startUge = startUge;
+//		this.slutUge = slutUge;
+//		this.medarbejder = medarbejder;
+//		this.navn = navn;
+//		this.startaar = Dates.getYear();
+//		this.slutaar = Dates.getYear();
+//	}
 	
-	public Aktivitet(int startUge, int slutUge, String navn)
-	{
-		this.startUge = startUge;
-		this.slutUge = slutUge;
-		this.navn = navn;
-		this.startaar = Dates.getYear();
-		this.slutaar = Dates.getYear();
-	}
-	
+//	public Aktivitet(int startUge, int slutUge, String navn)
+//	{
+//		this.startUge = startUge;
+//		this.slutUge = slutUge;
+//		this.navn = navn;
+//		this.startaar = Dates.getYear();
+//		this.slutaar = Dates.getYear();
+//	}
+//	
 	public Aktivitet(String navn)
 	{
 		this.navn = navn;
@@ -62,12 +62,6 @@ public class Aktivitet {
 		this.slutaar = Dates.getYear();
 		this.startUge = Dates.getCurrentWeek();
 		this.slutUge = Dates.getCurrentWeek();
-	}
-	
-	public Boolean soegAssistance()
-	{
-		Assistance assistance = new Assistance(this);
-		return assistanceManager.Gem(assistance);
 	}
 	
 	public Boolean SaetMedarbejder(Medarbejder nyMedarbejder)
@@ -244,14 +238,14 @@ public class Aktivitet {
 		this.navn = navn;
 	}
 
-	public Boolean Feardig()
-	{
-		return this.faerdig;
-	}
-	
-	public String toString() {
-    	return navn;
-    }
+//	public Boolean Feardig()
+//	{
+//		return this.faerdig;
+//	}
+//	
+//	public String toString() {
+//    	return navn;
+//    }
 	
 	public List<Entry<UUID, Brugttid>> getAlleBrugttid(){
 		return brugttidManager.AlleBrugttidEfterAktivitet(this);
@@ -268,9 +262,9 @@ public class Aktivitet {
 		return false;
 	}
 	
-	public String getStart() {
-		return "Y:"+startaar+"U:"+startUge;
-	}
+//	public String getStart() {
+//		return "Y:"+startaar+"U:"+startUge;
+//	}
 
 	public int getTidBrugt() {
 		int i = 0;

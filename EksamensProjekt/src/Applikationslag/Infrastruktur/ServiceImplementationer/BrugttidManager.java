@@ -41,19 +41,19 @@ public class BrugttidManager implements IBrugttidManager {
 				.collect(Collectors.toList());
 	}
 
-	//@Override
-	public List<Entry<UUID, Brugttid>> AlleBrugttidEfterProjekt(Projekt projekt) {
-		return BrugttidData.Bibliotek.entrySet().stream()
-			.filter(e -> e.getValue().Aktivitet().getProjekt().ID() == projekt.ID())
-			.collect(Collectors.toList());
-	}
+//	//@Override
+//	public List<Entry<UUID, Brugttid>> AlleBrugttidEfterProjekt(Projekt projekt) {
+//		return BrugttidData.Bibliotek.entrySet().stream()
+//			.filter(e -> e.getValue().Aktivitet().getProjekt().ID() == projekt.ID())
+//			.collect(Collectors.toList());
+//	}
 
-	@Override
-	public List<Entry<UUID, Brugttid>> AlleBrugttidEfterDag(Date dato) {
-		return BrugttidData.Bibliotek.entrySet().stream()
-				.filter(e -> e.getValue().Dato().getDay() == dato.getDay())
-				.collect(Collectors.toList());
-	}
+//	@Override
+//	public List<Entry<UUID, Brugttid>> AlleBrugttidEfterDag(Date dato) {
+//		return BrugttidData.Bibliotek.entrySet().stream()
+//				.filter(e -> e.getValue().Dato().getDay() == dato.getDay())
+//				.collect(Collectors.toList());
+//	}
 
 	@Override
 	public List<Entry<UUID, Brugttid>> AlleBrugttidEfterDagOgMedarbejder(Date dato, Medarbejder medarbejder) {

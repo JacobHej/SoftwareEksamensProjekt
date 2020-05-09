@@ -73,9 +73,9 @@ public class Ferie {
 		return forklaring;
 	}
 	
-	public void setForklaring(String forklaring) {
-		this.forklaring=forklaring;
-	}
+//	public void setForklaring(String forklaring) {
+//		this.forklaring=forklaring;
+//	}
 	
 	public boolean gem() {
 		return ferieManager.Gem(this);
@@ -85,7 +85,7 @@ public class Ferie {
 		return "U:"+startUge+" Y:"+startaar;
 	}
 	
-	public String getFlotSlut() {
-		return "U:"+slutUge+" Y:"+slutaar;
-	}
+//	public String getFlotSlut() {
+//		return "U:"+slutUge+" Y:"+slutaar;
+//	}
 }

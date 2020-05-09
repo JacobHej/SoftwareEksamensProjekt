@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 import Applikationslag.Data.Datavedholdelsesklasser.*;
 import Applikationslag.Domaeneklasser.Aktivitet;
-import Applikationslag.Domaeneklasser.Assistance;
+//import Applikationslag.Domaeneklasser.Assistance;
 import Applikationslag.Domaeneklasser.Medarbejder;
 import Applikationslag.Domaeneklasser.Projekt;
 import Applikationslag.Infrastruktur.ServiceInterfaces.*;

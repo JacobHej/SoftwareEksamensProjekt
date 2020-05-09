@@ -21,13 +21,13 @@ public class Projekt {
 	private IAktivitetManager aktivitetManager = Managers.FaaAktivitetManager();
 	private IProjektManager projektManager = Managers.FaaProjektManager();
 	
-	public Projekt(String navn, int startUge)
-	{
-		this.navn = navn;
-		this.startUge = startUge;
-		genererProjektnummer();
-
-	}
+//	public Projekt(String navn, int startUge)
+//	{
+//		this.navn = navn;
+//		this.startUge = startUge;
+//		genererProjektnummer();
+//
+//	}
 	
 	public String toString() {
 		String s = (projektnummer + ": " + navn);
@@ -51,11 +51,11 @@ public class Projekt {
 		return done2;
 	}
 	
-	public Boolean tilfoejAktivitet(String navn)
-	{
-		Aktivitet a = new Aktivitet(navn);
-		return tilfoejAktivitet(a);
-	}
+//	public Boolean tilfoejAktivitet(String navn)
+//	{
+//		Aktivitet a = new Aktivitet(navn);
+//		return tilfoejAktivitet(a);
+//	}
 	
 	private boolean genererProjektnummer() {
 		try {
@@ -105,9 +105,9 @@ public class Projekt {
 		return this.navn;
 	}
 	
-	public void setProjektnummer(int projektnummer) {
-		this.projektnummer=projektnummer;
-	}
+//	public void setProjektnummer(int projektnummer) {
+//		this.projektnummer=projektnummer;
+//	}
 	
 	public int getProjektnummer()
 	{
