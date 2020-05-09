@@ -102,6 +102,7 @@ public class projektSteps {
 	    Currentmedarbejder=new Medarbejder("Hans");
 	    assertTrue(Currentmedarbejder.Gem());
 	    assertTrue(Currentaktivitet.SaetMedarbejder(Currentmedarbejder));
+		assertTrue(Currentaktivitet.TilfoejTid(int1, new Date()));
 		assertTrue(Currentaktivitet.TilfoejTid(int1));
 	}
 

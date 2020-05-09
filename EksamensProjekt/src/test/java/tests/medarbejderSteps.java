@@ -168,10 +168,7 @@ public class medarbejderSteps {
 	@Given("{string} har {int} planlagte ferier")
 	public void harPlanlagteFerier(String medarbejdernavn, Integer antalFerier) {
 		Currentmedarbejder = medarbejderManager.MedarbejderUdFraNavn(medarbejdernavn);
-	    if (Currentmedarbejder == null ) {
-	    	Currentmedarbejder = new Medarbejder(medarbejdernavn);
-	    	assertTrue(Currentmedarbejder.Gem());
-	    }
+
 	    
 	    for (int i = 0; i < antalFerier; i++) {
 	    	Currentmedarbejder.tagFerie(i, i, 2000+i, 2000+i);
@@ -186,9 +183,7 @@ public class medarbejderSteps {
 	    	Currentprojekt = new Projekt("Dummy");Currentprojekt.Gem();
 	    }
 	    Currentmedarbejder = medarbejderManager.MedarbejderUdFraNavn(medarbejdernavn);
-	    if (Currentmedarbejder == null ) {
-	    	Currentmedarbejder = new Medarbejder(medarbejdernavn);
-	    }
+
 
 		for (int i = 0; i < antalaktiviteter; i++) {
 	    	Currentaktivitet = new Aktivitet("Dummy" + i);
@@ -203,9 +198,7 @@ public class medarbejderSteps {
 	@Given("{string} har {int} Brugt tid")
 	public void harBrugtTid(String medarbejdernavn, Integer int1) {
 		Currentprojekt = projektManager.projektUdFraNavn("Dummy");
-	    if (Currentprojekt == null) {
-	    	Currentprojekt = new Projekt("Dummy");Currentprojekt.Gem();
-	    }
+
 	    Currentmedarbejder = medarbejderManager.MedarbejderUdFraNavn(medarbejdernavn);
 	    if (Currentmedarbejder == null ) {
 	    	Currentmedarbejder = new Medarbejder(medarbejdernavn);
@@ -213,7 +206,7 @@ public class medarbejderSteps {
 	    Currentaktivitet = aktivitetManager.AktivitetEfterProjektOgNavn(Currentprojekt, "Dummy0");
 	    for (int i = 0; i < int1; i++) {
 	    	System.out.println(Currentaktivitet);
-	    	assertTrue(Currentaktivitet.TilfoejTid(1, Currentmedarbejder));
+	    	assertTrue(Currentaktivitet.TilfoejTid(1, new Date(), Currentmedarbejder));
 	    }
 	    assertTrue(brugttidManager.AlleBrugttidEfterMedarbejder(Currentmedarbejder).size()==int1);
 	}
@@ -221,18 +214,14 @@ public class medarbejderSteps {
 	@Then("medarbejderen {string} kan slettes")
 	public void medarbejderenKanSlettes(String medarbejdernavn) {
 		Currentmedarbejder = medarbejderManager.MedarbejderUdFraNavn(medarbejdernavn);
-	    if (Currentmedarbejder == null ) {
-	    	Currentmedarbejder = new Medarbejder(medarbejdernavn);
-	    }
+
 	    assertTrue(medarbejderManager.fjern(Currentmedarbejder));
 	}
 	
 	@Then("medarbejderen {string} kan ikke slettes")
 	public void medarbejderenKanIkkeSlettes(String medarbejdernavn) {
 		Currentmedarbejder = medarbejderManager.MedarbejderUdFraNavn(medarbejdernavn);
-	    if (Currentmedarbejder == null ) {
-	    	Currentmedarbejder = new Medarbejder(medarbejdernavn);
-	    }
+
 
 	    assertFalse(medarbejderManager.fjern(Currentmedarbejder));
 	}
