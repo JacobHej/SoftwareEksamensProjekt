@@ -7,12 +7,8 @@ public class LoebeNummer {
 	static int loebeNummer;
 	
 	public static int genererloebeNummer() {
-		try {
-			forstoerLoebenummer();
-			return loebeNummer;
-		}catch(Exception e) {
-			return 0;
-		}
+		forstoerLoebenummer();
+		return loebeNummer;
 		
 	}
 	

@@ -13,6 +13,7 @@ import Applikationslag.Infrastruktur.ServiceInterfaces.IProjektManager;
 import Applikationslag.Infrastruktur.ServiceImplementationer.ProjektManager;
 import Applikationslag.Infrastruktur.ServiceInterfaces.IMedarbejderManager;
 import Applikationslag.Infrastruktur.ServiceInterfaces.IAktivitetManager;
+import Applikationslag.Infrastruktur.ServiceInterfaces.IBrugttidManager;
 import Applikationslag.Redskaber.Managers;
 
 import java.util.Date;
@@ -23,6 +24,7 @@ public class medarbejderSteps {
 	IMedarbejderManager medarbejderManager= Managers.FaaMedarbejderManager();
 	IProjektManager projektManager= Managers.FaaProjektManager();
 	IAktivitetManager aktivitetManager= Managers.FaaAktivitetManager();
+	IBrugttidManager brugttidManager= Managers.FaaBrugttidManager();
 	Medarbejder Currentmedarbejder;
 	Aktivitet Currentaktivitet;
 	Projekt Currentprojekt;
@@ -162,4 +164,78 @@ public class medarbejderSteps {
 	    Medarbejder KanIkkeOprettes = new Medarbejder(medarbejdernavn);
 	    assertFalse(KanIkkeOprettes.Gem());
 	}	
+//FJERN MEDARBEJDER
+	@Given("{string} har {int} planlagte ferier")
+	public void harPlanlagteFerier(String medarbejdernavn, Integer antalFerier) {
+		Currentmedarbejder = medarbejderManager.MedarbejderUdFraNavn(medarbejdernavn);
+	    if (Currentmedarbejder == null ) {
+	    	Currentmedarbejder = new Medarbejder(medarbejdernavn);
+	    	assertTrue(Currentmedarbejder.Gem());
+	    }
+	    
+	    for (int i = 0; i < antalFerier; i++) {
+	    	Currentmedarbejder.tagFerie(i, i, 2000+i, 2000+i);
+	    }
+	    System.out.println("Antal ferier: " + Currentmedarbejder.getFerier().size());
+	}
+	
+	@Given("{string} har {int} aktiviteter")
+	public void harAktiviteter(String medarbejdernavn, Integer antalaktiviteter) {
+	    Currentprojekt = projektManager.projektUdFraNavn("Dummy");
+	    if (Currentprojekt == null) {
+	    	Currentprojekt = new Projekt("Dummy");Currentprojekt.Gem();
+	    }
+	    Currentmedarbejder = medarbejderManager.MedarbejderUdFraNavn(medarbejdernavn);
+	    if (Currentmedarbejder == null ) {
+	    	Currentmedarbejder = new Medarbejder(medarbejdernavn);
+	    }
+
+		for (int i = 0; i < antalaktiviteter; i++) {
+	    	Currentaktivitet = new Aktivitet("Dummy" + i);
+	    	Currentaktivitet.setTidsperiode(1, 1, 2020, 2020);
+	    	assertTrue(Currentaktivitet.SaetMedarbejder(Currentmedarbejder));
+	    	assertTrue(Currentprojekt.tilfoejAktivitet(Currentaktivitet));
+			
+	    }
+		assertTrue(Currentmedarbejder.getAlleAktiviteter().size()==antalaktiviteter);
+	}
+	
+	@Given("{string} har {int} Brugt tid")
+	public void harBrugtTid(String medarbejdernavn, Integer int1) {
+		Currentprojekt = projektManager.projektUdFraNavn("Dummy");
+	    if (Currentprojekt == null) {
+	    	Currentprojekt = new Projekt("Dummy");Currentprojekt.Gem();
+	    }
+	    Currentmedarbejder = medarbejderManager.MedarbejderUdFraNavn(medarbejdernavn);
+	    if (Currentmedarbejder == null ) {
+	    	Currentmedarbejder = new Medarbejder(medarbejdernavn);
+	    }
+	    Currentaktivitet = aktivitetManager.AktivitetEfterProjektOgNavn(Currentprojekt, "Dummy0");
+	    for (int i = 0; i < int1; i++) {
+	    	System.out.println(Currentaktivitet);
+	    	assertTrue(Currentaktivitet.TilfoejTid(1, Currentmedarbejder));
+	    }
+	    assertTrue(brugttidManager.AlleBrugttidEfterMedarbejder(Currentmedarbejder).size()==int1);
+	}
+	
+	@Then("medarbejderen {string} kan slettes")
+	public void medarbejderenKanSlettes(String medarbejdernavn) {
+		Currentmedarbejder = medarbejderManager.MedarbejderUdFraNavn(medarbejdernavn);
+	    if (Currentmedarbejder == null ) {
+	    	Currentmedarbejder = new Medarbejder(medarbejdernavn);
+	    }
+	    assertTrue(medarbejderManager.fjern(Currentmedarbejder));
+	}
+	
+	@Then("medarbejderen {string} kan ikke slettes")
+	public void medarbejderenKanIkkeSlettes(String medarbejdernavn) {
+		Currentmedarbejder = medarbejderManager.MedarbejderUdFraNavn(medarbejdernavn);
+	    if (Currentmedarbejder == null ) {
+	    	Currentmedarbejder = new Medarbejder(medarbejdernavn);
+	    }
+
+	    assertFalse(medarbejderManager.fjern(Currentmedarbejder));
+	}
+	
+
 }

@@ -66,7 +66,7 @@ public class RapportSteps {
 	    	Currentmedarbejder = new Medarbejder(medarbejdernavn);Currentmedarbejder.Gem();
 	    }
 	    Currentaktivitet = aktivitetManager.AktivitetEfterProjektOgNavn(Currentprojekt, aktivitetnavn);
-
+	    
 	    assertTrue(Currentaktivitet.SaetMedarbejder(Currentmedarbejder));
 	}
 
