@@ -18,13 +18,17 @@ public class AktivitetManager implements IAktivitetManager{
 
 	//@Override
 	public Boolean GemAktivitet(Aktivitet aktivitet) {
-
+		
+		assert(aktivitet!=null):"Precondition violated";
+		assert(aktivitet.getNavn()!=null):"Precondition violated";
+		
 		if(aktivitet.getProjekt() == null) {
 			System.out.println("Projektet var null da aktivitet prøvede at blive gemt");
 			return false;
 		}
-			
-			
+		
+		
+		
 		if (!AktivitetData.Bibliotek.entrySet().stream().anyMatch(
 				e -> e.getValue().getNavn().equals(aktivitet.getNavn()))) 
 		{
@@ -59,10 +63,6 @@ public class AktivitetManager implements IAktivitetManager{
 				.filter(e -> e.getValue().getNavn().equals(navn))
 				.filter(e -> e.getValue().getProjekt() == p)
 				.collect(Collectors.toList()).get(0).getValue());
-		
-		
-		
-		
 		
 	}
 	

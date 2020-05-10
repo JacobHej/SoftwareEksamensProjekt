@@ -111,6 +111,15 @@ public class MedarbejderManager implements IMedarbejderManager {
 		return false;
 	}
 	
+	public boolean eksisterer(Medarbejder m) {
+		for(Entry<UUID, Medarbejder> e : MedarbejderData.Bibliotek.entrySet()) {
+			if (e.getValue() == m) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	
 //	public Boolean MedarbejderFri(int weekStart, int weekSlut, int yearStart, int yearSlut, Medarbejder medarbejder) {
 //		for(int i = yearStart; i <= yearSlut; i ++)

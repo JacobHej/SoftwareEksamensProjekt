@@ -1064,6 +1064,7 @@ public class MainController implements Initializable {
     
 
     private void visMuligeHjælpere(Medarbejder m) {
+    	assert(m!=null):"Pre-conditions violated";
     	//Indsæt mulige hjælpere
     	ObservableList<Medarbejder> hjælpere =  FXCollections.observableArrayList();
     	medarbejderDropDownHjælper.setItems(hjælpere);
@@ -1072,6 +1073,16 @@ public class MainController implements Initializable {
     			hjælpere.add(e.getValue());
     		}
     	}
+    	assert(medarbejderDropDownHjælper.getItems() == hjælpere&&medarbejderbibliotekContains(hjælpere)):"Post-conditions violated";
+    }
+    
+    private boolean medarbejderbibliotekContains(ObservableList<Medarbejder> l) {
+    	for(Medarbejder m : l) {
+    		if(!medarbejderManager.eksisterer(m)) {
+    			return false;
+    		}
+    	}
+    	return true;
     }
     
 
@@ -1263,6 +1274,9 @@ public class MainController implements Initializable {
     }
     
     private void visFerier() {
+    	
+    	assert(true):"Pre-conditions violated";
+    	
     	Medarbejder m = medarbejderTabel.getSelectionModel().getSelectedItem();
     	if(m==null) {
     		popup("Ingen medarbejder valgt");
@@ -1275,7 +1289,18 @@ public class MainController implements Initializable {
     	for(Entry<UUID, Ferie> e : m.getFerier()) {
     		ferieTabel.getItems().add(e.getValue());
         }
+    	assert(ferieTabel.getItems()==ferier&&tjekFerier(ferier, m)):"Post conditions violated";
     	
+    }
+    
+    //tjekker om ObservableList<Ferie>'s ferier alle høre til en medarbejder m
+    private boolean tjekFerier(ObservableList<Ferie> l, Medarbejder m) {
+    	for(Ferie f : l) {
+    		if(f.Medarbejder()!=m) {
+    			return false;
+    		}
+    	}
+    	return true;
     }
     
 //	HER

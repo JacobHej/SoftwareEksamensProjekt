@@ -85,6 +85,7 @@ public class FerieManager implements IFerieManager {
 
 
 	public long AktiviteterIDenneUge(int week, int year, Medarbejder medarbejder) {
+		assert(medarbejder!=null):"Pre-conditions violated";
 		if(medarbejder == null) {
 			System.out.println("Youre looking for a non existant medarbejder?");
 			//return 0;
@@ -130,6 +131,7 @@ public class FerieManager implements IFerieManager {
 //	}
 	
 	public Boolean MedarbejderFri(int weekStart, int weekSlut, int yearStart, int yearSlut, Medarbejder medarbejder) {
+		assert(medarbejder!=null&&(yearStart<yearSlut||(yearStart==yearSlut&&weekStart<=weekSlut))):"Pre-conditions violated";
 		for(int i = yearStart; i <= yearSlut; i ++)
 		{
 			for(int j = (i == yearStart ? weekStart : 0); j <= (i == yearSlut ? weekSlut : 53); j++)
