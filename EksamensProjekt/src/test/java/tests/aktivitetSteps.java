@@ -178,7 +178,9 @@ public class aktivitetSteps {
 		Currentmedarbejder = medarbejderManager.MedarbejderUdFraNavn(medarbejdernavn);
 		Currentaktivitet = aktivitetManager.AktivitetEfterProjektOgNavn(Currentprojekt, aktivitetnavn);
 		assertTrue(Currentmedarbejder.getNavn().equals(medarbejdernavn));
-		Currentbrugttid = new Brugttid(Currentaktivitet, Currentmedarbejder, antalTimer);
+		Date dato = new Date(2020, 10, 2);
+		Currentbrugttid = new Brugttid(Currentaktivitet, Currentmedarbejder, antalTimer, dato);
+		assertTrue(Currentbrugttid.getFlotTid().equals("5:00"));
 		assertTrue(Currentaktivitet.TilfoejTid(Currentbrugttid));
 	}
 
