@@ -262,9 +262,9 @@ public class Aktivitet {
 		return false;
 	}
 	
-//	public String getStart() {
-//		return "Y:"+startaar+"U:"+startUge;
-//	}
+	public String getStart() {
+		return "Y:"+startaar+"U:"+startUge;
+	}
 
 	public int getTidBrugt() {
 		int i = 0;
