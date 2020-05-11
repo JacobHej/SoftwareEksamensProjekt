@@ -963,7 +963,6 @@ public class MainController implements Initializable {
 
     }
 	
-    
     private void medarbejderAktivitetOnSelectStart(){
     	Aktivitet a = medarbejderAktiviteterTabel.getSelectionModel().getSelectedItems().get(0);
     	visBrugtTid(a);
@@ -1032,7 +1031,6 @@ public class MainController implements Initializable {
     	visBrugtTid(a);
     }
     
-
     @FXML
     private void hentAntalAktiviteter(ActionEvent event){
     	Medarbejder m = medarbejderTabel.getSelectionModel().getSelectedItems().get(0);
@@ -1062,7 +1060,6 @@ public class MainController implements Initializable {
 
     }
     
-
     private void visMuligeHjælpere(Medarbejder m) {
     	assert(m!=null):"Pre-conditions violated";
     	//Indsæt mulige hjælpere
